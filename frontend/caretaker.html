@@ -6,6 +6,8 @@
 <title>Care Companion — Family Caretaker Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
 <style>
   :root {
     --bg-page: #f8fafc;
@@ -16,6 +18,7 @@
     --emerald-light: #d1fae5;
     --amber: #d97706;
     --rose: #e11d48;
+    --purple: #7c3aed;
     --text-main: #0f172a;
     --text-muted: #64748b;
     --border: #e2e8f0;
@@ -34,7 +37,7 @@
   }
 
   .container {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 24px 20px;
   }
@@ -93,24 +96,55 @@
     box-shadow: 0 0 10px #34d399;
   }
 
-  /* Grid Layout for Hub */
-  .hub-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
+  /* Navigation Tabs (Photo Queue is 1st) */
+  .nav-tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    background: #e2e8f0;
+    padding: 6px;
+    border-radius: 18px;
     margin-bottom: 24px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: thin;
   }
-  @media (max-width: 768px) {
-    .hub-grid { grid-template-columns: 1fr; }
-    .header-card { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .nav-tab-btn {
+    flex: 1 0 auto;
+    min-width: max-content;
+    padding: 12px 18px;
+    border-radius: 14px;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .nav-tab-btn.active {
+    background: white;
+    color: var(--text-main);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
 
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* Cards */
   .card {
     background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: 24px;
     box-shadow: var(--shadow-sm);
+    margin-bottom: 24px;
   }
   .card-header {
     display: flex;
@@ -127,34 +161,8 @@
     gap: 10px;
   }
 
-  /* Remote Trigger / Check-in Launcher */
-  .photo-selector-list {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    padding-bottom: 10px;
-    margin-bottom: 16px;
-  }
-  .photo-thumb-option {
-    width: 72px;
-    height: 72px;
-    border-radius: 12px;
-    object-fit: cover;
-    cursor: pointer;
-    border: 3px solid transparent;
-    opacity: 0.6;
-    transition: all 0.2s;
-    flex-shrink: 0;
-  }
-  .photo-thumb-option.selected {
-    border-color: var(--primary-light);
-    opacity: 1;
-    transform: scale(1.05);
-  }
-
-  .input-group {
-    margin-bottom: 14px;
-  }
+  /* Form Elements */
+  .input-group { margin-bottom: 16px; }
   .input-label {
     font-size: 13px;
     font-weight: 700;
@@ -174,22 +182,19 @@
     outline: none;
     transition: border 0.2s;
   }
-  .text-field:focus {
-    border-color: var(--primary-light);
-  }
+  .text-field:focus { border-color: var(--primary-light); }
 
   .btn-primary {
-    width: 100%;
-    padding: 14px 20px;
+    padding: 12px 20px;
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: white;
     border: none;
     border-radius: var(--radius-md);
     font-family: inherit;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     cursor: pointer;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
@@ -197,204 +202,544 @@
     transition: all 0.2s;
   }
   .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(37,99,235,0.35);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(37,99,235,0.35);
   }
-
-  /* Pill Reminder Setup Card */
-  .pill-pills-row {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
-  }
-  .pill-tag {
-    background: #f1f5f9;
-    border: 1px solid var(--border);
+  .btn-secondary {
     padding: 8px 14px;
-    border-radius: 20px;
+    background: #f1f5f9;
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-family: inherit;
     font-size: 13px;
-    font-weight: 600;
-    display: flex;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s;
+    display: inline-flex;
     align-items: center;
     gap: 6px;
   }
-  .escalation-config-box {
-    background: #fffbeb;
-    border: 1px solid #fef3c7;
+  .btn-secondary:hover { background: #e2e8f0; }
+
+  /* Drag & Drop Upload Zone */
+  .file-dropzone {
+    border: 2px dashed #93c5fd;
+    background: #eff6ff;
     border-radius: var(--radius-md);
-    padding: 14px;
-    margin-bottom: 16px;
-    font-size: 13px;
-    color: #92400e;
+    padding: 20px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 12px;
   }
-  .escalation-steps {
-    margin-top: 6px;
+  .file-dropzone.dragover {
+    border-color: #2563eb;
+    background: #dbeafe;
+    transform: scale(1.01);
+  }
+  .dropzone-icon {
+    margin-bottom: 6px;
+    color: #2563eb;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+  }
+  .dropzone-text { font-size: 14px; font-weight: 600; color: #1e40af; }
+  .dropzone-sub { font-size: 12px; color: #64748b; margin-top: 2px; }
+
+  /* Previews */
+  .upload-preview-box {
+    display: none;
+    position: relative;
+    margin-bottom: 12px;
+    border-radius: 14px;
+    overflow: hidden;
+    max-height: 140px;
+    border: 2px solid #3b82f6;
+  }
+  .upload-preview-box.show { display: block; }
+  .upload-preview-img { width: 100%; height: 140px; object-fit: cover; display: block; }
+  .remove-preview-btn {
+    position: absolute;
+    top: 8px; right: 8px;
+    background: rgba(0,0,0,0.7);
+    color: white; border: none; border-radius: 50%;
+    width: 26px; height: 26px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+  }
+
+  /* Sub Navigation Toggle */
+  .sub-nav-toggle {
+    display: flex;
+    background: #f1f5f9;
+    padding: 4px;
+    border-radius: 12px;
     gap: 4px;
   }
-  .escalation-step-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 600;
-  }
-
-  .btn-pill-trigger {
-    width: 100%;
-    padding: 14px 20px;
-    background: linear-gradient(135deg, #059669, #047857);
-    color: white;
+  .sub-toggle-btn {
+    padding: 8px 16px;
+    border-radius: 9px;
     border: none;
-    border-radius: var(--radius-md);
+    background: transparent;
     font-family: inherit;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 700;
+    color: var(--text-muted);
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    box-shadow: 0 4px 14px rgba(5,150,105,0.25);
     transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
   }
-  .btn-pill-trigger:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(5,150,105,0.35);
+  .sub-toggle-btn.active {
+    background: white;
+    color: var(--text-main);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
   }
 
-  /* AI Assistant Chat Section */
-  .chat-wrapper {
-    margin-top: 24px;
-  }
-  .chat-box {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 24px;
+  /* Time Slot Cards */
+  .time-slot-card {
+    background: #ffffff;
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 16px;
     box-shadow: var(--shadow-sm);
   }
-  .chat-stream {
-    height: 320px;
-    overflow-y: auto;
+  .time-slot-header {
     display: flex;
-    flex-direction: column;
-    gap: 14px;
-    padding-right: 6px;
-    margin-bottom: 18px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f1f5f9;
   }
-  .chat-msg {
-    max-width: 80%;
-    padding: 14px 18px;
-    border-radius: 18px;
-    font-size: 14px;
-    line-height: 1.5;
-  }
-  .chat-msg.bot {
-    background: #f1f5f9;
-    color: var(--text-main);
-    align-self: flex-start;
-    border-bottom-left-radius: 4px;
-  }
-  .chat-msg.user {
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    color: white;
-    align-self: flex-end;
-    border-bottom-right-radius: 4px;
-  }
-  .chat-input-row {
-    display: flex;
-    gap: 10px;
-  }
-  .chat-input {
-    flex: 1;
-    padding: 14px 20px;
-    border-radius: 50px;
-    border: 1px solid var(--border);
-    outline: none;
-    font-family: inherit;
-    font-size: 14px;
-  }
-  .chat-input:focus {
-    border-color: var(--primary-light);
-  }
-  .chat-send-btn {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: #1e3a8a;
-    color: white;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
+  .time-slot-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--primary);
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 8px;
   }
-
-  /* Live Activity Feed */
-  .activity-log-card {
-    margin-top: 24px;
-  }
-  .activity-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .activity-item:last-child {
-    border: none;
-  }
-  .act-badge {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #f1f5f9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    flex-shrink: 0;
-  }
-  .act-title {
-    font-size: 14px;
+  .time-slot-badge {
+    background: #e0f2fe;
+    color: #0369a1;
+    font-size: 12px;
     font-weight: 700;
-  }
-  .act-sub {
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-  .act-time {
-    margin-left: auto;
-    font-size: 12px;
-    color: var(--text-muted);
-    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
   }
 
-  /* Broadcast Alert Banner when Grandma takes action */
-  .hub-alert-toast {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background: #0f172a;
-    color: white;
-    padding: 16px 24px;
-    border-radius: 50px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  .slot-pill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 12px;
+  }
+  .slot-pill-item {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px;
     display: flex;
     align-items: center;
     gap: 12px;
-    transform: translateY(100px);
-    opacity: 0;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    z-index: 100;
+    position: relative;
   }
-  .hub-alert-toast.show {
-    transform: translateY(0);
-    opacity: 1;
+  .slot-pill-photo {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    background: #e2e8f0;
+    flex-shrink: 0;
   }
+  .pill-icon-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--primary-light);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  /* Pill Inventory Grid */
+  .pill-inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .pill-inv-card {
+    background: #ffffff;
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+  }
+  .pill-inv-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+  .pill-inv-photo {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    object-fit: cover;
+    border: 2px solid var(--border);
+    background: #e2e8f0;
+    flex-shrink: 0;
+  }
+  .pill-inv-title { font-size: 16px; font-weight: 700; color: var(--text-dark); }
+  .pill-inv-dosage { font-size: 13px; color: var(--text-muted); }
+  .pill-time-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .time-chip {
+    background: #ede9fe; color: #6d28d9;
+    font-size: 11px; font-weight: 700;
+    padding: 4px 8px; border-radius: 12px;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+
+  /* Edit Pill Modal */
+  .edit-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 15, 26, 0.7);
+    backdrop-filter: blur(12px);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .edit-modal-overlay.active { display: flex; }
+  .edit-modal-card {
+    background: white;
+    max-width: 500px;
+    width: 100%;
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: var(--shadow-md);
+    max-height: min(90vh, 760px);
+    overflow-y: auto;
+  }
+  .edit-modal-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .edit-modal-title {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .icon-button {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #f8fafc;
+    color: var(--text-main);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+  }
+  .icon-button:hover { background: #e2e8f0; }
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  /* Photo Grid */
+  .photo-grid-manager {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .photo-item-card {
+    background: #ffffff;
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+  .photo-item-card.prioritized {
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25);
+  }
+  .photo-item-img { width: 100%; height: 150px; object-fit: cover; background: #000; }
+  .photo-item-body { padding: 12px 14px; display: flex; flex-direction: column; flex: 1; }
+  .photo-item-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; color: var(--text-dark); }
+  .photo-item-caption { font-size: 12px; color: var(--text-muted); font-style: italic; margin-bottom: 12px; flex: 1; }
+  .photo-card-actions {
+    display: flex; flex-direction: column; gap: 8px;
+    padding-top: 8px; border-top: 1px solid #f1f5f9;
+  }
+  .photo-action-row {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  .photo-action-row .delete-card-btn { margin-inline-start: auto; }
+  .btn-send-now {
+    width: 100%;
+    padding: 9px 12px;
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(5,150,105,0.2);
+    transition: all 0.15s;
+  }
+  .btn-send-now:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(5,150,105,0.3);
+  }
+  .card-edit-btn {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1d4ed8;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font: 700 12px/1.2 inherit;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .card-edit-btn:hover { background: #dbeafe; }
+  .star-priority-btn {
+    background: #f8fafc; border: 1px solid var(--border);
+    padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 5px; transition: all 0.2s;
+  }
+  .star-priority-btn:hover { background: #fef3c7; border-color: #f59e0b; }
+  .star-priority-btn.active { background: #f59e0b; color: white; border-color: #d97706; }
+  .priority-badge-corner {
+    position: absolute; top: 8px; left: 8px;
+    background: #f59e0b; color: white;
+    font-size: 11px; font-weight: 800;
+    padding: 4px 10px; border-radius: 20px;
+    display: flex; align-items: center; gap: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 2;
+  }
+
+  /* Automated Check-in Schedule */
+  .schedule-card {
+    background: linear-gradient(145deg, #ffffff, #f0fdf4);
+    border: 2px solid #bbf7d0;
+  }
+  .schedule-time-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .schedule-time-chip {
+    background: #f1f5f9;
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .schedule-time-chip .del-time-btn {
+    background: none;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+  .schedule-time-form {
+    display: flex;
+    gap: 10px;
+    max-width: 460px;
+  }
+
+  .caption-pool-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .caption-pool-item {
+    background: #f8fafc; border: 1px solid var(--border);
+    border-radius: 12px; padding: 10px 14px;
+    display: flex; align-items: center; justify-content: space-between; font-size: 13px;
+  }
+  .caption-pool-item .del-caption-btn { color: #ef4444; background: none; border: none; cursor: pointer; font-size: 14px; padding: 4px; display: flex; align-items: center; }
+
+  /* ========================================================
+     ERRANDS ENHANCED CARDS (WITH CARETAKER & TIMING REMINDERS)
+     ======================================================== */
+  .errand-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
+  .errand-item-card {
+    background: white; border: 2px solid var(--border);
+    border-radius: 20px; padding: 20px;
+    box-shadow: var(--shadow-sm);
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .errand-item-top {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .errand-item-main {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .errand-icon-badge {
+    width: 48px; height: 48px; border-radius: 14px;
+    background: #ede9fe; color: var(--purple);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .errand-details-row {
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    padding-top: 10px; border-top: 1px solid #f1f5f9;
+  }
+  .errand-caretaker-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #f1f5f9; padding: 4px 12px 4px 6px; border-radius: 24px;
+    font-size: 13px; font-weight: 700;
+  }
+  .errand-caretaker-pill img {
+    width: 26px; height: 26px; border-radius: 50%; object-fit: cover;
+  }
+  .errand-timing-tag {
+    font-size: 12px; color: var(--text-muted); font-weight: 600;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .errand-recurring-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .recurring-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--text-main);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .recurring-checkbox input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: #059669;
+    cursor: pointer;
+  }
+  .caretaker-roster {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .caretaker-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #f8fafc;
+  }
+  .caretaker-profile img {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #bfdbfe;
+    flex: 0 0 auto;
+  }
+  .caretaker-profile strong,
+  .caretaker-profile span { display: block; }
+  .caretaker-profile span {
+    margin-top: 2px;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+  .errand-control-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #f1f5f9;
+  }
+  .errand-control-grid .input-group { margin: 0; min-width: 0; }
+  .errand-control-grid .text-field {
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+  }
+  .errand-actions { display: flex; align-items: center; gap: 8px; }
+
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible {
+    outline: 3px solid #1d4ed8;
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 720px) {
+    .container { padding: 16px 12px; }
+    .header-card { align-items: flex-start; padding: 20px; }
+    .header-left { min-width: 0; }
+    .header-titles p { display: none; }
+    .live-status-pill { flex: 0 0 auto; }
+    .nav-tabs { margin-inline: -12px; border-radius: 0; padding-inline: 12px; }
+    .nav-tab-btn { flex: 0 0 auto; }
+    .text-field { font-size: 16px; }
+    .caretaker-roster,
+    .errand-control-grid { grid-template-columns: 1fr; }
+    .errand-item-top { align-items: flex-start; gap: 12px; flex-direction: column; }
+    .errand-actions { width: 100%; justify-content: flex-end; }
+    .schedule-card .card-header { align-items: flex-start; gap: 14px; flex-direction: column; }
+    .schedule-time-form { flex-direction: column; max-width: none; }
+  }
+
+  /* Toast */
+  .hub-alert-toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: #0f172a; color: white;
+    padding: 16px 24px; border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    display: flex; align-items: center; gap: 12px;
+    transform: translateY(100px); opacity: 0;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 100;
+  }
+  .hub-alert-toast.show { transform: translateY(0); opacity: 1; }
 </style>
 </head>
 <body>
@@ -406,356 +751,1639 @@
       <img class="patient-avatar" src="https://media.clero.so/content_items/2026/08/Grandma_Portrait.jpg" alt="Grandma">
       <div class="header-titles">
         <h1>Grandma's Care Hub</h1>
-        <p>Live status, scheduled check-ins & medication tracking</p>
+        <p>Family management for photos, time-based medications, errands & check-ins</p>
       </div>
     </div>
     <div class="live-status-pill">
       <span class="dot"></span>
-      <span id="hubStatusText">Frame Active (Slideshow)</span>
+      <span id="hubStatusText">Frame Active</span>
     </div>
   </div>
 
-  <div class="hub-grid">
-    <!-- Action 1: Trigger Photo Check-in -->
+  <!-- Navigation Tabs -->
+  <div class="nav-tabs">
+    <button class="nav-tab-btn active" type="button" onclick="switchTab('photos', this)"><i data-lucide="image" style="width:18px;height:18px;"></i> Photo Queue</button>
+    <button class="nav-tab-btn" type="button" onclick="switchTab('pills', this)"><i data-lucide="pill" style="width:18px;height:18px;"></i> Pills &amp; Schedule</button>
+    <button class="nav-tab-btn" type="button" onclick="switchTab('errands', this)"><i data-lucide="check-square" style="width:18px;height:18px;"></i> Errands &amp; Reminders</button>
+    <button class="nav-tab-btn" type="button" onclick="switchTab('ai', this)"><i data-lucide="bot" style="width:18px;height:18px;"></i> AI Assistant</button>
+  </div>
+
+  <!-- ========================================================
+       TAB 1: PHOTO MANAGEMENT & AUTOMATED CHECK-IN SCHEDULER
+       ======================================================== -->
+  <div class="tab-content active" id="tab-photos">
+    <div class="card schedule-card">
+      <div class="card-header">
+        <div>
+          <div class="card-title" style="color:#166534;"><i data-lucide="calendar-clock" style="width:22px;height:22px;color:#16a34a;"></i> Scheduled Check-in Times</div>
+          <p style="font-size:13px; color:#15803d; margin-top:2px;">
+            The system automatically draws a random photo from the queue at these times and sends a live check-in to Grandma.
+          </p>
+        </div>
+        <button class="btn-primary" type="button" style="background:#16a34a; font-size:13px; padding:8px 14px;" onclick="triggerAutoRandomCheckin()">
+          <i data-lucide="shuffle" style="width:14px;height:14px;"></i> Test Random Check-in Now
+        </button>
+      </div>
+
+      <div class="schedule-time-list" id="scheduleTimesContainer"></div>
+
+      <div class="schedule-time-form">
+        <input class="text-field" id="newScheduleTimeInput" type="text" inputmode="text" placeholder="e.g. 09:30 AM or 04:00 PM" aria-label="New scheduled check-in time">
+        <button class="btn-secondary" type="button" onclick="addNewScheduleTime()"><i data-lucide="plus" style="width:14px;height:14px;"></i> Add Time</button>
+      </div>
+    </div>
+
     <div class="card">
       <div class="card-header">
-        <div class="card-title"><span>📸</span> Send Photo Check-in</div>
+        <div class="card-title"><i data-lucide="image" style="width:22px;height:22px;color:#2563eb;"></i> Digital Frame Photo Queue</div>
+        <span style="font-size: 13px; color: var(--text-muted);">Use "Send as Check-in Now" to immediately dispatch any photo to Grandma</span>
       </div>
-      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
-        Pick a family photo and send a live prompt to Grandma's screen with automated text-to-speech.
-      </p>
-
-      <div class="input-group">
-        <label class="input-label">Select Photo to Send</label>
-        <div class="photo-selector-list" id="photoSelector">
-          <img class="photo-thumb-option selected" src="https://media.clero.so/content_items/2026/08/Family_Picnic_Scene.jpg" onclick="selectThumb(this, 'Family Picnic Scene')" alt="Picnic">
-          <img class="photo-thumb-option" src="https://media.clero.so/content_items/2026/08/Beach_Vacation_Scene.jpg" onclick="selectThumb(this, 'Beach Vacation Scene')" alt="Beach">
-          <img class="photo-thumb-option" src="https://media.clero.so/content_items/2026/08/Family_Dinner_Scene.jpg" onclick="selectThumb(this, 'Family Dinner Scene')" alt="Dinner">
-          <img class="photo-thumb-option" src="https://media.clero.so/content_items/2026/08/Reading_Time_Scene.jpg" onclick="selectThumb(this, 'Reading Time Scene')" alt="Reading">
-          <img class="photo-thumb-option" src="https://media.clero.so/content_items/2026/08/Christmas_Dinner_Scene.jpg" onclick="selectThumb(this, 'Christmas Dinner Scene')" alt="Christmas">
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label class="input-label">Caption / Message</label>
-        <input class="text-field" id="checkinCaption" type="text" value="Hi Grandma! Look at this memory from our sunny picnic. How are you feeling today?">
-      </div>
-
-      <div class="escalation-config-box">
-        <strong>⚡ Auto-Escalation Demo Settings:</strong>
-        <div class="escalation-steps">
-          <div class="escalation-step-item"><span>1️⃣ Try 1:</span> Ping Grandma's phone after 5s</div>
-          <div class="escalation-step-item"><span>2️⃣ Try 2:</span> Alert Caregiver phone after 10s</div>
-        </div>
-      </div>
-
-      <button class="btn-primary" onclick="sendRemoteCheckin()">
-        <span>🚀</span> Send Check-in Now (Live Demo)
-      </button>
+      <div class="photo-grid-manager" id="photoGridManager"></div>
     </div>
 
-    <!-- Action 2: Pill Reminder Setup -->
     <div class="card">
       <div class="card-header">
-        <div class="card-title"><span>💊</span> Pill & Errand Reminder</div>
+        <div class="card-title"><i data-lucide="upload-cloud" style="width:22px;height:22px;color:#2563eb;"></i> Add New Photo to Queue</div>
       </div>
-      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
-        Scheduled routine pills with checklist interface and confirmation alerts.
-      </p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+        <div>
+          <input type="file" id="localFileInput" accept="image/*" style="display:none;" onchange="handleLocalFileUpload(event)">
+          <div class="file-dropzone" id="photoDropzone" onclick="document.getElementById('localFileInput').click()">
+            <div class="dropzone-icon"><i data-lucide="folder-up" style="width:32px;height:32px;"></i></div>
+            <div class="dropzone-text">Drag & drop photo or browse</div>
+            <div class="dropzone-sub">Supports JPG, PNG, WEBP from your computer</div>
+          </div>
+          <div class="upload-preview-box" id="uploadPreviewBox">
+            <img class="upload-preview-img" id="uploadPreviewImg" src="https://media.clero.so/content_items/2026/08/Family_Picnic_Scene.jpg" alt="Preview">
+            <button class="remove-preview-btn" onclick="clearUploadedFile()"><i data-lucide="x" style="width:14px;height:14px;"></i></button>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Or paste Image URL</label>
+            <input class="text-field" id="newPhotoUrl" type="text" placeholder="https://...">
+          </div>
+        </div>
 
-      <div class="input-group">
-        <label class="input-label">Assigned Medications</label>
-        <div class="pill-pills-row">
-          <span class="pill-tag">🔴 Blood Pressure (1 tab)</span>
-          <span class="pill-tag">🟡 Vitamin D3 (1 cap)</span>
-          <span class="pill-tag">⚪ Calcium & Zinc (1 tab)</span>
-          <span class="pill-tag">💧 Glass of Water</span>
+        <div>
+          <div class="input-group">
+            <label class="input-label">Title / Memory Name</label>
+            <input class="text-field" id="newPhotoTitle" type="text" placeholder="e.g. Grandma smiling in the garden">
+          </div>
+          <div class="input-group">
+            <label class="input-label">Custom Caption (optional - or auto-pick from pool)</label>
+            <input class="text-field" id="newPhotoCaption" type="text" placeholder="Leave blank to pick random caption">
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:18px;">
+            <input type="checkbox" id="newPhotoStar" style="width:18px; height:18px; cursor:pointer;">
+            <label for="newPhotoStar" style="font-size:14px; font-weight:600; cursor:pointer;">Prioritize immediately as NEXT photo</label>
+          </div>
+          <button class="btn-primary" style="width:100%; padding:14px;" onclick="addNewPhoto()">
+            <i data-lucide="plus" style="width:16px;height:16px;"></i> Add Photo to Grandma's Frame
+          </button>
         </div>
       </div>
-
-      <div class="input-group">
-        <label class="input-label">Schedule Trigger</label>
-        <select class="text-field" id="pillTiming">
-          <option value="now">⚡ Trigger Immediately (Demo)</option>
-          <option value="morning">Morning (8:00 AM)</option>
-          <option value="evening">Evening (7:00 PM)</option>
-        </select>
-      </div>
-
-      <div class="escalation-config-box">
-        <strong>🔔 Reminder Rules:</strong>
-        <div class="escalation-steps">
-          <div class="escalation-step-item"><span>✓</span> Multi-pill interactive checklist</div>
-          <div class="escalation-step-item"><span>✓</span> Visual checkmark on tap + Audio confirmation</div>
-        </div>
-      </div>
-
-      <button class="btn-pill-trigger" onclick="sendRemotePills()">
-        <span>💊</span> Trigger Pill Reminder (Live Demo)
-      </button>
     </div>
-  </div>
 
-  <!-- AI Caretaker Assistant Chat -->
-  <div class="chat-wrapper">
-    <div class="chat-box">
+    <div class="card">
       <div class="card-header">
-        <div class="card-title"><span>🤖</span> AI Care Assistant</div>
-        <span style="font-size: 13px; color: var(--text-muted);">Trained on Grandma's daily routine & history</span>
+        <div class="card-title"><i data-lucide="message-square" style="width:22px;height:22px;color:#2563eb;"></i> Caption Pool</div>
+        <span style="font-size: 13px; color: var(--text-muted);">Randomly paired with photos without custom captions</span>
       </div>
-      <div class="chat-stream" id="chatStream">
-        <div class="chat-msg bot">
-          Hello! I'm monitoring Grandma's activity and status. You can ask me how she's doing, review past check-ins, or verify if she took her pills. 💚
-        </div>
-      </div>
-      <div class="chat-input-row">
-        <input class="chat-input" id="aiInput" type="text" placeholder="Ask AI: 'How did Grandma sleep?' or 'Did she take her pills?'" autocomplete="off">
-        <button class="chat-send-btn" onclick="sendAiMessage()">➤</button>
+      <div class="caption-pool-list" id="captionPoolList"></div>
+      <div style="display:flex; gap:10px;">
+        <input class="text-field" id="newPoolCaptionInput" type="text" placeholder="Add a sweet caption (e.g. 'Thinking of you today!')">
+        <button class="btn-secondary" onclick="addCaptionToPool()"><i data-lucide="plus" style="width:14px;height:14px;"></i> Add to Pool</button>
       </div>
     </div>
   </div>
 
-  <!-- Live Activity Log -->
-  <div class="card activity-log-card">
-    <div class="card-header">
-      <div class="card-title"><span>📋</span> Real-time Event Log</div>
-      <span style="font-size: 13px; color: var(--text-muted);">Synced across Caregiver & Receiver devices</span>
-    </div>
-    <div id="activityList">
-      <div class="activity-item">
-        <div class="act-badge">🖼️</div>
+  <!-- ========================================================
+       TAB 2: PILLS & MEDICATION MANAGEMENT
+       ======================================================== -->
+  <div class="tab-content" id="tab-pills">
+    <div class="card">
+      <div class="card-header">
         <div>
-          <div class="act-title">Photo Frame running smoothly</div>
-          <div class="act-sub">Rotating family memories every 3 seconds</div>
+          <div class="card-title"><i data-lucide="pill" style="width:22px;height:22px;color:#2563eb;"></i> Daily Medication Schedule</div>
+          <p style="font-size:13px; color:var(--text-muted); margin-top:2px;">
+            Organized by intake time slots or view individual pill schedules with uploaded photos. Click "Edit" on any pill to change photo or details.
+          </p>
         </div>
-        <div class="act-time">Just now</div>
+        <div class="sub-nav-toggle">
+          <button class="sub-toggle-btn active" id="btnTimeView" onclick="switchPillSubView('time')"><i data-lucide="clock" style="width:14px;height:14px;"></i> Time View</button>
+          <button class="sub-toggle-btn" id="btnPillView" onclick="switchPillSubView('pill')"><i data-lucide="table" style="width:14px;height:14px;"></i> Pill View</button>
+        </div>
       </div>
-      <div class="activity-item">
-        <div class="act-badge">😊</div>
-        <div>
-          <div class="act-title">Grandma marked: "Good"</div>
-          <div class="act-sub">Response received via Touch UI</div>
+
+      <!-- VIEW A: TIME SLOTS VIEW -->
+      <div id="pillsTimeView">
+        <div id="timeSlotsContainer"></div>
+
+        <div style="background:#f8fafc; border:2px dashed #cbd5e1; border-radius:18px; padding:18px; margin-top:16px;">
+          <div style="font-weight:700; font-size:14px; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+            <i data-lucide="clock-plus" style="width:18px;height:18px;color:#2563eb;"></i> Add New Scheduled Time Slot
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
+            <div class="input-group" style="flex:1; min-width:200px; margin:0;">
+              <label class="input-label" for="newSlotNameInput">Slot Name / Routine</label>
+              <input class="text-field" id="newSlotNameInput" placeholder="e.g. Morning, Lunch, Snack">
+            </div>
+            <div class="input-group" style="width:190px; margin:0;">
+              <label class="input-label" for="newSlotTimeInput">Actual Scheduled Time</label>
+              <input class="text-field" id="newSlotTimeInput" type="time" aria-label="Actual scheduled time">
+            </div>
+            <div class="input-group" style="width:140px; margin:0;">
+              <label class="input-label" for="newSlotIconSelect">Icon</label>
+              <select class="text-field" id="newSlotIconSelect">
+                <option value="sun">☀️ Sun</option>
+                <option value="sunrise">🌅 Sunrise</option>
+                <option value="sunset">🌙 Sunset</option>
+                <option value="moon">🛌 Moon</option>
+                <option value="clock">⏰ Clock</option>
+                <option value="coffee">☕ Snack</option>
+              </select>
+            </div>
+            <button class="btn-secondary" type="button" onclick="addNewTimeSlot()"><i data-lucide="plus" style="width:14px;height:14px;"></i> Add Slot</button>
+          </div>
         </div>
-        <div class="act-time">10:30 AM</div>
+
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+          <button class="btn-primary" style="background:#059669;" onclick="triggerSelectedSlotReminder()">
+            <i data-lucide="bell-ring" style="width:16px;height:16px;"></i> Send Current Time Alert to Grandma's Screen
+          </button>
+        </div>
+      </div>
+
+      <!-- VIEW B: PILL VIEW (EDITABLE) -->
+      <div id="pillsInventoryView" style="display:none;">
+        <div class="pill-inventory-grid" id="pillInventoryGrid"></div>
+      </div>
+    </div>
+
+    <!-- Upload & Add New Pill Card -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><i data-lucide="plus-circle" style="width:22px;height:22px;color:#2563eb;"></i> Add New Medication & Photo</div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+        <div>
+          <input type="file" id="pillPhotoInput" accept="image/*" style="display:none;" onchange="handlePillPhotoUpload(event)">
+          <div class="file-dropzone" id="pillDropzone" onclick="document.getElementById('pillPhotoInput').click()">
+            <div class="dropzone-icon"><i data-lucide="camera" style="width:32px;height:32px;"></i></div>
+            <div class="dropzone-text">Drag & drop pill photo or browse</div>
+            <div class="dropzone-sub">Shows on Caretaker Hub & Grandma's screen</div>
+          </div>
+
+          <div class="upload-preview-box" id="pillUploadPreviewBox">
+            <img class="upload-preview-img" id="pillUploadPreviewImg" src="assets/pills/lisinopril.svg" alt="Pill Preview">
+            <button class="remove-preview-btn" onclick="clearPillUploadFile()"><i data-lucide="x" style="width:14px;height:14px;"></i></button>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Pill Category Icon</label>
+            <select class="text-field" id="newPillIconSelect">
+              <option value="heart-pulse">❤️ Heart & Pressure</option>
+              <option value="sun">☀️ Vitamin D3</option>
+              <option value="shield">🛡️ Calcium & Minerals</option>
+              <option value="droplet">💧 Water & Hydration</option>
+              <option value="capsule">💊 Capsule / Antibiotic</option>
+              <option value="sparkles">✨ Supplement</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <div class="input-group">
+            <label class="input-label">Medication Name</label>
+            <input class="text-field" id="newPillNameInput" placeholder="e.g. Lisinopril / Blood Pressure">
+          </div>
+          <div class="input-group">
+            <label class="input-label">Dosage & Instructions</label>
+            <input class="text-field" id="newPillDosageInput" placeholder="e.g. 1 Tablet · With full glass of water">
+          </div>
+          <div class="input-group">
+            <label class="input-label">Scheduled Time Slots</label>
+            <div id="timeSlotsCheckboxes" style="display:flex; gap:12px; flex-wrap:wrap; margin-top:6px;"></div>
+          </div>
+          <button class="btn-primary" style="width:100%; padding:14px; margin-top:8px;" onclick="addNewPillWithSchedule()">
+            <i data-lucide="plus" style="width:16px;height:16px;"></i> Save Medication to Schedule
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       TAB 3: ERRANDS & REMINDERS (WITH CARETAKER & RELATIVE TIMING)
+       ======================================================== -->
+  <div class="tab-content" id="tab-errands">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title"><i data-lucide="check-square" style="width:22px;height:22px;color:#2563eb;"></i> Grandma's Errands & Assigned Routine</div>
+          <p style="font-size:13px; color:var(--text-muted); margin-top:2px;">
+            Set responsible family members and configure relative reminders for both the caretaker and patient.
+          </p>
+        </div>
+      </div>
+      <div class="caretaker-roster" id="caretakerRoster" aria-label="Responsible caretakers"></div>
+      <div class="errand-list" id="errandList"></div>
+
+      <!-- Add New Errand Form -->
+      <div style="background:#f8fafc; border:1px solid var(--border); border-radius:20px; padding:22px;">
+        <div style="font-weight:800; font-size:16px; margin-bottom:14px; color:var(--text-dark);">
+          <i data-lucide="calendar-plus" style="width:18px;height:18px;vertical-align:middle;color:#2563eb;"></i> Add New Errand with Assigned Caretaker
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:14px;">
+          <div class="input-group" style="margin:0;">
+            <label class="input-label">Errand Title</label>
+            <input class="text-field" id="newErrandTitle" placeholder="e.g. Afternoon Garden Walk">
+          </div>
+          <div class="input-group" style="margin:0;">
+            <label class="input-label">Scheduled Time</label>
+            <input class="text-field" id="newErrandTime" placeholder="e.g. Today at 3:30 PM">
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:16px; margin-bottom:18px;">
+          <div class="input-group" style="margin:0;">
+            <label class="input-label">Responsible Caretaker</label>
+            <select class="text-field" id="newErrandCaretaker">
+              <option value="Alex">Alex (Son · Primary)</option>
+              <option value="Elena">Elena (Daughter · Secondary)</option>
+            </select>
+          </div>
+          <div class="input-group" style="margin:0;">
+            <label class="input-label">Remind Caretaker</label>
+            <select class="text-field" id="newErrandCaretakerReminder">
+              <option value="30m">30 minutes before</option>
+              <option value="15m">15 minutes before</option>
+              <option value="5m">5 minutes before</option>
+              <option value="5s">5 seconds before (demo)</option>
+            </select>
+          </div>
+          <div class="input-group" style="margin:0;">
+            <label class="input-label">Remind Patient (Grandma)</label>
+            <select class="text-field" id="newErrandPatientReminder">
+              <option value="15m">15 minutes before</option>
+              <option value="10m">10 minutes before</option>
+              <option value="5m">5 minutes before</option>
+              <option value="5s">5 seconds before (demo)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;">
+          <label class="recurring-checkbox" for="newErrandRecurring">
+            <input id="newErrandRecurring" type="checkbox">
+            <span>Recurring Routine (repeats daily / weekly)</span>
+          </label>
+          <button class="btn-primary" type="button" onclick="addNewErrand()">
+            <i data-lucide="plus" style="width:16px;height:16px;"></i> Schedule Errand & Reminders
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       TAB 4: AI ASSISTANT
+       ======================================================== -->
+  <div class="tab-content" id="tab-ai">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><i data-lucide="bot" style="width:22px;height:22px;color:#2563eb;"></i> AI Care Assistant</div>
+      </div>
+      <div class="chat-stream" id="chatStream" style="height:260px; overflow-y:auto; display:flex; flex-direction:column; gap:12px; margin-bottom:16px;">
+        <div class="chat-msg bot" style="background:#f1f5f9; padding:12px 16px; border-radius:16px; font-size:14px; max-width:80%;">
+          Hello! I'm monitoring Grandma's medication schedule and check-ins. You can ask me what pills she has scheduled or review errands!
+        </div>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <input class="text-field" id="aiInput" placeholder="Ask AI: 'What pills are scheduled for morning?'" autocomplete="off">
+        <button class="btn-primary" onclick="sendAiMessage()"><i data-lucide="arrow-right" style="width:16px;height:16px;"></i> Ask</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Toast for Remote Events -->
+<!-- Edit Pill Modal -->
+<div class="edit-modal-overlay" id="editPillModal" role="dialog" aria-modal="true" aria-labelledby="editPillModalTitle">
+  <div class="edit-modal-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+      <div id="editPillModalTitle" style="font-family:'Fraunces',serif; font-size:20px; font-weight:700;">Edit Medication &amp; Photo</div>
+      <button class="icon-button" type="button" aria-label="Close edit medication dialog" onclick="closeEditModal()"><i data-lucide="x" style="width:20px;height:20px;"></i></button>
+    </div>
+
+    <input type="hidden" id="editPillId">
+
+    <input type="file" id="editPillPhotoFileInput" accept="image/*" style="display:none;" onchange="handleEditPillPhotoUpload(event)">
+    <div class="file-dropzone" id="editPillDropzone" onclick="document.getElementById('editPillPhotoFileInput').click()">
+      <div class="dropzone-icon"><i data-lucide="image" style="width:28px;height:28px;"></i></div>
+      <div class="dropzone-text">Upload new photo for this pill</div>
+      <div class="dropzone-sub">Drag & drop or click to replace image</div>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:16px;">
+      <img id="editPillPhotoPreview" src="assets/pills/lisinopril.svg" alt="Medication preview" style="width:64px; height:64px; border-radius:14px; object-fit:cover; border:2px solid var(--border);">
+      <input class="text-field" id="editPillPhotoUrl" placeholder="Or paste image URL" style="flex:1;">
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">Medication Name</label>
+      <input class="text-field" id="editPillName">
+    </div>
+    <div class="input-group">
+      <label class="input-label">Dosage</label>
+      <input class="text-field" id="editPillDosage">
+    </div>
+    <div class="input-group">
+      <label class="input-label">Icon</label>
+      <select class="text-field" id="editPillIcon">
+        <option value="heart-pulse">❤️ Heart & Pressure</option>
+        <option value="sun">☀️ Vitamin D3</option>
+        <option value="shield">🛡️ Calcium & Minerals</option>
+        <option value="droplet">💧 Water & Hydration</option>
+        <option value="capsule">💊 Capsule</option>
+        <option value="sparkles">✨ Supplement</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label class="input-label">Time Slots</label>
+      <div id="editTimeSlotsCheckboxes" style="display:flex; gap:10px; flex-wrap:wrap;"></div>
+    </div>
+
+    <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+      <button class="btn-secondary" type="button" onclick="closeEditModal()">Cancel</button>
+      <button class="btn-primary" type="button" onclick="saveEditedPill()"><i data-lucide="check" style="width:16px;height:16px;"></i> Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Photo Modal -->
+<div class="edit-modal-overlay" id="editPhotoModal" role="dialog" aria-modal="true" aria-labelledby="editPhotoModalTitle">
+  <form class="edit-modal-card" onsubmit="saveEditedPhoto(event)">
+    <div class="edit-modal-heading">
+      <div class="edit-modal-title" id="editPhotoModalTitle">Edit Photo</div>
+      <button class="icon-button" type="button" aria-label="Close edit photo dialog" onclick="closeEditPhotoModal()">
+        <i data-lucide="x" style="width:20px;height:20px;"></i>
+      </button>
+    </div>
+    <input type="hidden" id="editPhotoId">
+    <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
+      <img id="editPhotoPreview" src="https://media.clero.so/content_items/2026/08/Family_Picnic_Scene.jpg" alt="Current photo preview" width="88" height="72" style="width:88px;height:72px;border-radius:14px;object-fit:cover;background:#e2e8f0;">
+      <p style="font-size:13px;line-height:1.5;color:var(--text-muted);">Changes appear on Grandma's frame immediately after saving.</p>
+    </div>
+    <div class="input-group">
+      <label class="input-label" for="editPhotoTitle">Title</label>
+      <input class="text-field" id="editPhotoTitle" maxlength="100" required>
+    </div>
+    <div class="input-group">
+      <label class="input-label" for="editPhotoCaption">Caption</label>
+      <textarea class="text-field" id="editPhotoCaption" maxlength="240" rows="3" style="resize:vertical;"></textarea>
+    </div>
+    <div class="input-group">
+      <label class="input-label" for="editPhotoUrl">Image URL</label>
+      <input class="text-field" id="editPhotoUrl" type="text" inputmode="url" required placeholder="https://...">
+    </div>
+    <label style="display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700;cursor:pointer;">
+      <input id="editPhotoPrioritized" type="checkbox" style="width:18px;height:18px;">
+      Make this the next photo on Grandma's frame
+    </label>
+    <div class="modal-actions">
+      <button class="btn-secondary" type="button" onclick="closeEditPhotoModal()">Cancel</button>
+      <button class="btn-primary" type="submit"><i data-lucide="check" style="width:16px;height:16px;"></i> Save Photo</button>
+    </div>
+  </form>
+</div>
+
+<!-- Edit Errand Modal -->
+<div class="edit-modal-overlay" id="editErrandModal" role="dialog" aria-modal="true" aria-labelledby="editErrandModalTitle">
+  <form class="edit-modal-card" onsubmit="saveEditedErrand(event)">
+    <div class="edit-modal-heading">
+      <div class="edit-modal-title" id="editErrandModalTitle">Edit Errand</div>
+      <button class="icon-button" type="button" aria-label="Close edit errand dialog" onclick="closeEditErrandModal()">
+        <i data-lucide="x" style="width:20px;height:20px;"></i>
+      </button>
+    </div>
+    <input type="hidden" id="editErrandId">
+    <div class="input-group">
+      <label class="input-label" for="editErrandTitle">Title</label>
+      <input class="text-field" id="editErrandTitle" maxlength="120" required>
+    </div>
+    <div class="input-group">
+      <label class="input-label" for="editErrandTime">Scheduled time</label>
+      <input class="text-field" id="editErrandTime" maxlength="100" required>
+    </div>
+    <div class="input-group">
+      <label class="recurring-checkbox" for="editErrandRecurring">
+        <input id="editErrandRecurring" type="checkbox">
+        <span>Recurring Routine (repeats daily / weekly)</span>
+      </label>
+    </div>
+    <div class="input-group">
+      <label class="input-label" for="editErrandCaretaker">Assigned caretaker</label>
+      <select class="text-field" id="editErrandCaretaker">
+        <option value="Alex">Alex (Son · Primary)</option>
+        <option value="Elena">Elena (Daughter · Secondary)</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label class="input-label" for="editErrandCaretakerReminder">Remind caretaker</label>
+      <select class="text-field" id="editErrandCaretakerReminder"></select>
+    </div>
+    <div class="input-group">
+      <label class="input-label" for="editErrandPatientReminder">Remind Grandma</label>
+      <select class="text-field" id="editErrandPatientReminder"></select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" type="button" onclick="closeEditErrandModal()">Cancel</button>
+      <button class="btn-primary" type="submit"><i data-lucide="check" style="width:16px;height:16px;"></i> Save Errand</button>
+    </div>
+  </form>
+</div>
+
+<!-- Toast -->
 <div class="hub-alert-toast" id="hubToast">
-  <span style="font-size: 24px;" id="toastIcon">🔔</span>
+  <i data-lucide="bell" style="width:24px;height:24px;"></i>
   <span id="toastMsg">Update received from Grandma's frame!</span>
 </div>
 
 <script>
-  // Broadcast Channel for live multi-tab communication with Receiver page
   const careBus = window.BroadcastChannel ? new BroadcastChannel('care_companion_bus') : null;
+  const CARE_STORAGE_KEYS = {
+    photos: 'care_companion_photos_v1',
+    pills: 'care_companion_pills_v1',
+    errands: 'care_companion_errands_v1',
+    checkinTimes: 'care_companion_checkin_times_v1',
+    lastScheduledCheckin: 'care_companion_last_scheduled_checkin_v1'
+  };
+  let lastDialogTrigger = null;
 
-  let selectedPhotoUrl = 'https://media.clero.so/content_items/2026/08/Family_Picnic_Scene.jpg';
-
-  function selectThumb(el, name) {
-    document.querySelectorAll('.photo-thumb-option').forEach(t => t.classList.remove('selected'));
-    el.classList.add('selected');
-    selectedPhotoUrl = el.src;
+  function loadStoredArray(key, fallback) {
+    try {
+      const stored = JSON.parse(localStorage.getItem(key));
+      return Array.isArray(stored) ? stored : fallback;
+    } catch (_error) {
+      return fallback;
+    }
   }
 
-  function sendRemoteCheckin() {
-    const caption = document.getElementById('checkinCaption').value;
-    const sender = 'Son (Alex)';
-    const avatar = 'https://media.clero.so/content_items/2026/08/Son_Portrait.jpg';
+  function storeArray(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (_error) {
+      showToast('Saved for this tab, but browser storage is unavailable.');
+    }
+  }
 
+  function showEditDialog(dialogId, trigger, focusId) {
+    lastDialogTrigger = trigger || document.activeElement;
+    const dialog = document.getElementById(dialogId);
+    dialog.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    refreshIcons();
+    requestAnimationFrame(() => document.getElementById(focusId)?.focus());
+  }
+
+  function hideEditDialog(dialogId) {
+    document.getElementById(dialogId).classList.remove('active');
+    if (!document.querySelector('.edit-modal-overlay.active')) {
+      document.body.style.overflow = '';
+    }
+    lastDialogTrigger?.focus?.();
+    lastDialogTrigger = null;
+  }
+
+  function refreshIcons() {
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  }
+
+  function switchTab(tabId, tabButton) {
+    document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    tabButton.classList.add('active');
+    document.getElementById('tab-' + tabId).classList.add('active');
+    tabButton.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+    refreshIcons();
+  }
+
+  function switchPillSubView(view) {
+    document.getElementById('btnTimeView').classList.toggle('active', view === 'time');
+    document.getElementById('btnPillView').classList.toggle('active', view === 'pill');
+    document.getElementById('pillsTimeView').style.display = view === 'time' ? 'block' : 'none';
+    document.getElementById('pillsInventoryView').style.display = view === 'pill' ? 'block' : 'none';
+    refreshIcons();
+  }
+
+  // ========================================================
+  // MEDICATIONS DATA WITH WORKING PHOTO URLS & ICONS
+  // ========================================================
+  const publishedPillPhotoUrls = {
+    'Blood Pressure (Lisinopril)': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300',
+    'Vitamin D3 & Omega': 'https://images.unsplash.com/photo-1550572017-ed24d35eb7b3?w=300',
+    'Calcium & Zinc Support': 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=300',
+    'Glass of Fresh Water': 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=500&auto=format&fit=crop&q=80'
+  };
+  const pillPhotoFallbacks = {
+    'Blood Pressure (Lisinopril)': 'assets/pills/lisinopril.svg',
+    'Vitamin D3 & Omega': 'assets/pills/vitamin-d3.svg',
+    'Calcium & Zinc Support': 'assets/pills/calcium.svg',
+    'Glass of Fresh Water': 'assets/pills/fresh-water.svg'
+  };
+
+  let pillDatabase = loadStoredArray(CARE_STORAGE_KEYS.pills, [
+    {
+      id: 'pill_1',
+      name: 'Blood Pressure (Lisinopril)',
+      dosage: '1 Red Tablet · 10mg',
+      photoUrl: publishedPillPhotoUrls['Blood Pressure (Lisinopril)'],
+      fallbackPhotoUrl: pillPhotoFallbacks['Blood Pressure (Lisinopril)'],
+      iconName: 'heart-pulse',
+      times: ['Morning (08:00 AM)']
+    },
+    {
+      id: 'pill_2',
+      name: 'Vitamin D3 & Omega',
+      dosage: '1 Yellow Capsule',
+      photoUrl: publishedPillPhotoUrls['Vitamin D3 & Omega'],
+      fallbackPhotoUrl: pillPhotoFallbacks['Vitamin D3 & Omega'],
+      iconName: 'sun',
+      times: ['Morning (08:00 AM)', 'Evening (07:00 PM)']
+    },
+    {
+      id: 'pill_3',
+      name: 'Calcium & Zinc Support',
+      dosage: '1 White Tablet',
+      photoUrl: publishedPillPhotoUrls['Calcium & Zinc Support'],
+      fallbackPhotoUrl: pillPhotoFallbacks['Calcium & Zinc Support'],
+      iconName: 'shield',
+      times: ['Morning (08:00 AM)', 'Bedtime (10:00 PM)']
+    },
+    {
+      id: 'pill_4',
+      name: 'Glass of Fresh Water',
+      dosage: 'Full 250ml glass',
+      photoUrl: publishedPillPhotoUrls['Glass of Fresh Water'],
+      fallbackPhotoUrl: pillPhotoFallbacks['Glass of Fresh Water'],
+      iconName: 'droplet',
+      times: ['Morning (08:00 AM)', 'Afternoon (01:00 PM)', 'Evening (07:00 PM)']
+    }
+  ]).map(pill => publishedPillPhotoUrls[pill.name]
+    ? {
+        ...pill,
+        photoUrl: publishedPillPhotoUrls[pill.name],
+        fallbackPhotoUrl: pillPhotoFallbacks[pill.name]
+      }
+    : pill
+  );
+
+  let timeSlots = [
+    { slotName: 'Morning (08:00 AM)', icon: 'sunrise', color: '#0284c7' },
+    { slotName: 'Afternoon (01:00 PM)', icon: 'sun', color: '#d97706' },
+    { slotName: 'Evening (07:00 PM)', icon: 'sunset', color: '#7c3aed' },
+    { slotName: 'Bedtime (10:00 PM)', icon: 'moon', color: '#475569' }
+  ];
+
+  // Drag and Drop Utility
+  function setupDragDrop(zoneId, handleFileFn) {
+    const zone = document.getElementById(zoneId);
+    if (!zone) return;
+    ['dragenter', 'dragover'].forEach(eventName => {
+      zone.addEventListener(eventName, (e) => {
+        e.preventDefault(); e.stopPropagation();
+        zone.classList.add('dragover');
+      }, false);
+    });
+    ['dragleave', 'drop'].forEach(eventName => {
+      zone.addEventListener(eventName, (e) => {
+        e.preventDefault(); e.stopPropagation();
+        zone.classList.remove('dragover');
+      }, false);
+    });
+    zone.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      if (files && files.length > 0) {
+        handleFileFn(files[0]);
+      }
+    }, false);
+  }
+
+  function readImageFileAsThumbnail(file, onReady) {
+    if (!file || !file.type.startsWith('image/')) {
+      showToast('Please choose an image file.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const source = event.target.result;
+      const image = new Image();
+      image.onload = () => {
+        const maxSide = 320;
+        const scale = Math.min(1, maxSide / Math.max(image.naturalWidth, image.naturalHeight));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+        canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+        const context = canvas.getContext('2d');
+        if (!context) {
+          onReady(source);
+          return;
+        }
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        onReady(canvas.toDataURL('image/webp', 0.72));
+      };
+      image.onerror = () => onReady(source);
+      image.src = source;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Upload handlers
+  let uploadedPillPhotoBase64 = null;
+  function handlePillPhotoUpload(e) {
+    const file = e.target.files ? e.target.files[0] : e;
+    if (!file) return;
+    readImageFileAsThumbnail(file, (thumbnail) => {
+      uploadedPillPhotoBase64 = thumbnail;
+      document.getElementById('pillUploadPreviewImg').src = uploadedPillPhotoBase64;
+      document.getElementById('pillUploadPreviewBox').classList.add('show');
+      refreshIcons();
+    });
+  }
+
+  function clearPillUploadFile() {
+    uploadedPillPhotoBase64 = null;
+    document.getElementById('pillUploadPreviewBox').classList.remove('show');
+    document.getElementById('pillUploadPreviewImg').src = '';
+    document.getElementById('pillPhotoInput').value = '';
+  }
+
+  // Render Time View
+  function renderTimeSlotsView() {
+    const container = document.getElementById('timeSlotsContainer');
+    container.innerHTML = '';
+
+    timeSlots.forEach(slot => {
+      const pillsInSlot = pillDatabase.filter(p => p.times.includes(slot.slotName));
+
+      const card = document.createElement('div');
+      card.className = 'time-slot-card';
+      card.innerHTML = `
+        <div class="time-slot-header">
+          <div class="time-slot-title">
+            <i data-lucide="${slot.icon}" style="width:20px;height:20px;color:${slot.color};"></i>
+            <span>${slot.slotName}</span>
+          </div>
+          <span class="time-slot-badge">${pillsInSlot.length} items to take</span>
+        </div>
+        <div class="slot-pill-grid">
+          ${pillsInSlot.length === 0 ? '<div style="font-size:13px; color:var(--text-muted); font-style:italic;">No medications scheduled</div>' : ''}
+          ${pillsInSlot.map(p => `
+            <div class="slot-pill-item">
+              <img class="slot-pill-photo" src="${escapeHtml(p.photoUrl)}" alt="${escapeHtml(p.name)}" width="48" height="48" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='${escapeHtml(p.fallbackPhotoUrl || 'assets/pills/lisinopril.svg')}'">
+              <div style="flex:1;">
+                <div style="font-weight:700; font-size:14px; color:var(--text-dark);">${escapeHtml(p.name)}</div>
+                <div style="font-size:12px; color:var(--text-muted);">${escapeHtml(p.dosage)}</div>
+                <div class="pill-icon-tag"><i data-lucide="${p.iconName || 'pill'}" style="width:12px;height:12px;"></i></div>
+              </div>
+              <button style="background:none; border:none; cursor:pointer; color:#2563eb; padding:4px;" onclick="openEditModal('${p.id}')">
+                <i data-lucide="pencil" style="width:14px;height:14px;"></i>
+              </button>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      container.appendChild(card);
+    });
+    refreshIcons();
+    renderTimeSlotsCheckboxes();
+  }
+
+  function renderTimeSlotsCheckboxes() {
+    const box = document.getElementById('timeSlotsCheckboxes');
+    if (!box) return;
+    box.innerHTML = timeSlots.map((s, idx) => `
+      <label style="display:flex; align-items:center; gap:6px; font-size:13px; font-weight:600; cursor:pointer;">
+        <input type="checkbox" value="${s.slotName}" ${idx === 0 ? 'checked' : ''}> <i data-lucide="${s.icon}" style="width:14px;height:14px;"></i> ${s.slotName}
+      </label>
+    `).join('');
+    refreshIcons();
+  }
+
+  function addNewTimeSlot() {
+    const routine = document.getElementById('newSlotNameInput').value.trim();
+    const scheduledTime = document.getElementById('newSlotTimeInput').value;
+    const icon = document.getElementById('newSlotIconSelect').value;
+    if (!routine || !scheduledTime) {
+      showToast('Add both a slot name and its scheduled time.');
+      return;
+    }
+
+    const [hourValue, minuteValue] = scheduledTime.split(':').map(Number);
+    const period = hourValue >= 12 ? 'PM' : 'AM';
+    const displayHour = String(hourValue % 12 || 12).padStart(2, '0');
+    const displayTime = `${displayHour}:${String(minuteValue).padStart(2, '0')} ${period}`;
+    const name = `${routine} (${displayTime})`;
+
+    timeSlots.push({ slotName: name, icon: icon, color: '#2563eb' });
+    document.getElementById('newSlotNameInput').value = '';
+    document.getElementById('newSlotTimeInput').value = '';
+    renderTimeSlotsView();
+    showToast(`Time slot "${name}" added!`);
+  }
+
+  // Render Pill View
+  function renderPillInventoryView() {
+    const grid = document.getElementById('pillInventoryGrid');
+    grid.innerHTML = '';
+
+    pillDatabase.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'pill-inv-card';
+      card.innerHTML = `
+        <div class="pill-inv-top">
+          <img class="pill-inv-photo" src="${escapeHtml(p.photoUrl)}" alt="${escapeHtml(p.name)}" width="64" height="64" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='${escapeHtml(p.fallbackPhotoUrl || 'assets/pills/lisinopril.svg')}'">
+          <div style="flex:1;">
+            <div class="pill-inv-title">${escapeHtml(p.name)}</div>
+            <div class="pill-inv-dosage">${escapeHtml(p.dosage)}</div>
+            <div class="pill-icon-tag"><i data-lucide="${p.iconName || 'pill'}" style="width:12px;height:12px;"></i> Icon Assigned</div>
+          </div>
+        </div>
+        <div style="font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Scheduled Times:</div>
+        <div class="pill-time-chips">
+          ${p.times.map(t => `<span class="time-chip"><i data-lucide="clock" style="width:12px;height:12px;"></i> ${t}</span>`).join('')}
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; border-top:1px solid #f1f5f9; padding-top:8px;">
+          <button style="background:none; border:none; color:#2563eb; font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:4px;" onclick="openEditModal('${p.id}')">
+            <i data-lucide="pencil" style="width:14px;height:14px;"></i> Edit Pill & Photo
+          </button>
+          <button style="background:none; border:none; color:#ef4444; font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:4px;" onclick="deletePillItem('${p.id}')">
+            <i data-lucide="trash-2" style="width:14px;height:14px;"></i> Remove
+          </button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+    refreshIcons();
+  }
+
+  // Edit Modal Functions
+  let editUploadedPhotoBase64 = null;
+  function openEditModal(id) {
+    const pill = pillDatabase.find(p => p.id === id);
+    if (!pill) return;
+
+    document.getElementById('editPillId').value = pill.id;
+    document.getElementById('editPillName').value = pill.name;
+    document.getElementById('editPillDosage').value = pill.dosage;
+    document.getElementById('editPillPhotoUrl').value = pill.photoUrl;
+    document.getElementById('editPillPhotoPreview').src = pill.photoUrl;
+    document.getElementById('editPillIcon').value = pill.iconName || 'capsule';
+    editUploadedPhotoBase64 = null;
+
+    const slotBox = document.getElementById('editTimeSlotsCheckboxes');
+    slotBox.innerHTML = timeSlots.map(s => `
+      <label style="display:flex; align-items:center; gap:6px; font-size:13px; font-weight:600; cursor:pointer;">
+        <input type="checkbox" value="${s.slotName}" ${pill.times.includes(s.slotName) ? 'checked' : ''}> ${s.slotName}
+      </label>
+    `).join('');
+
+    showEditDialog('editPillModal', document.activeElement, 'editPillName');
+  }
+
+  function handleEditPillPhotoUpload(e) {
+    const file = e.target.files ? e.target.files[0] : e;
+    if (!file) return;
+    readImageFileAsThumbnail(file, (thumbnail) => {
+      editUploadedPhotoBase64 = thumbnail;
+      document.getElementById('editPillPhotoPreview').src = editUploadedPhotoBase64;
+      document.getElementById('editPillPhotoUrl').value = editUploadedPhotoBase64;
+    });
+  }
+
+  function closeEditModal() {
+    hideEditDialog('editPillModal');
+  }
+
+  function saveEditedPill() {
+    const id = document.getElementById('editPillId').value;
+    const pill = pillDatabase.find(p => p.id === id);
+    if (!pill) return;
+
+    pill.name = document.getElementById('editPillName').value.trim() || pill.name;
+    pill.dosage = document.getElementById('editPillDosage').value.trim() || pill.dosage;
+    pill.photoUrl = editUploadedPhotoBase64 || document.getElementById('editPillPhotoUrl').value.trim() || pill.photoUrl;
+    pill.iconName = document.getElementById('editPillIcon').value;
+
+    const checkedTimes = [];
+    document.querySelectorAll('#editTimeSlotsCheckboxes input[type="checkbox"]:checked').forEach(cb => {
+      checkedTimes.push(cb.value);
+    });
+    pill.times = checkedTimes;
+
+    closeEditModal();
+    renderTimeSlotsView();
+    renderPillInventoryView();
+    syncPillsToReceiver();
+    showToast(`Updated "${pill.name}" with new photo and schedule!`);
+  }
+
+  function addNewPillWithSchedule() {
+    const name = document.getElementById('newPillNameInput').value.trim();
+    const dosage = document.getElementById('newPillDosageInput').value.trim() || '1 Tablet';
+    const photo = uploadedPillPhotoBase64 || 'assets/pills/lisinopril.svg';
+    const icon = document.getElementById('newPillIconSelect').value;
+
+    const selectedTimes = [];
+    document.querySelectorAll('#timeSlotsCheckboxes input[type="checkbox"]:checked').forEach(cb => {
+      selectedTimes.push(cb.value);
+    });
+
+    if (!name) {
+      alert('Please enter medication name');
+      return;
+    }
+    if (selectedTimes.length === 0) {
+      alert('Please select at least one scheduled time slot');
+      return;
+    }
+
+    pillDatabase.push({
+      id: 'pill_' + Date.now(),
+      name: name,
+      dosage: dosage,
+      photoUrl: photo,
+      iconName: icon,
+      times: selectedTimes
+    });
+
+    renderTimeSlotsView();
+    renderPillInventoryView();
+    syncPillsToReceiver();
+    showToast(`"${name}" saved to schedule!`);
+
+    document.getElementById('newPillNameInput').value = '';
+    document.getElementById('newPillDosageInput').value = '';
+    clearPillUploadFile();
+  }
+
+  function deletePillItem(id) {
+    pillDatabase = pillDatabase.filter(p => p.id !== id);
+    renderTimeSlotsView();
+    renderPillInventoryView();
+    syncPillsToReceiver();
+    showToast('Medication removed');
+  }
+
+  function triggerSelectedSlotReminder() {
+    const morningPills = pillDatabase.filter(p => p.times.includes('Morning (08:00 AM)'));
+    const pillsToSend = morningPills.length > 0 ? morningPills : pillDatabase;
+
+    if (careBus) {
+      careBus.postMessage({
+        type: 'TRIGGER_PILLS',
+        pills: pillsToSend
+      });
+    }
+    showToast('Morning pill alert dispatched to Grandma\'s screen with photos!');
+  }
+
+  function syncPillsToReceiver() {
+    const morningPills = pillDatabase.filter(p => p.times.includes('Morning (08:00 AM)'));
+    storeArray(CARE_STORAGE_KEYS.pills, pillDatabase);
+    if (careBus) {
+      careBus.postMessage({
+        type: 'UPDATE_PILLS_DATA',
+        pills: morningPills.length > 0 ? morningPills : pillDatabase
+      });
+    }
+  }
+
+  // ========================================================
+  // PHOTOS MANAGEMENT WITH IMMEDIATE & SCHEDULED CHECK-INS
+  // ========================================================
+  let photos = loadStoredArray(CARE_STORAGE_KEYS.photos, [
+    { id: 1, src: 'https://media.clero.so/content_items/2026/08/Family_Picnic_Scene.jpg', title: 'Meadow Picnic', caption: 'Sunny afternoon memories with the grandkids', prioritized: true },
+    { id: 2, src: 'https://media.clero.so/content_items/2026/08/Beach_Vacation_Scene.jpg', title: 'Beach Vacation', caption: 'Golden hour waves and warm sea breeze', prioritized: false },
+    { id: 3, src: 'https://media.clero.so/content_items/2026/08/Family_Dinner_Scene.jpg', title: 'Family Dinner', caption: 'Delicious home cooking and hearty laughs', prioritized: false },
+    { id: 4, src: 'https://media.clero.so/content_items/2026/08/Reading_Time_Scene.jpg', title: 'Fireplace Reading', caption: 'Cozy evenings by the crackling fire', prioritized: false },
+    { id: 5, src: 'https://media.clero.so/content_items/2026/08/Christmas_Dinner_Scene.jpg', title: 'Christmas Celebration', caption: 'Warm holiday hugs and joyful smiles', prioritized: false }
+  ]);
+
+  let scheduledCheckinTimes = loadStoredArray(CARE_STORAGE_KEYS.checkinTimes, [
+    '09:30 AM',
+    '02:00 PM',
+    '06:30 PM'
+  ]);
+
+  let captionPool = [
+    "Thinking of you with lots of love!",
+    "Hope your morning is as wonderful as you are!",
+    "Sending the biggest family hugs today!",
+    "Remembering this lovely day together!",
+    "Smile Grandma, we love you so much!"
+  ];
+
+  let uploadedFileBase64 = null;
+
+  function handleLocalFileUpload(e) {
+    const file = e.target.files ? e.target.files[0] : e;
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      uploadedFileBase64 = evt.target.result;
+      document.getElementById('uploadPreviewImg').src = uploadedFileBase64;
+      document.getElementById('uploadPreviewBox').classList.add('show');
+      const cleanName = file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
+      if (!document.getElementById('newPhotoTitle').value) {
+        document.getElementById('newPhotoTitle').value = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+      }
+      showToast('Photo loaded from computer!');
+      refreshIcons();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function clearUploadedFile() {
+    uploadedFileBase64 = null;
+    document.getElementById('uploadPreviewBox').classList.remove('show');
+    document.getElementById('uploadPreviewImg').src = '';
+    document.getElementById('localFileInput').value = '';
+  }
+
+  function renderPhotoGrid() {
+    const grid = document.getElementById('photoGridManager');
+    grid.innerHTML = '';
+    photos.forEach(p => {
+      const safeId = escapeHtml(String(p.id));
+      const safeTitle = escapeHtml(p.title || 'Family Memory');
+      const safeCaption = escapeHtml(p.caption || '');
+      const safeSrc = escapeHtml(p.src || '');
+      const card = document.createElement('div');
+      card.className = `photo-item-card ${p.prioritized ? 'prioritized' : ''}`;
+      card.innerHTML = `
+        ${p.prioritized ? '<div class="priority-badge-corner"><i data-lucide="star" style="width:12px;height:12px;fill:white;"></i> NEXT UP</div>' : ''}
+        <img class="photo-item-img" src="${safeSrc}" alt="${safeTitle}" loading="lazy" decoding="async">
+        <div class="photo-item-body">
+          <div class="photo-item-title">${safeTitle}</div>
+          <div class="photo-item-caption">"${safeCaption}"</div>
+          <div class="photo-card-actions">
+            <button class="btn-send-now" type="button" onclick="sendSpecificPhotoCheckinNow('${safeId}')">
+              <i data-lucide="send" style="width:14px;height:14px;"></i> Send as Check-in Now
+            </button>
+            <div class="photo-action-row">
+              <button class="star-priority-btn ${p.prioritized ? 'active' : ''}" type="button" onclick="setPriorityPhoto('${safeId}')">
+                <i data-lucide="star" style="width:12px;height:12px;${p.prioritized ? 'fill:white;' : ''}"></i> ${p.prioritized ? 'Prioritized' : 'Make Next'}
+              </button>
+              <button class="card-edit-btn" type="button" onclick="openEditPhotoModal('${safeId}', this)">
+                <i data-lucide="pencil" style="width:12px;height:12px;"></i> Edit
+              </button>
+              <button class="delete-card-btn" type="button" aria-label="Delete ${safeTitle}" style="background:none; border:none; color:#ef4444; cursor:pointer; font-size:12px; display:flex; align-items:center; gap:2px;" onclick="deletePhoto('${safeId}')">
+                <i data-lucide="trash-2" style="width:12px;height:12px;"></i> Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+    refreshIcons();
+  }
+
+  function dispatchPhotoCheckin(photo, toastMessage) {
+    if (!photo) return false;
+    const caption = photo.caption || `Hi Grandma! Look at this memory: ${photo.title}. How are you feeling today?`;
     if (careBus) {
       careBus.postMessage({
         type: 'TRIGGER_CHECKIN',
-        senderName: sender,
-        avatarUrl: avatar,
-        photoUrl: selectedPhotoUrl,
-        caption: caption
+        senderName: 'Alex',
+        avatarUrl: 'https://media.clero.so/content_items/2026/08/Son_Portrait.jpg',
+        photoUrl: photo.src,
+        caption
       });
     }
-
-    logActivity('🚀', `Sent Photo Check-in to Grandma`, 'Caption: "' + caption.slice(0, 35) + '..."');
-    showToast('🚀 Check-in sent to Grandma\'s screen!');
+    showToast(toastMessage);
+    return true;
   }
 
-  function sendRemotePills() {
-    if (careBus) {
-      careBus.postMessage({
-        type: 'TRIGGER_PILLS'
-      });
+  function sendSpecificPhotoCheckinNow(id) {
+    const photo = photos.find(item => String(item.id) === String(id));
+    if (!photo) {
+      showToast('That photo is no longer in the queue.');
+      return;
+    }
+    dispatchPhotoCheckin(photo, `Dispatched "${photo.title}" as a live check-in to Grandma's screen!`);
+  }
+
+  function triggerAutoRandomCheckin(scheduledTime = '') {
+    if (!photos.length) {
+      showToast('Add a photo before sending a random check-in.');
+      return;
+    }
+    const photo = photos[Math.floor(Math.random() * photos.length)];
+    const prefix = scheduledTime ? `Scheduled ${scheduledTime} check-in` : 'Random check-in';
+    dispatchPhotoCheckin(photo, `${prefix} dispatched with "${photo.title}"!`);
+  }
+
+  function normalizeScheduleTime(value) {
+    const match = String(value || '').trim().toUpperCase().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/);
+    if (!match) return null;
+
+    let hour = Number(match[1]);
+    const minute = Number(match[2]);
+    const meridiem = match[3];
+    if (minute > 59 || (meridiem && (hour < 1 || hour > 12)) || (!meridiem && hour > 23)) return null;
+
+    if (meridiem) {
+      if (hour === 12) hour = 0;
+      if (meridiem === 'PM') hour += 12;
     }
 
-    logActivity('💊', `Triggered Pill Reminder on Grandma's device`, '4 items scheduled');
-    showToast('💊 Pill reminder dispatched to Grandma\'s screen!');
-  }
-
-  function logActivity(icon, title, sub) {
-    const list = document.getElementById('activityList');
-    const item = document.createElement('div');
-    item.className = 'activity-item';
-    item.innerHTML = `
-      <div class="act-badge">${icon}</div>
-      <div>
-        <div class="act-title">${title}</div>
-        <div class="act-sub">${sub}</div>
-      </div>
-      <div class="act-time">Just now</div>
-    `;
-    list.insertBefore(item, list.firstChild);
-  }
-
-  function showToast(msg, icon = '🔔') {
-    const toast = document.getElementById('hubToast');
-    document.getElementById('toastMsg').textContent = msg;
-    document.getElementById('toastIcon').textContent = icon;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3500);
-  }
-
-  // Listen to events from the Receiver Frame
-  if (careBus) {
-    careBus.onmessage = (e) => {
-      const data = e.data;
-      if (data.type === 'CHECKIN_RESPONSE') {
-        logActivity(data.emoji, `Grandma responded: "${data.status}"`, `Time: ${data.timestamp}`);
-        showToast(`Grandma responded "${data.status}" ${data.emoji}!`, data.emoji);
-        addAiMessage(`🔔 Live update: Grandma just tapped "${data.status}" ${data.emoji} in response to your check-in!`, 'bot');
-      } else if (data.type === 'PILLS_TAKEN') {
-        logActivity('✅', 'Grandma took all her pills', `Confirmed at ${data.timestamp}`);
-        showToast('✅ Grandma confirmed taking her medication!', '💊');
-        addAiMessage(`💊 Great news: Grandma has verified and completed taking all her morning pills!`, 'bot');
-      } else if (data.type === 'ESCALATION_ALERT') {
-        logActivity('🚨', `Escalation Stage ${data.stage} Triggered`, data.message);
-        showToast(data.message, '🚨');
-      }
+    const displayHour = hour % 12 || 12;
+    const displayMeridiem = hour >= 12 ? 'PM' : 'AM';
+    return {
+      key: `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`,
+      display: `${String(displayHour).padStart(2, '0')}:${String(minute).padStart(2, '0')} ${displayMeridiem}`
     };
   }
 
-  // AI Chat simulation
+  function renderScheduledTimes() {
+    const container = document.getElementById('scheduleTimesContainer');
+    if (!container) return;
+    container.innerHTML = scheduledCheckinTimes.map((time, index) => `
+      <div class="schedule-time-chip">
+        <i data-lucide="clock" style="width:14px;height:14px;color:#16a34a;"></i>
+        <span>${escapeHtml(time)}</span>
+        <button class="del-time-btn" type="button" aria-label="Remove ${escapeHtml(time)}" onclick="removeScheduleTime(${index})"><i data-lucide="x" style="width:13px;height:13px;"></i></button>
+      </div>
+    `).join('');
+    refreshIcons();
+  }
+
+  function addNewScheduleTime() {
+    const input = document.getElementById('newScheduleTimeInput');
+    const normalized = normalizeScheduleTime(input.value);
+    if (!normalized) {
+      showToast('Enter a valid time, such as 09:30 AM or 16:00.');
+      input.focus();
+      return;
+    }
+
+    const alreadyScheduled = scheduledCheckinTimes.some(time => normalizeScheduleTime(time)?.key === normalized.key);
+    if (alreadyScheduled) {
+      showToast(`${normalized.display} is already scheduled.`);
+      return;
+    }
+
+    scheduledCheckinTimes.push(normalized.display);
+    scheduledCheckinTimes.sort((a, b) => normalizeScheduleTime(a).key.localeCompare(normalizeScheduleTime(b).key));
+    storeArray(CARE_STORAGE_KEYS.checkinTimes, scheduledCheckinTimes);
+    input.value = '';
+    renderScheduledTimes();
+    showToast(`Check-in scheduled at ${normalized.display}!`);
+  }
+
+  function removeScheduleTime(index) {
+    if (index < 0 || index >= scheduledCheckinTimes.length) return;
+    const [removedTime] = scheduledCheckinTimes.splice(index, 1);
+    storeArray(CARE_STORAGE_KEYS.checkinTimes, scheduledCheckinTimes);
+    renderScheduledTimes();
+    showToast(`Removed the ${removedTime} check-in.`);
+  }
+
+  function getLocalDateKey(date) {
+    return [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
+  }
+
+  function runScheduledCheckins(now = new Date()) {
+    const currentTimeKey = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    const scheduledTime = scheduledCheckinTimes.find(time => normalizeScheduleTime(time)?.key === currentTimeKey);
+    if (!scheduledTime) return;
+
+    const dispatchToken = `${getLocalDateKey(now)}|${currentTimeKey}`;
+    try {
+      if (localStorage.getItem(CARE_STORAGE_KEYS.lastScheduledCheckin) === dispatchToken) return;
+      localStorage.setItem(CARE_STORAGE_KEYS.lastScheduledCheckin, dispatchToken);
+    } catch (_error) {
+      if (runScheduledCheckins.lastDispatchToken === dispatchToken) return;
+      runScheduledCheckins.lastDispatchToken = dispatchToken;
+    }
+    triggerAutoRandomCheckin(scheduledTime);
+  }
+
+  function setPriorityPhoto(id) {
+    photos.forEach(p => { p.prioritized = (String(p.id) === String(id)); });
+    renderPhotoGrid();
+    showToast('Prioritized photo updated! It will be the next photo on Grandma\'s frame.');
+    syncPhotosToReceiver();
+  }
+
+  function deletePhoto(id) {
+    photos = photos.filter(p => String(p.id) !== String(id));
+    renderPhotoGrid();
+    syncPhotosToReceiver();
+  }
+
+  function getSafeImageSource(value) {
+    const candidate = String(value || '').trim();
+    if (/^data:image\/(?:avif|gif|jpeg|png|svg\+xml|webp);/i.test(candidate)) return candidate;
+    if (/^blob:/i.test(candidate)) return candidate;
+    try {
+      const parsed = new URL(candidate, window.location.href);
+      return ['http:', 'https:', 'file:'].includes(parsed.protocol) ? candidate : '';
+    } catch (_error) {
+      return '';
+    }
+  }
+
+  function openEditPhotoModal(id, trigger) {
+    const photo = photos.find(item => String(item.id) === String(id));
+    if (!photo) return;
+    document.getElementById('editPhotoId').value = String(photo.id);
+    document.getElementById('editPhotoTitle').value = photo.title || '';
+    document.getElementById('editPhotoCaption').value = photo.caption || '';
+    document.getElementById('editPhotoUrl').value = photo.src || '';
+    document.getElementById('editPhotoPrioritized').checked = Boolean(photo.prioritized);
+    document.getElementById('editPhotoPreview').src = photo.src || '';
+    showEditDialog('editPhotoModal', trigger, 'editPhotoTitle');
+  }
+
+  function closeEditPhotoModal() {
+    hideEditDialog('editPhotoModal');
+  }
+
+  function saveEditedPhoto(event) {
+    event.preventDefault();
+    const id = document.getElementById('editPhotoId').value;
+    const photo = photos.find(item => String(item.id) === id);
+    if (!photo) return;
+
+    const title = document.getElementById('editPhotoTitle').value.trim();
+    const caption = document.getElementById('editPhotoCaption').value.trim();
+    const imageSource = getSafeImageSource(document.getElementById('editPhotoUrl').value);
+    const prioritized = document.getElementById('editPhotoPrioritized').checked;
+    if (!title || !imageSource) {
+      showToast('Add a title and a valid image URL before saving.');
+      return;
+    }
+
+    if (prioritized) photos.forEach(item => { item.prioritized = false; });
+    Object.assign(photo, { title, caption, src: imageSource, prioritized });
+    closeEditPhotoModal();
+    renderPhotoGrid();
+    syncPhotosToReceiver();
+    showToast(`Updated "${title}" on Grandma's frame.`);
+  }
+
+  function addNewPhoto() {
+    let finalSrc = uploadedFileBase64 || document.getElementById('newPhotoUrl').value.trim();
+    const title = document.getElementById('newPhotoTitle').value.trim() || 'Family Memory';
+    let caption = document.getElementById('newPhotoCaption').value.trim();
+    const isStar = document.getElementById('newPhotoStar').checked;
+
+    if (!finalSrc) {
+      alert('Please select a file from your computer or enter an image URL');
+      return;
+    }
+
+    if (!caption && captionPool.length > 0) {
+      const randomIndex = Math.floor(Math.random() * captionPool.length);
+      caption = captionPool[randomIndex];
+    }
+
+    if (isStar) {
+      photos.forEach(p => p.prioritized = false);
+    }
+
+    photos.unshift({ id: Date.now(), src: finalSrc, title, caption, prioritized: isStar });
+    renderPhotoGrid();
+    showToast('New photo added to Grandma\'s frame queue!');
+    syncPhotosToReceiver();
+
+    clearUploadedFile();
+    document.getElementById('newPhotoUrl').value = '';
+    document.getElementById('newPhotoTitle').value = '';
+    document.getElementById('newPhotoCaption').value = '';
+    document.getElementById('newPhotoStar').checked = false;
+  }
+
+  function renderCaptionPool() {
+    const list = document.getElementById('captionPoolList');
+    list.innerHTML = '';
+    captionPool.forEach((c, idx) => {
+      const item = document.createElement('div');
+      item.className = 'caption-pool-item';
+      item.innerHTML = `<span>"${c}"</span><button class="del-caption-btn" onclick="deleteCaptionFromPool(${idx})"><i data-lucide="x" style="width:14px;height:14px;"></i></button>`;
+      list.appendChild(item);
+    });
+    refreshIcons();
+  }
+
+  function addCaptionToPool() {
+    const input = document.getElementById('newPoolCaptionInput');
+    const val = input.value.trim();
+    if (!val) return;
+    captionPool.push(val);
+    input.value = '';
+    renderCaptionPool();
+  }
+
+  function deleteCaptionFromPool(idx) {
+    captionPool.splice(idx, 1);
+    renderCaptionPool();
+  }
+
+  function syncPhotosToReceiver() {
+    storeArray(CARE_STORAGE_KEYS.photos, photos);
+    if (careBus) {
+      careBus.postMessage({ type: 'UPDATE_PHOTO_QUEUE', photos: photos });
+    }
+  }
+
+  // ========================================================
+  // ERRANDS DATA WITH CARETAKER AVATARS & RELATIVE TIMERS
+  // ========================================================
+  const caretakerProfiles = {
+    Alex: {
+      name: 'Alex',
+      role: 'Son · Primary',
+      label: 'Alex (Son · Primary)',
+      avatar: 'https://media.clero.so/content_items/2026/08/Son_Portrait.jpg',
+      fallbackAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=160&h=160&fit=crop&crop=face'
+    },
+    Elena: {
+      name: 'Elena',
+      role: 'Daughter · Secondary',
+      label: 'Elena (Daughter · Secondary)',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=160&h=160&fit=crop&crop=face',
+      fallbackAvatar: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=160&h=160&fit=crop&crop=face'
+    }
+  };
+  const caretakerReminderOptions = [
+    { value: '30m', label: '30 minutes before' },
+    { value: '15m', label: '15 minutes before' },
+    { value: '5m', label: '5 minutes before' },
+    { value: '5s', label: '5 seconds before (demo)' }
+  ];
+  const patientReminderOptions = [
+    { value: '15m', label: '15 minutes before' },
+    { value: '10m', label: '10 minutes before' },
+    { value: '5m', label: '5 minutes before' },
+    { value: '5s', label: '5 seconds before (demo)' }
+  ];
+
+  let errands = loadStoredArray(CARE_STORAGE_KEYS.errands, [
+    {
+      id: 'e1',
+      icon: 'footprints',
+      title: 'Afternoon Garden Walk',
+      time: 'Today at 3:30 PM',
+      caretaker: 'Alex',
+      caretakerReminder: '15m',
+      patientReminder: '5m',
+      recurring: true,
+      done: false
+    },
+    {
+      id: 'e2',
+      icon: 'phone-call',
+      title: 'Video Call with Grandchildren',
+      time: 'Tomorrow at 10:00 AM',
+      caretaker: 'Elena',
+      caretakerReminder: '30m',
+      patientReminder: '15m',
+      recurring: false,
+      done: false
+    }
+  ]);
+
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, character => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+    })[character]);
+  }
+
+  function renderReminderOptions(options, selectedValue) {
+    return options.map(option =>
+      `<option value="${option.value}" ${option.value === selectedValue ? 'selected' : ''}>${option.label}</option>`
+    ).join('');
+  }
+
+  function renderCaretakerRoster() {
+    const roster = document.getElementById('caretakerRoster');
+    roster.innerHTML = Object.values(caretakerProfiles).map(profile => `
+      <article class="caretaker-profile">
+        <img src="${profile.avatar}" alt="${profile.name}" onerror="this.onerror=null;this.src='${profile.fallbackAvatar}'">
+        <div><strong>${profile.name}</strong><span>${profile.role}</span></div>
+      </article>
+    `).join('');
+  }
+
+  function renderErrands() {
+    const list = document.getElementById('errandList');
+    list.innerHTML = '';
+
+    errands.forEach(e => {
+      const profile = caretakerProfiles[e.caretaker] || caretakerProfiles['Alex'];
+      const safeId = escapeHtml(e.id);
+      const card = document.createElement('div');
+      card.className = 'errand-item-card';
+      card.innerHTML = `
+        <div class="errand-item-top">
+          <div class="errand-item-main">
+            <div class="errand-icon-badge"><i data-lucide="${e.icon}" style="width:24px;height:24px;"></i></div>
+            <div>
+              <div style="font-weight:800; font-size:16px; color:var(--text-dark);">${escapeHtml(e.title)}</div>
+              <div style="font-size:13px; color:var(--text-muted);">${escapeHtml(e.time)}</div>
+            </div>
+          </div>
+          <div class="errand-actions">
+            <button class="card-edit-btn" type="button" onclick="openEditErrandModal('${safeId}', this)">
+              <i data-lucide="pencil" style="width:13px;height:13px;"></i> Edit
+            </button>
+            <button class="btn-secondary" type="button" style="padding:8px 12px; font-size:12px;" onclick="triggerDemoErrandAlert('${safeId}')">
+              <i data-lucide="bell-ring" style="width:13px;height:13px;color:#7c3aed;"></i> Test Alert
+            </button>
+            <button type="button" aria-label="Delete ${escapeHtml(e.title)}" style="background:none; border:none; color:#ef4444; cursor:pointer; padding:8px;" onclick="deleteErrand('${safeId}')">
+              <i data-lucide="trash-2" style="width:16px;height:16px;"></i>
+            </button>
+          </div>
+        </div>
+        <div class="errand-details-row">
+          <div class="errand-caretaker-pill">
+            <img src="${profile.avatar}" alt="${profile.name}" onerror="this.onerror=null;this.src='${profile.fallbackAvatar}'">
+            <span>${profile.label}</span>
+          </div>
+          ${e.recurring ? '<span class="errand-recurring-badge"><i data-lucide="repeat-2" style="width:13px;height:13px;"></i> Daily</span>' : ''}
+        </div>
+        <div class="errand-control-grid">
+          <div class="input-group">
+            <label class="input-label" for="caretaker-${safeId}">Responsible caretaker</label>
+            <select class="text-field" id="caretaker-${safeId}" onchange="updateErrandSetting('${safeId}', 'caretaker', this.value)">
+              ${Object.entries(caretakerProfiles).map(([key, candidate]) => `<option value="${key}" ${key === e.caretaker ? 'selected' : ''}>${candidate.label}</option>`).join('')}
+            </select>
+          </div>
+          <div class="input-group">
+            <label class="input-label" for="caretaker-reminder-${safeId}">Remind caretaker</label>
+            <select class="text-field" id="caretaker-reminder-${safeId}" onchange="updateErrandSetting('${safeId}', 'caretakerReminder', this.value)">
+              ${renderReminderOptions(caretakerReminderOptions, e.caretakerReminder)}
+            </select>
+          </div>
+          <div class="input-group">
+            <label class="input-label" for="patient-reminder-${safeId}">Remind Grandma</label>
+            <select class="text-field" id="patient-reminder-${safeId}" onchange="updateErrandSetting('${safeId}', 'patientReminder', this.value)">
+              ${renderReminderOptions(patientReminderOptions, e.patientReminder)}
+            </select>
+          </div>
+        </div>
+      `;
+      list.appendChild(card);
+    });
+    refreshIcons();
+  }
+
+  function updateErrandSetting(id, field, value) {
+    const errand = errands.find(item => item.id === id);
+    if (!errand) return;
+    const allowedValues = {
+      caretaker: Object.keys(caretakerProfiles),
+      caretakerReminder: caretakerReminderOptions.map(option => option.value),
+      patientReminder: patientReminderOptions.map(option => option.value)
+    };
+    if (!allowedValues[field]?.includes(value)) return;
+    errand[field] = value;
+    renderErrands();
+    syncErrandsToReceiver();
+  }
+
+  function addNewErrand() {
+    const title = document.getElementById('newErrandTitle').value.trim();
+    const time = document.getElementById('newErrandTime').value.trim() || 'Today';
+    const caretaker = document.getElementById('newErrandCaretaker').value;
+    const caretakerReminder = document.getElementById('newErrandCaretakerReminder').value;
+    const patientReminder = document.getElementById('newErrandPatientReminder').value;
+    const recurring = document.getElementById('newErrandRecurring').checked;
+
+    if (!title) {
+      alert('Please enter errand title');
+      return;
+    }
+
+    errands.push({
+      id: 'e_' + Date.now(),
+      icon: 'check-circle-2',
+      title,
+      time,
+      caretaker,
+      caretakerReminder,
+      patientReminder,
+      recurring,
+      done: false
+    });
+
+    renderErrands();
+    syncErrandsToReceiver();
+    showToast(`Errand "${title}" assigned to ${caretaker}!`);
+
+    document.getElementById('newErrandTitle').value = '';
+    document.getElementById('newErrandTime').value = '';
+    document.getElementById('newErrandRecurring').checked = false;
+  }
+
+  function deleteErrand(id) {
+    errands = errands.filter(e => e.id !== id);
+    renderErrands();
+    syncErrandsToReceiver();
+  }
+
+  function openEditErrandModal(id, trigger) {
+    const errand = errands.find(item => item.id === id);
+    if (!errand) return;
+    document.getElementById('editErrandId').value = errand.id;
+    document.getElementById('editErrandTitle').value = errand.title;
+    document.getElementById('editErrandTime').value = errand.time;
+    document.getElementById('editErrandRecurring').checked = Boolean(errand.recurring);
+    document.getElementById('editErrandCaretaker').value = errand.caretaker;
+    document.getElementById('editErrandCaretakerReminder').innerHTML = renderReminderOptions(caretakerReminderOptions, errand.caretakerReminder);
+    document.getElementById('editErrandPatientReminder').innerHTML = renderReminderOptions(patientReminderOptions, errand.patientReminder);
+    showEditDialog('editErrandModal', trigger, 'editErrandTitle');
+  }
+
+  function closeEditErrandModal() {
+    hideEditDialog('editErrandModal');
+  }
+
+  function saveEditedErrand(event) {
+    event.preventDefault();
+    const id = document.getElementById('editErrandId').value;
+    const errand = errands.find(item => item.id === id);
+    if (!errand) return;
+    const title = document.getElementById('editErrandTitle').value.trim();
+    const time = document.getElementById('editErrandTime').value.trim();
+    if (!title || !time) {
+      showToast('Add both an errand title and scheduled time.');
+      return;
+    }
+
+    Object.assign(errand, {
+      title,
+      time,
+      caretaker: document.getElementById('editErrandCaretaker').value,
+      caretakerReminder: document.getElementById('editErrandCaretakerReminder').value,
+      patientReminder: document.getElementById('editErrandPatientReminder').value,
+      recurring: document.getElementById('editErrandRecurring').checked
+    });
+    closeEditErrandModal();
+    renderErrands();
+    syncErrandsToReceiver();
+    showToast(`Updated "${title}" and its reminders.`);
+  }
+
+  function syncErrandsToReceiver() {
+    storeArray(CARE_STORAGE_KEYS.errands, errands);
+    if (careBus) careBus.postMessage({ type: 'UPDATE_ERRANDS_DATA', errands });
+  }
+
+  function syncAllState() {
+    syncPhotosToReceiver();
+    syncPillsToReceiver();
+    syncErrandsToReceiver();
+    if (careBus) careBus.postMessage({ type: 'SYNC_COMPLETE', timestamp: Date.now() });
+  }
+
+  function triggerDemoErrandAlert(id) {
+    const e = errands.find(item => item.id === id);
+    if (!e) return;
+    if (!careBus) {
+      showToast('This browser cannot send cross-tab demo alerts.');
+      return;
+    }
+    const profile = caretakerProfiles[e.caretaker] || caretakerProfiles.Alex;
+    const errandPayload = {
+      id: e.id,
+      title: e.title,
+      time: e.time,
+      caretakerName: profile.name,
+      caretakerRole: profile.role,
+      caretakerAvatarUrl: profile.avatar,
+      caretakerReminder: e.caretakerReminder,
+      patientReminder: e.patientReminder,
+      recurring: Boolean(e.recurring)
+    };
+    careBus.postMessage({ type: 'TRIGGER_ERRAND', errand: errandPayload, ...errandPayload });
+    showToast(`Dispatched errand alert for "${e.title}" to Grandma's screen!`);
+  }
+
+  // AI Chat
   const chatStream = document.getElementById('chatStream');
   const aiInput = document.getElementById('aiInput');
 
   function addAiMessage(text, type) {
     const msg = document.createElement('div');
     msg.className = `chat-msg ${type}`;
-    msg.innerHTML = text;
+    msg.style.cssText = type === 'user' ? 'background:#2563eb; color:white; align-self:flex-end; padding:12px 16px; border-radius:16px; font-size:14px; max-width:80%;' : 'background:#f1f5f9; padding:12px 16px; border-radius:16px; font-size:14px; max-width:80%;';
+    msg.textContent = text;
     chatStream.appendChild(msg);
     chatStream.scrollTop = chatStream.scrollHeight;
   }
-
-  const aiKnowledge = {
-    'pill|medication|medicine|taken': 'Grandma took her routine pills today with a full glass of water. All 4 items are checked off. 👍',
-    'how is|how are|status|doing': 'Grandma is in good spirits! She marked "Good" 😊 on her last check-in, enjoyed looking at the picnic photos, and took a short walk this morning.',
-    'sleep|rest|night': 'Sleep was steady last night — approximately 7.5 hours. No disturbances were logged on her bedside device.',
-    'escalat|alert|urgent': 'The escalation protocol is armed: if a check-in is unacknowledged, Stage 1 pings her device in 5s, and Stage 2 alerts your phone.',
-    'photo|images': 'Her digital frame is actively cycling through the 5 family trip photos every 3 seconds.'
-  };
 
   function sendAiMessage() {
     const q = aiInput.value.trim();
     if (!q) return;
     aiInput.value = '';
     addAiMessage(q, 'user');
-
     setTimeout(() => {
-      let reply = "Grandma's day is going smoothly! All vital signs and check-ins are normal. Let me know if you want to send another photo check-in or medication alert.";
-      const lower = q.toLowerCase();
-      for (const [key, val] of Object.entries(aiKnowledge)) {
-        if (key.split('|').some(k => lower.includes(k))) {
-          reply = val;
-          break;
-        }
-      }
+      let reply = "Grandma's medication schedule has 4 active prescriptions. Her morning pills include Lisinopril, Vitamin D3 & Omega, Calcium, and Water. Errands are assigned to Alex and Elena.";
       addAiMessage(reply, 'bot');
-    }, 600);
+    }, 500);
   }
 
-  aiInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') sendAiMessage();
+  function showToast(msg) {
+    const toast = document.getElementById('hubToast');
+    document.getElementById('toastMsg').textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+
+  if (careBus) {
+    careBus.onmessage = (e) => {
+      const data = e.data;
+      if (!data || typeof data !== 'object') return;
+      if (data.type === 'CHECKIN_RESPONSE') {
+        showToast(`Grandma responded "${data.status}"!`);
+      } else if (data.type === 'PILLS_TAKEN') {
+        showToast('Grandma confirmed taking all her medications!');
+      } else if (data.type === 'ERRAND_ACKNOWLEDGED') {
+        showToast(`Grandma acknowledged "${data.title}" at ${data.timestamp}.`);
+      } else if (data.type === 'REQUEST_SYNC') {
+        syncAllState();
+      } else if (data.type === 'RECEIVER_READY') {
+        document.getElementById('hubStatusText').textContent = 'Frame Active · Synced';
+      }
+    };
+  }
+
+  document.getElementById('editPhotoUrl').addEventListener('input', (event) => {
+    const source = getSafeImageSource(event.target.value);
+    if (source) document.getElementById('editPhotoPreview').src = source;
   });
+
+  document.querySelectorAll('.edit-modal-overlay').forEach((overlay) => {
+    overlay.addEventListener('click', (event) => {
+      if (event.target !== overlay) return;
+      if (overlay.id === 'editPillModal') closeEditModal();
+      if (overlay.id === 'editPhotoModal') closeEditPhotoModal();
+      if (overlay.id === 'editErrandModal') closeEditErrandModal();
+    });
+  });
+
+  document.addEventListener('keydown', (event) => {
+    const activeDialog = document.querySelector('.edit-modal-overlay.active');
+    if (!activeDialog) {
+      if (event.key === 'Enter' && document.activeElement === aiInput) sendAiMessage();
+      return;
+    }
+    if (event.key === 'Escape') {
+      if (activeDialog.id === 'editPillModal') closeEditModal();
+      if (activeDialog.id === 'editPhotoModal') closeEditPhotoModal();
+      if (activeDialog.id === 'editErrandModal') closeEditErrandModal();
+      return;
+    }
+    if (event.key !== 'Tab') return;
+    const focusable = Array.from(activeDialog.querySelectorAll('button, input, select, textarea, [tabindex]:not([tabindex="-1"])'))
+      .filter(element => !element.disabled && element.offsetParent !== null);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+
+  // Init drag & drops
+  setupDragDrop('photoDropzone', handleLocalFileUpload);
+  setupDragDrop('pillDropzone', handlePillPhotoUpload);
+  setupDragDrop('editPillDropzone', handleEditPillPhotoUpload);
+
+  // Init
+  renderPhotoGrid();
+  renderScheduledTimes();
+  renderCaptionPool();
+  renderTimeSlotsView();
+  renderPillInventoryView();
+  renderCaretakerRoster();
+  renderErrands();
+  syncAllState();
+  refreshIcons();
+  runScheduledCheckins();
+  window.setInterval(runScheduledCheckins, 15000);
 </script>
 </body>
 </html>
-<script data-clero-project-page-live-reload>
-(() => {
-  const pageId = "75aa64fe249b830c7ffb22a0";
-  const revision = "6da117c350054492135922be8efd5bc7c845674216a8be676e888b0813bf231d";
-  let socket = null;
-  let reconnectTimer = null;
-  let reconnectDelay = 1000;
-  let stopped = false;
-
-  const reload = () => window.location.reload();
-  const scheduleReconnect = () => {
-    if (stopped || reconnectTimer !== null) return;
-    reconnectTimer = window.setTimeout(() => {
-      reconnectTimer = null;
-      connect();
-    }, reconnectDelay);
-    reconnectDelay = Math.min(reconnectDelay * 2, 15000);
-  };
-  const connect = () => {
-    if (stopped) return;
-    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-    try {
-      socket = new WebSocket(
-        `${protocol}//${window.location.host}/ws/project-pages/${encodeURIComponent(pageId)}/`
-      );
-    } catch (_error) {
-      scheduleReconnect();
-      return;
-    }
-    socket.addEventListener("open", () => {
-      reconnectDelay = 1000;
-    });
-    socket.addEventListener("message", (messageEvent) => {
-      let message;
-      try {
-        message = JSON.parse(messageEvent.data);
-      } catch (_error) {
-        return;
-      }
-      const data = message && message.data ? message.data : {};
-      if (
-        message.event === "project.html.connected" &&
-        data.body_sha256 &&
-        data.body_sha256 !== revision
-      ) {
-        reload();
-        return;
-      }
-      if (
-        message.event === "project.html.updated" &&
-        (!data.body_sha256 || data.body_sha256 !== revision)
-      ) {
-        reload();
-        return;
-      }
-      if (
-        message.event === "project.html.unpublished" ||
-        message.event === "project.html.deleted"
-      ) {
-        reload();
-      }
-    });
-    socket.addEventListener("close", (closeEvent) => {
-      socket = null;
-      if (closeEvent.code === 4004) {
-        reload();
-        return;
-      }
-      scheduleReconnect();
-    });
-    socket.addEventListener("error", () => {
-      if (socket) socket.close();
-    });
-  };
-  window.addEventListener("pagehide", () => {
-    stopped = true;
-    if (reconnectTimer !== null) window.clearTimeout(reconnectTimer);
-    if (socket) socket.close(1000, "Page closed");
-  }, { once: true });
-  connect();
-})();
-</script>

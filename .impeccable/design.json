@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-22T14:45:41+07:00",
+  "title": "Design System: Care Companion",
+  "extensions": {
+    "colorMeta": {
+      "family-ink": { "role": "primary", "displayName": "Family Ink", "canonical": "#17231d", "tonalRamp": ["#08100c", "#17231d", "#2b4335", "#476454", "#6f8778", "#9eafa4", "#ced8d1", "#f1f5f2"] },
+      "care-blue": { "role": "secondary", "displayName": "Care Blue", "canonical": "#2563eb", "tonalRamp": ["#0b1d4d", "#123681", "#1c4fbd", "#2563eb", "#5b8af0", "#91aff5", "#c7d7fa", "#eff4ff"] },
+      "confirmation-green": { "role": "tertiary", "displayName": "Confirmation Green", "canonical": "#059669", "tonalRamp": ["#062b20", "#07523c", "#087757", "#059669", "#3ab58b", "#78cfad", "#b7e8d4", "#edfaf4"] },
+      "checkin-coral": { "role": "tertiary", "displayName": "Check-in Coral", "canonical": "#e76f51", "tonalRamp": ["#4c1710", "#7c2c20", "#ad4533", "#e76f51", "#ee947e", "#f4b8aa", "#f9d9d1", "#fff2ee"] },
+      "canvas": { "role": "neutral", "displayName": "Care Canvas", "canonical": "#f8fafc", "tonalRamp": ["#202426", "#404547", "#626769", "#858a8c", "#a9adaf", "#cdd0d2", "#e8eaec", "#f8fafc"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Family Story", "purpose": "Sender messages, modal titles, and household identity." },
+      "body": { "displayName": "Accessible Interface", "purpose": "Controls, logs, captions, schedules, and supporting copy." }
+    },
+    "shadows": [
+      { "name": "surface-low", "value": "0 4px 12px rgba(0,0,0,0.03)", "purpose": "Caretaker task surfaces." },
+      { "name": "interrupt-high", "value": "0 25px 60px rgba(0,0,0,0.4)", "purpose": "Protected-focus patient reminders and check-ins." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(.16, 1, .3, 1)", "purpose": "Takeovers, toasts, and direct manipulation feedback." },
+      { "name": "photo-cycle", "value": "3000ms", "purpose": "Ambient family-photo rotation interval." }
+    ],
+    "breakpoints": [
+      { "name": "compact", "value": "430px" },
+      { "name": "tablet", "value": "720px" },
+      { "name": "launcher-stack", "value": "860px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Care Action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Dispatches a caretaker action to Grandma's frame.",
+      "html": "<button class=\"ds-care-action\">Send check-in now</button>",
+      "css": ".ds-care-action{background:#2563eb;color:#fff;border:0;border-radius:12px;padding:12px 20px;font:700 14px 'Atkinson Hyperlegible',sans-serif;transition:transform .2s cubic-bezier(.16,1,.3,1),filter .2s}.ds-care-action:hover{transform:translateY(-2px);filter:brightness(1.04)}.ds-care-action:focus-visible{outline:3px solid #d97706;outline-offset:3px}"
+    },
+    {
+      "name": "Caretaker Surface",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "A focused operational surface for one care task.",
+      "html": "<section class=\"ds-care-surface\"><h3>Medication schedule</h3><p>Four morning items ready.</p></section>",
+      "css": ".ds-care-surface{background:#fff;color:#0f172a;border:1px solid #e2e8f0;border-radius:24px;padding:24px;box-shadow:0 4px 12px rgba(0,0,0,.03);font-family:'Atkinson Hyperlegible',sans-serif}.ds-care-surface h3{margin:0 0 8px;font:700 20px Literata,Georgia,serif}.ds-care-surface p{margin:0;color:#64748b}"
+    },
+    {
+      "name": "Live Status",
+      "kind": "chip",
+      "refersTo": "status-pill",
+      "description": "Communicates a current cross-tab connection or care state.",
+      "html": "<span class=\"ds-live-status\"><svg viewBox=\"0 0 12 12\" aria-hidden=\"true\"><circle cx=\"6\" cy=\"6\" r=\"4\"/></svg>Frame live</span>",
+      "css": ".ds-live-status{display:inline-flex;align-items:center;gap:8px;background:#17231d;color:#fff;border-radius:999px;padding:8px 16px;font:700 13px 'Atkinson Hyperlegible',sans-serif}.ds-live-status svg{width:12px;height:12px;fill:#059669}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Family Daybook",
+    "overview": "Care Companion joins an ambient family photo frame to a clear household care ledger. Family imagery carries the patient view; paper-white operational surfaces organize the caretaker view.",
+    "keyCharacteristics": ["Full-bleed family photographs", "Paper-white task surfaces", "Semantic care colors", "Large patient controls"],
+    "rules": [
+      { "name": "State Has a Color", "body": "Green confirms, coral asks for attention, blue dispatches, and amber marks schedules.", "section": "colors" },
+      { "name": "Across the Room", "body": "Patient prompts and decisions remain readable from several feet away.", "section": "typography" }
+    ],
+    "dos": ["Do let real family imagery dominate idle receiver states.", "Do keep patient actions large, labeled, and voice-supported.", "Do timestamp synchronized care events."],
+    "donts": ["Don't make the receiver feel like a settings dashboard.", "Don't use color as the only care-state carrier.", "Don't introduce elastic motion or decorative glow."]
+  }
+}

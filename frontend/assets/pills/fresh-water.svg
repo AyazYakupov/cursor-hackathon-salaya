@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+  <title id="title">Glass of fresh water</title>
+  <rect width="160" height="160" rx="28" fill="#eff6ff"/>
+  <path d="M50 31h60l-7 98H57z" fill="#ffffff" stroke="#93c5fd" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M55 68h50l-4 57H59z" fill="#38bdf8" opacity=".72"/>
+  <path d="M56 68c12-7 25 7 48 0" fill="none" stroke="#0ea5e9" stroke-width="4" stroke-linecap="round"/>
+  <g fill="#e0f2fe">
+    <circle cx="70" cy="88" r="5"/><circle cx="91" cy="101" r="4"/><circle cx="78" cy="114" r="3"/>
+  </g>
+  <path d="M55 42h50" stroke="#dbeafe" stroke-width="4" stroke-linecap="round"/>
+</svg>
