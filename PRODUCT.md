@@ -62,21 +62,9 @@ This is the miss path. It is part of the product, not a footnote.
 3. Repeat until a configured miss count is reached (default 2 retries after the first interrupt; make it 1 retry on stage).
 4. **Then call the caretaker.** Do not stop at a status badge. Someone who can help must feel it on their phone.
 
-The caretaker ping for the demonstration is a **Trello notification**. Create or move a card when the miss count is hit so the presenter’s phone buzzes in the room. That is the proof, not a slide about “we could notify you.”
+The caretaker ping for the demonstration is a **Twilio notification** so presenter’s phone buzzes in the room. That is the proof, not a slide about “we could notify you.”
 
 Do not wait the full window on stage. Use a demo control to fire the next retry or to skip straight to caretaker escalation.
-
-## Phone ping (Trello)
-
-Trello is the integration we actually wire for the demo, because it already pings a phone.
-
-| Event | What Trello does |
-| --- | --- |
-| Patient completes a check-in or pill | Optional card comment / “done” move. Nice, not required. |
-| Patient misses N times | **Required.** New or moved card the caretaker’s Trello app will notify on. |
-| Errand assigned to Bob | Card for the responsible person, if P2 is in the demo. |
-
-Board is pre-made. App notifications on. Rehearse the buzz before going on stage.
 
 ## Voice
 
@@ -97,11 +85,11 @@ Caretakers preload photos: a place they went, a picture of people together, anyt
 Example beat:
 
 1. Slideshow is running.
-2. Today’s photo arrives and interrupts: “Here’s your check-in.”
+2. Today’s photo arrives with avatar of which family member sent it and interrupts: “Here’s your check-in from %Family Member Name%.”
 3. Patient taps.
 4. They see the sender’s avatar, the photo, and hear the caption.
 5. The app asks something like “How are you today?”
-6. They respond.
+6. They respond verbally. There is a backup option for on-screen keyboard but it is closed by default with a large mic icon shown.
 7. The photo leaves the active queue. History keeps it.
 
 ### Queue rules
@@ -129,6 +117,7 @@ Same engine, medication payload.
 - At the time, the tablet alerts and shows the pill photo(s).
 - Patient taps each pill, then **Done**.
 - Caretaker is notified. The app keeps a log.
+- If pills are not confirmed within X time (set by caretaker) then follows escalation sequence to call patient then after Y time (also set by caretaker) if still not confirmed calls caretaker.
 
 ## Feature 3 — Errands
 
@@ -136,7 +125,7 @@ Same engine, a task with a responsible person.
 
 Used for doctor visits, pickups, “please be ready,” and other household logistics.
 
-- An errand has a time, patient-facing copy, and a **responsible party**.
+- An errand has a time, patient-facing copy, and a **responsible party** (selected from users of the system).
 - **Reminder only:** ping the patient (e.g. “Grandma, remember your appointment”).
 - **Hand-off:** patient is pinged to get ready; Bob is pinged to do the pickup. Each side can have its own notify-ahead time (travel time for Bob, 15 minutes for the patient, or whatever is set).
 - This is the reason to allow more than one caretaker user on day one, if it does not slow the check-in demo.
@@ -148,7 +137,7 @@ In order. Stop adding types when the first loop is not reliable.
 | Priority | Capability | Done when |
 | --- | --- | --- |
 | P0 | Photo check-in | Caretaker queues/prioritizes a photo; tablet slideshow interrupts; patient responds; caretaker sees the log |
-| P0 | Miss → caretaker phone | After N misses, a Trello card fires and the presenter’s phone pings in the room |
+| P0 | Miss → caretaker phone | After N misses, the presenter’s phone pings in the room via Twillio |
 | P1 | Pill reminder | Timed pill with photo; patient taps items + Done; caretaker is notified and can see the log |
 | P2 | Errand with a second person | Patient reminder plus a ping to the responsible caretaker |
 
@@ -159,7 +148,7 @@ In order. Stop adding types when the first loop is not reliable.
 - A full family social feed
 - Drawing on photos
 - A polished gradual/multi-stage alarm
-- A real carrier phone call (patient retries stay in-app; caretaker ping is Trello)
+- A real carrier phone call (patient retries stay in-app; caretaker ping is via Twillio)
 - Voice cloning, unless it drops in with no extra risk
 - Clinical medical records, dosing math, or pharmacy integrations
 - Calendar sync, maps, or live travel-time APIs (a notify-ahead offset is enough)
@@ -173,7 +162,7 @@ Roadmap, say it in the demo if asked: several family members can each send check
 2. Caretaker uploads today’s photo, writes a caption, marks it priority.
 3. Tablet interrupts. Patient taps. Image, who it is from, spoken caption, “How are you today?”
 4. Patient answers with a large control. Caretaker panel updates.
-5. Second beat: she does not answer. After N misses, the presenter’s phone pings from Trello.
+5. Second beat: she does not answer. After N misses, the presenter’s phone pings from Twillio.
 6. If time: a pill appears, they tap it, Done, log updates. If more time: Bob gets the pickup ping.
 
 Five-minute version and fallbacks: [DEMO.md](DEMO.md).
@@ -184,7 +173,7 @@ Five-minute version and fallbacks: [DEMO.md](DEMO.md).
 2. **Miss count N** before the caretaker ping. Recommendation: 2 in product, 1 retry on stage.
 3. **Multi-caretaker:** one caretaker for P0/P1. Add Bob only if P2 is in the demo.
 
-Locked: no login. Locked: missed path ends on the caretaker’s phone via Trello. Locked: voice clone is optional.
+Locked: no login. Locked: missed path ends on the caretaker’s phone via Twillio. Locked: voice clone is optional.
 
 ## Contracts the demo needs
 
@@ -194,7 +183,7 @@ Write these in [`api-contracts/`](api-contracts/README.md) before splitting fron
 2. Check-in media queue (create, list, prioritize, mark sent/complete).
 3. Patient device state (current slideshow, active interrupt, submit response).
 4. Reminder schedule, response window, retry count.
-5. Escalation: miss N times → Trello caretaker ping.
+5. Escalation: miss N times → Twillio caretaker ping.
 6. Pill regimen, due dose, tap-each-item completion, caretaker notify/log.
 7. Errand create, responsible party, notify-ahead offsets, completion.
 
@@ -203,6 +192,6 @@ Write these in [`api-contracts/`](api-contracts/README.md) before splitting fron
 1. Patient idle slideshow + caretaker can add a photo to the queue.
 2. Priority photo becomes today’s interrupt; patient opens it and sees caption + prompt.
 3. Patient submits a response; caretaker log and queue update.
-4. Miss N times → retry patient → Trello card → phone pings (demo skip control).
+4. Miss N times → retry patient → Twillio → phone pings (demo skip control).
 5. Pill due → tap items → Done → notify/log.
 6. Errand pings patient and Bob.
