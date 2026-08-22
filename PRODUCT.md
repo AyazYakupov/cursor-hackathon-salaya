@@ -12,9 +12,9 @@ A tablet for someone who needs care, and a control panel for the people who love
 
 | Role | Who | What they need |
 | --- | --- | --- |
-| Patient | The person with the tablet (e.g. Betty) | Large targets, few choices, something pleasant to look at, a clear prompt when it is time to respond |
-| Caretaker | The person loading content and watching status | Fast logging, a queue they can preload, a way to make *today* relevant, a record that the check-in happened |
-| Family member | Extra caretaker (e.g. Bob on pickup) | Only when they are the responsible party for an errand |
+| Loved One | (Previously called Patient and referenced in this doc as Patient but front-facing as "Loved One")The person with the tablet (e.g. Betty) | Large targets, few choices, something pleasant to look at, a clear prompt when it is time to respond |
+| Family Member | (Previously called Caretaker and referenced in this doc as Caretaker but front-facing as "Family Member") The person loading content and watching status | Fast logging, a queue they can preload, a way to make *today* relevant, a record that the check-in happened |
+| Additional Family member | (Previously called Family member and referenced in this doc as Family member but front-facing as "Additiional Family Member") Extra caretaker (which are now called family member) (e.g. Bob on pickup) | Only when they are the responsible party for an errand |
 
 Primary user for the demo: the caretaker and the patient, in that order. The story is “family stays in the day,” not “admin configures a clinic.”
 
@@ -137,7 +137,7 @@ In order. Stop adding types when the first loop is not reliable.
 | Priority | Capability | Done when |
 | --- | --- | --- |
 | P0 | Photo check-in | Caretaker queues/prioritizes a photo; tablet slideshow interrupts; patient responds; caretaker sees the log |
-| P0 | Miss → caretaker phone | After N misses, the presenter’s phone pings in the room via Twillio |
+| P0 | Miss → caretaker phone | After N misses, the presenter’s phone pings in the room via Twilio |
 | P1 | Pill reminder | Timed pill with photo; patient taps items + Done; caretaker is notified and can see the log |
 | P2 | Errand with a second person | Patient reminder plus a ping to the responsible caretaker |
 
@@ -148,11 +148,16 @@ In order. Stop adding types when the first loop is not reliable.
 - A full family social feed
 - Drawing on photos
 - A polished gradual/multi-stage alarm
-- A real carrier phone call (patient retries stay in-app; caretaker ping is via Twillio)
+- A real carrier phone call or ping (patient retries stay in-app; caretaker SMS ping is via Twilio but actual SMS notifications and calls won't be a part of the initial build)
 - Voice cloning, unless it drops in with no extra risk
 - Clinical medical records, dosing math, or pharmacy integrations
 - Calendar sync, maps, or live travel-time APIs (a notify-ahead offset is enough)
 - Patient typing or small-text settings screens
+
+## Nice-to-Have if Time (at the end only, low priority)
+
+- A real carrier phone call or ping (patient retries stay in-app; caretaker SMS ping is via Twilio but actual SMS notifications and calls won't be a part of the initial build)
+- Voice to text recording on the patient's side for their checkin that appears for the caretaker.
 
 Roadmap, say it in the demo if asked: several family members can each send check-ins; gradual alarms; a real follow-up voice call.
 
@@ -162,18 +167,19 @@ Roadmap, say it in the demo if asked: several family members can each send check
 2. Caretaker uploads today’s photo, writes a caption, marks it priority.
 3. Tablet interrupts. Patient taps. Image, who it is from, spoken caption, “How are you today?”
 4. Patient answers with a large control. Caretaker panel updates.
-5. Second beat: she does not answer. After N misses, the presenter’s phone pings from Twillio.
+5. Second beat: she does not answer. After N misses, the presenter’s phone pings from Twilio.
 6. If time: a pill appears, they tap it, Done, log updates. If more time: Bob gets the pickup ping.
+7. Overview of the backend panel the caretaker uses to configure all of the above.
 
 Five-minute version and fallbacks: [DEMO.md](DEMO.md).
 
 ## Open questions to lock in five minutes
 
-1. **How does the patient answer a check-in?** Recommendation: three huge buttons (e.g. Good / Okay / Need help). Optional later: hold-to-talk or Whisper dictation.
-2. **Miss count N** before the caretaker ping. Recommendation: 2 in product, 1 retry on stage.
-3. **Multi-caretaker:** one caretaker for P0/P1. Add Bob only if P2 is in the demo.
+1. **How does the patient answer a check-in?** Recommendation: three huge buttons (e.g. Good / Okay / Need help). Optional later: hold-to-talk or Whisper dictation. - ANSWER: In MVP these 3 buttons are good, with a big microphone button underneath where they can also record something, but the voice to text does not need to work if there is time.
+2. **Miss count N** before the caretaker ping. Recommendation: 2 in product, 1 retry on stage. - ANSWER: Caretaker sets the amount of time (in 1 minute increments with a 5 second option for the demo) for retry 1 and retry 2. On retry 1 the patient is pinged, on retry 2 the caretaker is pinged.
+3. **Multi-caretaker:** one caretaker for P0/P1. Add Bob only if P2 is in the demo. ANSWER: There should be 2 caretakers since the demo will be from the perspective of 1 and the other one will only come in when changing who the image/checkin is from and who is responsible for the errands.
 
-Locked: no login. Locked: missed path ends on the caretaker’s phone via Twillio. Locked: voice clone is optional.
+Locked: no login. Locked: missed path ends on the caretaker’s phone via Twilio. Locked: voice clone is optional.
 
 ## Contracts the demo needs
 
@@ -183,7 +189,7 @@ Write these in [`api-contracts/`](api-contracts/README.md) before splitting fron
 2. Check-in media queue (create, list, prioritize, mark sent/complete).
 3. Patient device state (current slideshow, active interrupt, submit response).
 4. Reminder schedule, response window, retry count.
-5. Escalation: miss N times → Twillio caretaker ping.
+5. Escalation: miss N times → Twilio caretaker ping.
 6. Pill regimen, due dose, tap-each-item completion, caretaker notify/log.
 7. Errand create, responsible party, notify-ahead offsets, completion.
 
@@ -192,6 +198,6 @@ Write these in [`api-contracts/`](api-contracts/README.md) before splitting fron
 1. Patient idle slideshow + caretaker can add a photo to the queue.
 2. Priority photo becomes today’s interrupt; patient opens it and sees caption + prompt.
 3. Patient submits a response; caretaker log and queue update.
-4. Miss N times → retry patient → Twillio → phone pings (demo skip control).
+4. Miss N times → retry patient → Twilio → phone pings (demo skip control).
 5. Pill due → tap items → Done → notify/log.
 6. Errand pings patient and Bob.
