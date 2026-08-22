@@ -1,6 +1,6 @@
 # cursor-hackathon-salaya
 
-A tablet for someone who needs care, and a control panel for the people who love them. Daily photo check-ins, pill reminders, and family errands share one reminder engine.
+A tablet for someone who needs care, and a control panel for the people who love them. Daily photo check-ins, pill reminders, and family errands share one reminder engine. If the patient misses, it retries, then pings the caretaker’s phone.
 
 ## Product
 

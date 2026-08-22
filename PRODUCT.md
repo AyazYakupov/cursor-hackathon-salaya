@@ -20,6 +20,8 @@ Primary user for the demo: the caretaker and the patient, in that order. The sto
 
 **Tenancy for this build:** one household, one patient. More than one caretaker is allowed if it stays cheap, because errands need a responsible person. Multiple families, multiple patients, and a public signup flow are out of scope.
 
+**No login.** Both sides boot already in the demo household: one patient tablet, one caretaker panel. No signup, no password, no role switcher on stage.
+
 ## Two surfaces
 
 ### Patient tablet
@@ -37,8 +39,8 @@ A normal desktop or phone UI for the people running the household.
 
 - Preload photos, captions, pills, and errands.
 - See queue, priority, and whether today already has a relevant item.
-- See status: sent, waiting, responded, missed.
-- Receive a notification when the patient finishes something.
+- See status: sent, waiting, retrying, missed, escalated.
+- Receive a notification when the patient finishes something, and when they do not.
 
 ## Shared reminder engine
 
@@ -46,10 +48,45 @@ Check-ins, pills, and errands are the same machine with different payloads.
 
 1. Something is queued or scheduled.
 2. At the right time it interrupts the tablet.
-3. The patient has a response window (default 15–30 minutes, configurable).
+3. The patient has a response window (default 15–30 minutes, configurable). For the live demo, shorten this so a miss can be shown without waiting.
 4. A single alarm is enough for the demo. A gradual alarm is nicer later.
-5. If they miss it, the caretaker gets a status update. Next-order escalation is an in-app or simulated auto-call: *“This is your auto call. Please check your tablet.”*
-6. Completing the item logs it and notifies the caretaker.
+5. If they complete it, log it and notify the caretaker.
+6. If they do not, follow the escalation order below.
+
+## Escalation order
+
+This is the miss path. It is part of the product, not a footnote.
+
+1. **Interrupt the patient.** Check-in, pill, or errand takes over the tablet.
+2. **Retry the patient** if they do not respond. Same item, another alarm / spoken nudge: *“This is your reminder. Please check your tablet.”*
+3. Repeat until a configured miss count is reached (default 2 retries after the first interrupt; make it 1 retry on stage).
+4. **Then call the caretaker.** Do not stop at a status badge. Someone who can help must feel it on their phone.
+
+The caretaker ping for the demonstration is a **Trello notification**. Create or move a card when the miss count is hit so the presenter’s phone buzzes in the room. That is the proof, not a slide about “we could notify you.”
+
+Do not wait the full window on stage. Use a demo control to fire the next retry or to skip straight to caretaker escalation.
+
+## Phone ping (Trello)
+
+Trello is the integration we actually wire for the demo, because it already pings a phone.
+
+| Event | What Trello does |
+| --- | --- |
+| Patient completes a check-in or pill | Optional card comment / “done” move. Nice, not required. |
+| Patient misses N times | **Required.** New or moved card the caretaker’s Trello app will notify on. |
+| Errand assigned to Bob | Card for the responsible person, if P2 is in the demo. |
+
+Board is pre-made. App notifications on. Rehearse the buzz before going on stage.
+
+## Voice
+
+Spoken caption and spoken prompt make the tablet feel like a person, not a form.
+
+| Level | What | For this build |
+| --- | --- | --- |
+| Device speech | Caption + “How are you today?” read out loud | Do this if it is cheap (browser TTS is enough) |
+| Dictation | Whisper / Wispr-style speech-to-text so a caretaker can speak a caption, or the patient can speak a reply | Nice if it is already easy |
+| Voice clone | Local or hosted model that sounds like the family member | Stretch only. Skip unless it is free and already working. Do not block the demo on it. |
 
 ## Feature 1 — Daily photo check-in
 
@@ -111,22 +148,24 @@ In order. Stop adding types when the first loop is not reliable.
 | Priority | Capability | Done when |
 | --- | --- | --- |
 | P0 | Photo check-in | Caretaker queues/prioritizes a photo; tablet slideshow interrupts; patient responds; caretaker sees the log |
+| P0 | Miss → caretaker phone | After N misses, a Trello card fires and the presenter’s phone pings in the room |
 | P1 | Pill reminder | Timed pill with photo; patient taps items + Done; caretaker is notified and can see the log |
 | P2 | Errand with a second person | Patient reminder plus a ping to the responsible caretaker |
 
 ## Will not build this round
 
+- Login, signup, or accounts. Both surfaces are already in the household.
 - Multiple households or multiple patients
 - A full family social feed
 - Drawing on photos
 - A polished gradual/multi-stage alarm
-- A real phone carrier call (simulate the auto-call in-app)
-- Voice-to-voice conversation beyond speaking the caption and the prompt
+- A real carrier phone call (patient retries stay in-app; caretaker ping is Trello)
+- Voice cloning, unless it drops in with no extra risk
 - Clinical medical records, dosing math, or pharmacy integrations
 - Calendar sync, maps, or live travel-time APIs (a notify-ahead offset is enough)
 - Patient typing or small-text settings screens
 
-Roadmap, say it in the demo if asked: several family members can each send check-ins so the patient feels loved by more than one person; gradual alarms; a real follow-up call.
+Roadmap, say it in the demo if asked: several family members can each send check-ins; gradual alarms; a real follow-up voice call.
 
 ## Ideal demo (about 90 seconds)
 
@@ -134,27 +173,28 @@ Roadmap, say it in the demo if asked: several family members can each send check
 2. Caretaker uploads today’s photo, writes a caption, marks it priority.
 3. Tablet interrupts. Patient taps. Image, who it is from, spoken caption, “How are you today?”
 4. Patient answers with a large control. Caretaker panel updates.
-5. If time: a pill appears, they tap it, Done, log updates. If more time: Bob gets the pickup ping.
+5. Second beat: she does not answer. After N misses, the presenter’s phone pings from Trello.
+6. If time: a pill appears, they tap it, Done, log updates. If more time: Bob gets the pickup ping.
 
 Five-minute version and fallbacks: [DEMO.md](DEMO.md).
 
 ## Open questions to lock in five minutes
 
-1. **How does the patient answer a check-in?** Recommendation: three huge buttons (e.g. Good / Okay / Need help). Optional later: hold-to-talk.
-2. **Caption playback:** device speech is enough; no custom recorded audio in the MVP.
-3. **Missed window:** caretaker status flips to missed, then one simulated auto-call on the tablet. No SMS.
-4. **Auth:** skip real login. Deep-link or a “Patient / Caretaker” switcher for the demo household.
-5. **Multi-caretaker:** one caretaker for P0/P1. Add Bob only if P2 is in the demo.
+1. **How does the patient answer a check-in?** Recommendation: three huge buttons (e.g. Good / Okay / Need help). Optional later: hold-to-talk or Whisper dictation.
+2. **Miss count N** before the caretaker ping. Recommendation: 2 in product, 1 retry on stage.
+3. **Multi-caretaker:** one caretaker for P0/P1. Add Bob only if P2 is in the demo.
+
+Locked: no login. Locked: missed path ends on the caretaker’s phone via Trello. Locked: voice clone is optional.
 
 ## Contracts the demo needs
 
 Write these in [`api-contracts/`](api-contracts/README.md) before splitting frontend and backend.
 
-1. Household bootstrap (one patient, caretakers, avatars).
+1. Household bootstrap (one patient, caretakers, avatars). Already “logged in.”
 2. Check-in media queue (create, list, prioritize, mark sent/complete).
 3. Patient device state (current slideshow, active interrupt, submit response).
-4. Reminder schedule and response window.
-5. Missed-check-in status and simulated auto-call.
+4. Reminder schedule, response window, retry count.
+5. Escalation: miss N times → Trello caretaker ping.
 6. Pill regimen, due dose, tap-each-item completion, caretaker notify/log.
 7. Errand create, responsible party, notify-ahead offsets, completion.
 
@@ -163,6 +203,6 @@ Write these in [`api-contracts/`](api-contracts/README.md) before splitting fron
 1. Patient idle slideshow + caretaker can add a photo to the queue.
 2. Priority photo becomes today’s interrupt; patient opens it and sees caption + prompt.
 3. Patient submits a response; caretaker log and queue update.
-4. Missed window shows missed status (auto-call if it is still easy).
+4. Miss N times → retry patient → Trello card → phone pings (demo skip control).
 5. Pill due → tap items → Done → notify/log.
 6. Errand pings patient and Bob.
