@@ -50,7 +50,9 @@ To run the backend scaffold: `cd backend && docker compose up`, then visit http:
 
 ## Background
 
-Built in one day at the Cursor hackathon in Salaya, Thailand, on 22 August 2026. Commits from the day come from Yakupov Ayaz, Chris and cuhaba.
+Built in one day at the Cursor hackathon in Salaya, Thailand, on 22 August 2026, by a team that included Yakupov Ayaz, Chris and Dylan Akpan. The team shared one laptop for most of the day, so most of the commits come from a single account. Dylan worked on the idea, the screen designs, the pitch and parts of the front end, and tested and presented the demo.
+
+The original team repo is [AyazYakupov/cursor-hackathon-salaya](https://github.com/AyazYakupov/cursor-hackathon-salaya).
 
 - [Product brief](PRODUCT.md): users, features and what was out of scope
 - [Demo script](DEMO.md): the 90 second demo path and fallbacks
@@ -58,7 +60,7 @@ Built in one day at the Cursor hackathon in Salaya, Thailand, on 22 August 2026.
 - [Team process](TEAM_PROCESS.md)
 - [API contracts](api-contracts/README.md)
 
-After the hackathon the frontend was revamped:
+After the hackathon, Dylan revamped the frontend:
 
 - A calmer, higher contrast design built for older eyes
 - The escalation alert and activity log on the family panel (before, missed check-ins never reached it)
