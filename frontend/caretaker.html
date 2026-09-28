@@ -2,26 +2,28 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Care Companion — Family Caretaker Hub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<title>Care Companion | Family panel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&amp;family=Lexend:wght@500;600;700&amp;display=swap" rel="stylesheet">
 <!-- Lucide Icons -->
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="assets/vendor/lucide.min.js"></script>
+<script src="assets/household.js"></script>
 <style>
   :root {
-    --bg-page: #f8fafc;
-    --card-bg: #ffffff;
-    --primary: #1e3a8a;
-    --primary-light: #3b82f6;
-    --emerald: #059669;
-    --emerald-light: #d1fae5;
-    --amber: #d97706;
-    --rose: #e11d48;
-    --purple: #7c3aed;
-    --text-main: #0f172a;
-    --text-muted: #64748b;
-    --border: #e2e8f0;
+    --bg-page: #f3f5f2;
+    --card-bg: #fbfcfa;
+    --primary: #1f3a2d;
+    --primary-light: #2e5241;
+    --emerald: #2f7a52;
+    --emerald-light: #e3efe7;
+    --amber: #a8711a;
+    --rose: #b3452f;
+    --purple: #1f3a2d;
+    --text-main: #1b2620;
+    --text-muted: #56625a;
+    --border: #dce3dd;
     --radius-lg: 24px;
     --radius-md: 16px;
     --shadow-sm: 0 4px 12px rgba(0,0,0,0.03);
@@ -29,7 +31,7 @@
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    font-family: 'Atkinson Hyperlegible', -apple-system, sans-serif;
     background: var(--bg-page);
     color: var(--text-main);
     min-height: 100vh;
@@ -44,7 +46,7 @@
 
   /* Header */
   .header-card {
-    background: linear-gradient(135deg, #1e293b, #0f172a);
+    background: linear-gradient(135deg, #1f3a2d, #1b2620);
     color: white;
     border-radius: var(--radius-lg);
     padding: 28px 32px;
@@ -52,7 +54,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 12px 36px rgba(15,23,42,0.15);
+    box-shadow: 0 12px 36px rgba(27,38,32,0.15);
   }
   .header-left {
     display: flex;
@@ -64,36 +66,23 @@
     height: 64px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #38bdf8;
+    border: 3px solid #e2a33a;
     box-shadow: 0 4px 14px rgba(0,0,0,0.3);
   }
   .header-titles h1 {
-    font-family: 'Fraunces', serif;
+    font-family: 'Lexend', serif;
     font-size: 26px;
     font-weight: 600;
   }
   .header-titles p {
     font-size: 14px;
-    color: #94a3b8;
+    color: #9aa69e;
     margin-top: 4px;
   }
-  .live-status-pill {
-    background: rgba(16,185,129,0.15);
-    border: 1px solid rgba(16,185,129,0.3);
-    color: #34d399;
-    padding: 8px 16px;
-    border-radius: 40px;
-    font-size: 13px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .live-status-pill .dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: #34d399;
-    box-shadow: 0 0 10px #34d399;
+  .sync-status {
+    color: #c9d6cd;
+    font-size: 14px;
+    text-align: right;
   }
 
   /* Navigation Tabs (Photo Queue is 1st) */
@@ -101,7 +90,7 @@
     display: flex;
     flex-wrap: nowrap;
     gap: 8px;
-    background: #e2e8f0;
+    background: #dce3dd;
     padding: 6px;
     border-radius: 18px;
     margin-bottom: 24px;
@@ -153,7 +142,7 @@
     margin-bottom: 18px;
   }
   .card-title {
-    font-family: 'Fraunces', serif;
+    font-family: 'Lexend', serif;
     font-size: 20px;
     font-weight: 600;
     display: flex;
@@ -169,8 +158,6 @@
     color: var(--text-muted);
     margin-bottom: 6px;
     display: block;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
   }
   .text-field {
     width: 100%;
@@ -186,7 +173,7 @@
 
   .btn-primary {
     padding: 12px 20px;
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    background: linear-gradient(135deg, #1f3a2d, #16291f);
     color: white;
     border: none;
     border-radius: var(--radius-md);
@@ -198,16 +185,16 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: 0 4px 14px rgba(37,99,235,0.25);
+    box-shadow: 0 4px 14px rgba(31,58,45,0.25);
     transition: all 0.2s;
   }
   .btn-primary:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(37,99,235,0.35);
+    box-shadow: 0 6px 18px rgba(31,58,45,0.35);
   }
   .btn-secondary {
     padding: 8px 14px;
-    background: #f1f5f9;
+    background: #eef2ee;
     color: var(--text-main);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
@@ -220,12 +207,12 @@
     align-items: center;
     gap: 6px;
   }
-  .btn-secondary:hover { background: #e2e8f0; }
+  .btn-secondary:hover { background: #dce3dd; }
 
   /* Drag & Drop Upload Zone */
   .file-dropzone {
-    border: 2px dashed #93c5fd;
-    background: #eff6ff;
+    border: 2px dashed #cbd7ce;
+    background: #eef2ee;
     border-radius: var(--radius-md);
     padding: 20px 16px;
     text-align: center;
@@ -234,18 +221,18 @@
     margin-bottom: 12px;
   }
   .file-dropzone.dragover {
-    border-color: #2563eb;
-    background: #dbeafe;
+    border-color: #1f3a2d;
+    background: #e4ebe5;
     transform: scale(1.01);
   }
   .dropzone-icon {
     margin-bottom: 6px;
-    color: #2563eb;
+    color: #1f3a2d;
     display: flex;
     justify-content: center;
   }
-  .dropzone-text { font-size: 14px; font-weight: 600; color: #1e40af; }
-  .dropzone-sub { font-size: 12px; color: #64748b; margin-top: 2px; }
+  .dropzone-text { font-size: 14px; font-weight: 600; color: #1f3a2d; }
+  .dropzone-sub { font-size: 12px; color: #56625a; margin-top: 2px; }
 
   /* Previews */
   .upload-preview-box {
@@ -255,7 +242,7 @@
     border-radius: 14px;
     overflow: hidden;
     max-height: 140px;
-    border: 2px solid #3b82f6;
+    border: 2px solid #2e5241;
   }
   .upload-preview-box.show { display: block; }
   .upload-preview-img { width: 100%; height: 140px; object-fit: cover; display: block; }
@@ -272,7 +259,7 @@
   /* Sub Navigation Toggle */
   .sub-nav-toggle {
     display: flex;
-    background: #f1f5f9;
+    background: #eef2ee;
     padding: 4px;
     border-radius: 12px;
     gap: 4px;
@@ -300,7 +287,7 @@
 
   /* Time Slot Cards */
   .time-slot-card {
-    background: #ffffff;
+    background: #fbfcfa;
     border: 2px solid var(--border);
     border-radius: 20px;
     padding: 20px;
@@ -313,7 +300,7 @@
     align-items: center;
     margin-bottom: 14px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid #eef2ee;
   }
   .time-slot-title {
     font-size: 16px;
@@ -324,8 +311,8 @@
     gap: 8px;
   }
   .time-slot-badge {
-    background: #e0f2fe;
-    color: #0369a1;
+    background: #e4ebe5;
+    color: #1f3a2d;
     font-size: 12px;
     font-weight: 700;
     padding: 4px 10px;
@@ -338,7 +325,7 @@
     gap: 12px;
   }
   .slot-pill-item {
-    background: #f8fafc;
+    background: #f3f5f2;
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 12px;
@@ -353,7 +340,7 @@
     border-radius: 10px;
     object-fit: cover;
     border: 1px solid var(--border);
-    background: #e2e8f0;
+    background: #dce3dd;
     flex-shrink: 0;
   }
   .pill-icon-tag {
@@ -374,7 +361,7 @@
     margin-bottom: 24px;
   }
   .pill-inv-card {
-    background: #ffffff;
+    background: #fbfcfa;
     border: 2px solid var(--border);
     border-radius: 20px;
     padding: 18px;
@@ -395,14 +382,14 @@
     border-radius: 14px;
     object-fit: cover;
     border: 2px solid var(--border);
-    background: #e2e8f0;
+    background: #dce3dd;
     flex-shrink: 0;
   }
   .pill-inv-title { font-size: 16px; font-weight: 700; color: var(--text-dark); }
   .pill-inv-dosage { font-size: 13px; color: var(--text-muted); }
   .pill-time-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
   .time-chip {
-    background: #ede9fe; color: #6d28d9;
+    background: #e4ebe5; color: #1f3a2d;
     font-size: 11px; font-weight: 700;
     padding: 4px 8px; border-radius: 12px;
     display: inline-flex; align-items: center; gap: 4px;
@@ -439,7 +426,7 @@
     margin-bottom: 18px;
   }
   .edit-modal-title {
-    font-family: 'Fraunces', serif;
+    font-family: 'Lexend', serif;
     font-size: 20px;
     font-weight: 700;
   }
@@ -448,7 +435,7 @@
     height: 40px;
     border: 1px solid var(--border);
     border-radius: 12px;
-    background: #f8fafc;
+    background: #f3f5f2;
     color: var(--text-main);
     cursor: pointer;
     display: inline-flex;
@@ -456,7 +443,7 @@
     justify-content: center;
     flex: 0 0 auto;
   }
-  .icon-button:hover { background: #e2e8f0; }
+  .icon-button:hover { background: #dce3dd; }
   .modal-actions {
     display: flex;
     justify-content: flex-end;
@@ -472,7 +459,7 @@
     margin-bottom: 24px;
   }
   .photo-item-card {
-    background: #ffffff;
+    background: #fbfcfa;
     border: 2px solid var(--border);
     border-radius: 18px;
     overflow: hidden;
@@ -483,8 +470,8 @@
     flex-direction: column;
   }
   .photo-item-card.prioritized {
-    border-color: #f59e0b;
-    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25);
+    border-color: #e2a33a;
+    box-shadow: 0 0 0 3px rgba(226, 163, 58, 0.25);
   }
   .photo-item-img { width: 100%; height: 150px; object-fit: cover; background: #000; }
   .photo-item-body { padding: 12px 14px; display: flex; flex-direction: column; flex: 1; }
@@ -492,7 +479,7 @@
   .photo-item-caption { font-size: 12px; color: var(--text-muted); font-style: italic; margin-bottom: 12px; flex: 1; }
   .photo-card-actions {
     display: flex; flex-direction: column; gap: 8px;
-    padding-top: 8px; border-top: 1px solid #f1f5f9;
+    padding-top: 8px; border-top: 1px solid #eef2ee;
   }
   .photo-action-row {
     display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
@@ -501,7 +488,7 @@
   .btn-send-now {
     width: 100%;
     padding: 9px 12px;
-    background: linear-gradient(135deg, #059669, #10b981);
+    background: linear-gradient(135deg, #2f7a52, #2f7a52);
     color: white;
     border: none;
     border-radius: 10px;
@@ -513,17 +500,17 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    box-shadow: 0 2px 6px rgba(5,150,105,0.2);
+    box-shadow: 0 2px 6px rgba(47,122,82,0.2);
     transition: all 0.15s;
   }
   .btn-send-now:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(5,150,105,0.3);
+    box-shadow: 0 4px 10px rgba(47,122,82,0.3);
   }
   .card-edit-btn {
-    background: #eff6ff;
-    border: 1px solid #bfdbfe;
-    color: #1d4ed8;
+    background: #eef2ee;
+    border: 1px solid #cbd7ce;
+    color: #16291f;
     padding: 6px 10px;
     border-radius: 20px;
     font: 700 12px/1.2 inherit;
@@ -532,17 +519,17 @@
     align-items: center;
     gap: 5px;
   }
-  .card-edit-btn:hover { background: #dbeafe; }
+  .card-edit-btn:hover { background: #e4ebe5; }
   .star-priority-btn {
-    background: #f8fafc; border: 1px solid var(--border);
+    background: #f3f5f2; border: 1px solid var(--border);
     padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;
     cursor: pointer; display: inline-flex; align-items: center; gap: 5px; transition: all 0.2s;
   }
-  .star-priority-btn:hover { background: #fef3c7; border-color: #f59e0b; }
-  .star-priority-btn.active { background: #f59e0b; color: white; border-color: #d97706; }
+  .star-priority-btn:hover { background: #fbefd6; border-color: #e2a33a; }
+  .star-priority-btn.active { background: #e2a33a; color: white; border-color: #a8711a; }
   .priority-badge-corner {
     position: absolute; top: 8px; left: 8px;
-    background: #f59e0b; color: white;
+    background: #e2a33a; color: white;
     font-size: 11px; font-weight: 800;
     padding: 4px 10px; border-radius: 20px;
     display: flex; align-items: center; gap: 4px;
@@ -551,8 +538,8 @@
 
   /* Automated Check-in Schedule */
   .schedule-card {
-    background: linear-gradient(145deg, #ffffff, #f0fdf4);
-    border: 2px solid #bbf7d0;
+    background: linear-gradient(145deg, #fbfcfa, #eef5f0);
+    border: 2px solid #c4dfcd;
   }
   .schedule-time-list {
     display: flex;
@@ -561,7 +548,7 @@
     margin-bottom: 14px;
   }
   .schedule-time-chip {
-    background: #f1f5f9;
+    background: #eef2ee;
     border: 1px solid var(--border);
     padding: 6px 12px;
     border-radius: 20px;
@@ -574,7 +561,7 @@
   .schedule-time-chip .del-time-btn {
     background: none;
     border: none;
-    color: #ef4444;
+    color: #b3452f;
     cursor: pointer;
     padding: 0;
     display: flex;
@@ -588,11 +575,11 @@
 
   .caption-pool-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
   .caption-pool-item {
-    background: #f8fafc; border: 1px solid var(--border);
+    background: #f3f5f2; border: 1px solid var(--border);
     border-radius: 12px; padding: 10px 14px;
     display: flex; align-items: center; justify-content: space-between; font-size: 13px;
   }
-  .caption-pool-item .del-caption-btn { color: #ef4444; background: none; border: none; cursor: pointer; font-size: 14px; padding: 4px; display: flex; align-items: center; }
+  .caption-pool-item .del-caption-btn { color: #b3452f; background: none; border: none; cursor: pointer; font-size: 14px; padding: 4px; display: flex; align-items: center; }
 
   /* ========================================================
      ERRANDS ENHANCED CARDS (WITH CARETAKER & TIMING REMINDERS)
@@ -612,16 +599,16 @@
   }
   .errand-icon-badge {
     width: 48px; height: 48px; border-radius: 14px;
-    background: #ede9fe; color: var(--purple);
+    background: #e4ebe5; color: var(--purple);
     display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
   .errand-details-row {
     display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-    padding-top: 10px; border-top: 1px solid #f1f5f9;
+    padding-top: 10px; border-top: 1px solid #eef2ee;
   }
   .errand-caretaker-pill {
     display: inline-flex; align-items: center; gap: 8px;
-    background: #f1f5f9; padding: 4px 12px 4px 6px; border-radius: 24px;
+    background: #eef2ee; padding: 4px 12px 4px 6px; border-radius: 24px;
     font-size: 13px; font-weight: 700;
   }
   .errand-caretaker-pill img {
@@ -637,9 +624,9 @@
     gap: 5px;
     padding: 5px 10px;
     border-radius: 999px;
-    background: #ecfdf5;
-    color: #047857;
-    border: 1px solid #a7f3d0;
+    background: #eef5f0;
+    color: #245f40;
+    border: 1px solid #c4dfcd;
     font-size: 12px;
     font-weight: 800;
   }
@@ -656,7 +643,7 @@
     width: 18px;
     height: 18px;
     margin: 0;
-    accent-color: #059669;
+    accent-color: #2f7a52;
     cursor: pointer;
   }
   .caretaker-roster {
@@ -673,14 +660,14 @@
     padding: 12px 14px;
     border: 1px solid var(--border);
     border-radius: 14px;
-    background: #f8fafc;
+    background: #f3f5f2;
   }
   .caretaker-profile img {
     width: 46px;
     height: 46px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #bfdbfe;
+    border: 2px solid #cbd7ce;
     flex: 0 0 auto;
   }
   .caretaker-profile strong,
@@ -695,7 +682,7 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
     padding-top: 12px;
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid #eef2ee;
   }
   .errand-control-grid .input-group { margin: 0; min-width: 0; }
   .errand-control-grid .text-field {
@@ -708,7 +695,7 @@
   button:focus-visible,
   input:focus-visible,
   select:focus-visible {
-    outline: 3px solid #1d4ed8;
+    outline: 3px solid #16291f;
     outline-offset: 2px;
   }
 
@@ -717,7 +704,7 @@
     .header-card { align-items: flex-start; padding: 20px; }
     .header-left { min-width: 0; }
     .header-titles p { display: none; }
-    .live-status-pill { flex: 0 0 auto; }
+    .sync-status { flex: 0 0 auto; }
     .nav-tabs { margin-inline: -12px; border-radius: 0; padding-inline: 12px; }
     .nav-tab-btn { flex: 0 0 auto; }
     .text-field { font-size: 16px; }
@@ -732,7 +719,7 @@
   /* Toast */
   .hub-alert-toast {
     position: fixed; bottom: 24px; right: 24px;
-    background: #0f172a; color: white;
+    background: #1b2620; color: white;
     padding: 16px 24px; border-radius: 50px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     display: flex; align-items: center; gap: 12px;
@@ -741,31 +728,49 @@
   }
   .hub-alert-toast.show { transform: translateY(0); opacity: 1; }
 </style>
+<link rel="stylesheet" href="assets/theme.css">
 </head>
-<body>
+<body class="caretaker">
 
 <div class="container">
   <!-- Header Card -->
   <div class="header-card">
     <div class="header-left">
-      <img class="patient-avatar" src="https://media.clero.so/content_items/2026/08/Grandma_Portrait.jpg" alt="Grandma">
+      <img class="patient-avatar" src="assets/people/grandma.jpg" alt="">
       <div class="header-titles">
-        <h1>Grandma's Care Hub</h1>
-        <p>Family management for photos, time-based medications, errands & check-ins</p>
+        <h1><span data-resident>Margaret</span>'s care</h1>
+        <p>Photos, medication and reminders for <span data-resident>Margaret</span>'s frame</p>
       </div>
     </div>
-    <div class="live-status-pill">
-      <span class="dot"></span>
-      <span id="hubStatusText">Frame Active</span>
-    </div>
+    <p class="sync-status" id="hubStatusText">Waiting for the frame</p>
   </div>
+
+  <!-- Escalation alert: shown when the resident misses a check-in after the retry -->
+  <section class="care-alert" id="careAlert" role="alert" hidden>
+    <i data-lucide="phone-call" style="width:26px;height:26px;"></i>
+    <div class="care-alert-copy">
+      <strong id="careAlertTitle"><span data-resident>Margaret</span> has not answered</strong>
+      <span id="careAlertText">She missed the check-in and the reminder. Please call her.</span>
+    </div>
+    <button class="btn-secondary" type="button" onclick="dismissCareAlert()">Mark as handled</button>
+  </section>
+
+  <!-- Activity log: every response, reminder and escalation from the frame -->
+  <section class="card activity-card" aria-labelledby="activityTitle">
+    <div class="card-header">
+      <div class="card-title" id="activityTitle"><i data-lucide="list-checks" style="width:22px;height:22px;"></i> Today's activity</div>
+      <button class="card-edit-btn" type="button" onclick="clearActivity()">Clear</button>
+    </div>
+    <ol class="activity-log" id="activityLog" aria-live="polite"></ol>
+    <p class="activity-empty" id="activityEmpty">Nothing yet today. Send a check-in and <span data-resident>Margaret</span>'s answer will show here.</p>
+    <p class="activity-note">Medication entries show what <span data-resident>Margaret</span> marked on the frame. They do not confirm that a dose was taken.</p>
+  </section>
 
   <!-- Navigation Tabs -->
   <div class="nav-tabs">
-    <button class="nav-tab-btn active" type="button" onclick="switchTab('photos', this)"><i data-lucide="image" style="width:18px;height:18px;"></i> Photo Queue</button>
-    <button class="nav-tab-btn" type="button" onclick="switchTab('pills', this)"><i data-lucide="pill" style="width:18px;height:18px;"></i> Pills &amp; Schedule</button>
-    <button class="nav-tab-btn" type="button" onclick="switchTab('errands', this)"><i data-lucide="check-square" style="width:18px;height:18px;"></i> Errands &amp; Reminders</button>
-    <button class="nav-tab-btn" type="button" onclick="switchTab('ai', this)"><i data-lucide="bot" style="width:18px;height:18px;"></i> AI Assistant</button>
+    <button class="nav-tab-btn active" type="button" onclick="switchTab('photos', this)"><i data-lucide="image" style="width:18px;height:18px;"></i> Photos</button>
+    <button class="nav-tab-btn" type="button" onclick="switchTab('pills', this)"><i data-lucide="pill" style="width:18px;height:18px;"></i> Medication</button>
+    <button class="nav-tab-btn" type="button" onclick="switchTab('errands', this)"><i data-lucide="calendar-check" style="width:18px;height:18px;"></i> Reminders</button>
   </div>
 
   <!-- ========================================================
@@ -775,69 +780,67 @@
     <div class="card schedule-card">
       <div class="card-header">
         <div>
-          <div class="card-title" style="color:#166534;"><i data-lucide="calendar-clock" style="width:22px;height:22px;color:#16a34a;"></i> Scheduled Check-in Times</div>
-          <p style="font-size:13px; color:#15803d; margin-top:2px;">
-            The system automatically draws a random photo from the queue at these times and sends a live check-in to Grandma.
-          </p>
+          <div class="card-title"><i data-lucide="calendar-clock" style="width:22px;height:22px;"></i> Scheduled check-in times</div>
+          <p class="card-sub">At each time, a photo from the queue is sent to <span data-resident>Margaret</span> with a question about how she is feeling.</p>
         </div>
-        <button class="btn-primary" type="button" style="background:#16a34a; font-size:13px; padding:8px 14px;" onclick="triggerAutoRandomCheckin()">
-          <i data-lucide="shuffle" style="width:14px;height:14px;"></i> Test Random Check-in Now
+        <button class="btn-primary" type="button" id="sendTestCheckinBtn" onclick="sendTestCheckin()">
+          <i data-lucide="send" style="width:16px;height:16px;"></i> Send test check-in
         </button>
       </div>
 
       <div class="schedule-time-list" id="scheduleTimesContainer"></div>
 
       <div class="schedule-time-form">
-        <input class="text-field" id="newScheduleTimeInput" type="text" inputmode="text" placeholder="e.g. 09:30 AM or 04:00 PM" aria-label="New scheduled check-in time">
-        <button class="btn-secondary" type="button" onclick="addNewScheduleTime()"><i data-lucide="plus" style="width:14px;height:14px;"></i> Add Time</button>
+        <input class="text-field" id="newScheduleTimeInput" type="time" aria-label="New scheduled check-in time">
+        <button class="btn-secondary" type="button" onclick="addNewScheduleTime()"><i data-lucide="plus" style="width:16px;height:16px;"></i> Add time</button>
       </div>
     </div>
 
     <div class="card">
       <div class="card-header">
-        <div class="card-title"><i data-lucide="image" style="width:22px;height:22px;color:#2563eb;"></i> Digital Frame Photo Queue</div>
-        <span style="font-size: 13px; color: var(--text-muted);">Use "Send as Check-in Now" to immediately dispatch any photo to Grandma</span>
+        <div class="card-title"><i data-lucide="image" style="width:22px;height:22px;"></i> Photo queue</div>
+        <span class="card-sub">Photos shown on <span data-resident>Margaret</span>'s frame. Use Send now to ask her about one straight away.</span>
       </div>
       <div class="photo-grid-manager" id="photoGridManager"></div>
     </div>
 
     <div class="card">
       <div class="card-header">
-        <div class="card-title"><i data-lucide="upload-cloud" style="width:22px;height:22px;color:#2563eb;"></i> Add New Photo to Queue</div>
+        <div class="card-title"><i data-lucide="upload-cloud" style="width:22px;height:22px;"></i> Add a photo</div>
       </div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div class="form-split">
         <div>
           <input type="file" id="localFileInput" accept="image/*" style="display:none;" onchange="handleLocalFileUpload(event)">
           <div class="file-dropzone" id="photoDropzone" onclick="document.getElementById('localFileInput').click()">
             <div class="dropzone-icon"><i data-lucide="folder-up" style="width:32px;height:32px;"></i></div>
-            <div class="dropzone-text">Drag & drop photo or browse</div>
-            <div class="dropzone-sub">Supports JPG, PNG, WEBP from your computer</div>
+            <div class="dropzone-text">Drag a photo here or browse</div>
+            <div class="dropzone-sub">JPG, PNG or WEBP</div>
           </div>
           <div class="upload-preview-box" id="uploadPreviewBox">
-            <img class="upload-preview-img" id="uploadPreviewImg" src="https://media.clero.so/content_items/2026/08/Family_Picnic_Scene.jpg" alt="Preview">
-            <button class="remove-preview-btn" onclick="clearUploadedFile()"><i data-lucide="x" style="width:14px;height:14px;"></i></button>
+            <img class="upload-preview-img" id="uploadPreviewImg" src="assets/photos/family-picnic-scene.jpg" alt="Photo preview">
+            <button class="remove-preview-btn" type="button" aria-label="Remove photo" onclick="clearUploadedFile()"><i data-lucide="x" style="width:14px;height:14px;"></i></button>
           </div>
           <div class="input-group">
-            <label class="input-label">Or paste Image URL</label>
-            <input class="text-field" id="newPhotoUrl" type="text" placeholder="https://...">
+            <label class="input-label" for="newPhotoUrl">Or paste an image link</label>
+            <input class="text-field" id="newPhotoUrl" type="text" inputmode="url" placeholder="https://">
           </div>
         </div>
 
         <div>
           <div class="input-group">
-            <label class="input-label">Title / Memory Name</label>
-            <input class="text-field" id="newPhotoTitle" type="text" placeholder="e.g. Grandma smiling in the garden">
+            <label class="input-label" for="newPhotoTitle">Title</label>
+            <input class="text-field" id="newPhotoTitle" type="text" placeholder="e.g. In the garden in May">
           </div>
           <div class="input-group">
-            <label class="input-label">Custom Caption (optional - or auto-pick from pool)</label>
-            <input class="text-field" id="newPhotoCaption" type="text" placeholder="Leave blank to pick random caption">
+            <label class="input-label" for="newPhotoCaption">Caption (optional)</label>
+            <input class="text-field" id="newPhotoCaption" type="text" placeholder="Leave blank to use one of your caption ideas">
           </div>
-          <div style="display:flex; align-items:center; gap:10px; margin-bottom:18px;">
-            <input type="checkbox" id="newPhotoStar" style="width:18px; height:18px; cursor:pointer;">
-            <label for="newPhotoStar" style="font-size:14px; font-weight:600; cursor:pointer;">Prioritize immediately as NEXT photo</label>
-          </div>
-          <button class="btn-primary" style="width:100%; padding:14px;" onclick="addNewPhoto()">
-            <i data-lucide="plus" style="width:16px;height:16px;"></i> Add Photo to Grandma's Frame
+          <label class="check-row" for="newPhotoStar">
+            <input type="checkbox" id="newPhotoStar">
+            <span>Show this photo next</span>
+          </label>
+          <button class="btn-primary btn-block" type="button" onclick="addNewPhoto()">
+            <i data-lucide="plus" style="width:16px;height:16px;"></i> Add photo
           </button>
         </div>
       </div>
@@ -845,13 +848,13 @@
 
     <div class="card">
       <div class="card-header">
-        <div class="card-title"><i data-lucide="message-square" style="width:22px;height:22px;color:#2563eb;"></i> Caption Pool</div>
-        <span style="font-size: 13px; color: var(--text-muted);">Randomly paired with photos without custom captions</span>
+        <div class="card-title"><i data-lucide="message-square" style="width:22px;height:22px;"></i> Caption ideas</div>
+        <span class="card-sub">Used for photos you add without a caption</span>
       </div>
       <div class="caption-pool-list" id="captionPoolList"></div>
-      <div style="display:flex; gap:10px;">
-        <input class="text-field" id="newPoolCaptionInput" type="text" placeholder="Add a sweet caption (e.g. 'Thinking of you today!')">
-        <button class="btn-secondary" onclick="addCaptionToPool()"><i data-lucide="plus" style="width:14px;height:14px;"></i> Add to Pool</button>
+      <div class="inline-form">
+        <input class="text-field" id="newPoolCaptionInput" type="text" placeholder="e.g. Thinking of you today" aria-label="New caption idea">
+        <button class="btn-secondary" type="button" onclick="addCaptionToPool()"><i data-lucide="plus" style="width:16px;height:16px;"></i> Add caption</button>
       </div>
     </div>
   </div>
@@ -863,14 +866,12 @@
     <div class="card">
       <div class="card-header">
         <div>
-          <div class="card-title"><i data-lucide="pill" style="width:22px;height:22px;color:#2563eb;"></i> Daily Medication Schedule</div>
-          <p style="font-size:13px; color:var(--text-muted); margin-top:2px;">
-            Organized by intake time slots or view individual pill schedules with uploaded photos. Click "Edit" on any pill to change photo or details.
-          </p>
+          <div class="card-title"><i data-lucide="pill" style="width:22px;height:22px;"></i> Daily medication</div>
+          <p class="card-sub">What to take and when. Select the pencil to change a photo or dose.</p>
         </div>
         <div class="sub-nav-toggle">
-          <button class="sub-toggle-btn active" id="btnTimeView" onclick="switchPillSubView('time')"><i data-lucide="clock" style="width:14px;height:14px;"></i> Time View</button>
-          <button class="sub-toggle-btn" id="btnPillView" onclick="switchPillSubView('pill')"><i data-lucide="table" style="width:14px;height:14px;"></i> Pill View</button>
+          <button class="sub-toggle-btn active" id="btnTimeView" type="button" onclick="switchPillSubView('time')"><i data-lucide="clock" style="width:16px;height:16px;"></i> By time</button>
+          <button class="sub-toggle-btn" id="btnPillView" type="button" onclick="switchPillSubView('pill')"><i data-lucide="list" style="width:16px;height:16px;"></i> By medication</button>
         </div>
       </div>
 
@@ -878,39 +879,37 @@
       <div id="pillsTimeView">
         <div id="timeSlotsContainer"></div>
 
-        <div style="background:#f8fafc; border:2px dashed #cbd5e1; border-radius:18px; padding:18px; margin-top:16px;">
-          <div style="font-weight:700; font-size:14px; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
-            <i data-lucide="clock-plus" style="width:18px;height:18px;color:#2563eb;"></i> Add New Scheduled Time Slot
-          </div>
-          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
-            <div class="input-group" style="flex:1; min-width:200px; margin:0;">
-              <label class="input-label" for="newSlotNameInput">Slot Name / Routine</label>
-              <input class="text-field" id="newSlotNameInput" placeholder="e.g. Morning, Lunch, Snack">
-            </div>
-            <div class="input-group" style="width:190px; margin:0;">
-              <label class="input-label" for="newSlotTimeInput">Actual Scheduled Time</label>
-              <input class="text-field" id="newSlotTimeInput" type="time" aria-label="Actual scheduled time">
-            </div>
-            <div class="input-group" style="width:140px; margin:0;">
-              <label class="input-label" for="newSlotIconSelect">Icon</label>
-              <select class="text-field" id="newSlotIconSelect">
-                <option value="sun">☀️ Sun</option>
-                <option value="sunrise">🌅 Sunrise</option>
-                <option value="sunset">🌙 Sunset</option>
-                <option value="moon">🛌 Moon</option>
-                <option value="clock">⏰ Clock</option>
-                <option value="coffee">☕ Snack</option>
-              </select>
-            </div>
-            <button class="btn-secondary" type="button" onclick="addNewTimeSlot()"><i data-lucide="plus" style="width:14px;height:14px;"></i> Add Slot</button>
-          </div>
-        </div>
-
-        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
-          <button class="btn-primary" style="background:#059669;" onclick="triggerSelectedSlotReminder()">
-            <i data-lucide="bell-ring" style="width:16px;height:16px;"></i> Send Current Time Alert to Grandma's Screen
+        <div class="card-actions">
+          <button class="btn-primary" type="button" id="sendMedicationReminderBtn" onclick="triggerSelectedSlotReminder()">
+            <i data-lucide="bell-ring" style="width:16px;height:16px;"></i> Send medication reminder
           </button>
         </div>
+
+        <section class="card-section" aria-labelledby="addSlotTitle">
+          <h3 class="card-section-title" id="addSlotTitle">Add a time</h3>
+          <div class="slot-form">
+            <div class="input-group">
+              <label class="input-label" for="newSlotNameInput">Name</label>
+              <input class="text-field" id="newSlotNameInput" placeholder="e.g. Lunch">
+            </div>
+            <div class="input-group">
+              <label class="input-label" for="newSlotTimeInput">Time</label>
+              <input class="text-field" id="newSlotTimeInput" type="time">
+            </div>
+            <div class="input-group">
+              <label class="input-label" for="newSlotIconSelect">Icon</label>
+              <select class="text-field" id="newSlotIconSelect">
+                <option value="sun">Sun</option>
+                <option value="sunrise">Sunrise</option>
+                <option value="sunset">Evening</option>
+                <option value="moon">Bedtime</option>
+                <option value="clock">Clock</option>
+                <option value="coffee">Snack</option>
+              </select>
+            </div>
+            <button class="btn-secondary" type="button" onclick="addNewTimeSlot()"><i data-lucide="plus" style="width:16px;height:16px;"></i> Add time</button>
+          </div>
+        </section>
       </div>
 
       <!-- VIEW B: PILL VIEW (EDITABLE) -->
@@ -922,50 +921,50 @@
     <!-- Upload & Add New Pill Card -->
     <div class="card">
       <div class="card-header">
-        <div class="card-title"><i data-lucide="plus-circle" style="width:22px;height:22px;color:#2563eb;"></i> Add New Medication & Photo</div>
+        <div class="card-title"><i data-lucide="plus-circle" style="width:22px;height:22px;"></i> Add a medication</div>
       </div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div class="form-split">
         <div>
           <input type="file" id="pillPhotoInput" accept="image/*" style="display:none;" onchange="handlePillPhotoUpload(event)">
           <div class="file-dropzone" id="pillDropzone" onclick="document.getElementById('pillPhotoInput').click()">
             <div class="dropzone-icon"><i data-lucide="camera" style="width:32px;height:32px;"></i></div>
-            <div class="dropzone-text">Drag & drop pill photo or browse</div>
-            <div class="dropzone-sub">Shows on Caretaker Hub & Grandma's screen</div>
+            <div class="dropzone-text">Drag a photo of the medication here or browse</div>
+            <div class="dropzone-sub">Shown here and on <span data-resident>Margaret</span>'s frame</div>
           </div>
 
           <div class="upload-preview-box" id="pillUploadPreviewBox">
-            <img class="upload-preview-img" id="pillUploadPreviewImg" src="assets/pills/lisinopril.svg" alt="Pill Preview">
-            <button class="remove-preview-btn" onclick="clearPillUploadFile()"><i data-lucide="x" style="width:14px;height:14px;"></i></button>
+            <img class="upload-preview-img" id="pillUploadPreviewImg" src="assets/pills/lisinopril.svg" alt="Medication photo preview">
+            <button class="remove-preview-btn" type="button" aria-label="Remove photo" onclick="clearPillUploadFile()"><i data-lucide="x" style="width:14px;height:14px;"></i></button>
           </div>
 
           <div class="input-group">
-            <label class="input-label">Pill Category Icon</label>
+            <label class="input-label" for="newPillIconSelect">Type</label>
             <select class="text-field" id="newPillIconSelect">
-              <option value="heart-pulse">❤️ Heart & Pressure</option>
-              <option value="sun">☀️ Vitamin D3</option>
-              <option value="shield">🛡️ Calcium & Minerals</option>
-              <option value="droplet">💧 Water & Hydration</option>
-              <option value="capsule">💊 Capsule / Antibiotic</option>
-              <option value="sparkles">✨ Supplement</option>
+              <option value="heart-pulse">Blood pressure</option>
+              <option value="sun">Vitamin D</option>
+              <option value="shield">Calcium and minerals</option>
+              <option value="droplet">Water</option>
+              <option value="capsule">Capsule</option>
+              <option value="sparkles">Supplement</option>
             </select>
           </div>
         </div>
 
         <div>
           <div class="input-group">
-            <label class="input-label">Medication Name</label>
-            <input class="text-field" id="newPillNameInput" placeholder="e.g. Lisinopril / Blood Pressure">
+            <label class="input-label" for="newPillNameInput">Name</label>
+            <input class="text-field" id="newPillNameInput" placeholder="e.g. Lisinopril 10 mg">
           </div>
           <div class="input-group">
-            <label class="input-label">Dosage & Instructions</label>
-            <input class="text-field" id="newPillDosageInput" placeholder="e.g. 1 Tablet · With full glass of water">
+            <label class="input-label" for="newPillDosageInput">Dose and instructions</label>
+            <input class="text-field" id="newPillDosageInput" placeholder="e.g. 1 tablet with water">
           </div>
           <div class="input-group">
-            <label class="input-label">Scheduled Time Slots</label>
-            <div id="timeSlotsCheckboxes" style="display:flex; gap:12px; flex-wrap:wrap; margin-top:6px;"></div>
+            <span class="input-label">When to take it</span>
+            <div class="check-list" id="timeSlotsCheckboxes"></div>
           </div>
-          <button class="btn-primary" style="width:100%; padding:14px; margin-top:8px;" onclick="addNewPillWithSchedule()">
-            <i data-lucide="plus" style="width:16px;height:16px;"></i> Save Medication to Schedule
+          <button class="btn-primary btn-block" type="button" onclick="addNewPillWithSchedule()">
+            <i data-lucide="plus" style="width:16px;height:16px;"></i> Save medication
           </button>
         </div>
       </div>
@@ -979,42 +978,38 @@
     <div class="card">
       <div class="card-header">
         <div>
-          <div class="card-title"><i data-lucide="check-square" style="width:22px;height:22px;color:#2563eb;"></i> Grandma's Errands & Assigned Routine</div>
-          <p style="font-size:13px; color:var(--text-muted); margin-top:2px;">
-            Set responsible family members and configure relative reminders for both the caretaker and patient.
-          </p>
+          <div class="card-title"><i data-lucide="calendar-check" style="width:22px;height:22px;"></i> Reminders and routines</div>
+          <p class="card-sub">Each reminder has a family member responsible. Both they and <span data-resident>Margaret</span> get a reminder before it.</p>
         </div>
       </div>
       <div class="caretaker-roster" id="caretakerRoster" aria-label="Responsible caretakers"></div>
       <div class="errand-list" id="errandList"></div>
 
-      <!-- Add New Errand Form -->
-      <div style="background:#f8fafc; border:1px solid var(--border); border-radius:20px; padding:22px;">
-        <div style="font-weight:800; font-size:16px; margin-bottom:14px; color:var(--text-dark);">
-          <i data-lucide="calendar-plus" style="width:18px;height:18px;vertical-align:middle;color:#2563eb;"></i> Add New Errand with Assigned Caretaker
-        </div>
+      <!-- Add a reminder -->
+      <section class="card-section" aria-labelledby="addErrandTitle">
+        <h3 class="card-section-title" id="addErrandTitle">Add a reminder</h3>
 
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:14px;">
+        <div class="form-split form-split-tight">
           <div class="input-group" style="margin:0;">
-            <label class="input-label">Errand Title</label>
-            <input class="text-field" id="newErrandTitle" placeholder="e.g. Afternoon Garden Walk">
+            <label class="input-label" for="newErrandTitle">What</label>
+            <input class="text-field" id="newErrandTitle" placeholder="e.g. Afternoon walk in the garden">
           </div>
           <div class="input-group" style="margin:0;">
-            <label class="input-label">Scheduled Time</label>
-            <input class="text-field" id="newErrandTime" placeholder="e.g. Today at 3:30 PM">
+            <label class="input-label" for="newErrandTime">When</label>
+            <input class="text-field" id="newErrandTime" placeholder="e.g. Today at 15:30">
           </div>
         </div>
 
-        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:16px; margin-bottom:18px;">
+        <div class="form-split form-split-3">
           <div class="input-group" style="margin:0;">
-            <label class="input-label">Responsible Caretaker</label>
+            <label class="input-label" for="newErrandCaretaker">Family member responsible</label>
             <select class="text-field" id="newErrandCaretaker">
-              <option value="Alex">Alex (Son · Primary)</option>
-              <option value="Elena">Elena (Daughter · Secondary)</option>
+              <option value="Alex">Alex, son</option>
+              <option value="Elena">Elena, daughter</option>
             </select>
           </div>
           <div class="input-group" style="margin:0;">
-            <label class="input-label">Remind Caretaker</label>
+            <label class="input-label" for="newErrandCaretakerReminder">Remind them</label>
             <select class="text-field" id="newErrandCaretakerReminder">
               <option value="30m">30 minutes before</option>
               <option value="15m">15 minutes before</option>
@@ -1023,7 +1018,7 @@
             </select>
           </div>
           <div class="input-group" style="margin:0;">
-            <label class="input-label">Remind Patient (Grandma)</label>
+            <label class="input-label" for="newErrandPatientReminder">Remind <span data-resident>Margaret</span></label>
             <select class="text-field" id="newErrandPatientReminder">
               <option value="15m">15 minutes before</option>
               <option value="10m">10 minutes before</option>
@@ -1036,42 +1031,23 @@
         <div style="display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;">
           <label class="recurring-checkbox" for="newErrandRecurring">
             <input id="newErrandRecurring" type="checkbox">
-            <span>Recurring Routine (repeats daily / weekly)</span>
+            <span>Repeats every day</span>
           </label>
           <button class="btn-primary" type="button" onclick="addNewErrand()">
-            <i data-lucide="plus" style="width:16px;height:16px;"></i> Schedule Errand & Reminders
+            <i data-lucide="plus" style="width:16px;height:16px;"></i> Save reminder
           </button>
         </div>
-      </div>
+      </section>
     </div>
   </div>
 
-  <!-- ========================================================
-       TAB 4: AI ASSISTANT
-       ======================================================== -->
-  <div class="tab-content" id="tab-ai">
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title"><i data-lucide="bot" style="width:22px;height:22px;color:#2563eb;"></i> AI Care Assistant</div>
-      </div>
-      <div class="chat-stream" id="chatStream" style="height:260px; overflow-y:auto; display:flex; flex-direction:column; gap:12px; margin-bottom:16px;">
-        <div class="chat-msg bot" style="background:#f1f5f9; padding:12px 16px; border-radius:16px; font-size:14px; max-width:80%;">
-          Hello! I'm monitoring Grandma's medication schedule and check-ins. You can ask me what pills she has scheduled or review errands!
-        </div>
-      </div>
-      <div style="display:flex; gap:10px;">
-        <input class="text-field" id="aiInput" placeholder="Ask AI: 'What pills are scheduled for morning?'" autocomplete="off">
-        <button class="btn-primary" onclick="sendAiMessage()"><i data-lucide="arrow-right" style="width:16px;height:16px;"></i> Ask</button>
-      </div>
-    </div>
-  </div>
 </div>
 
 <!-- Edit Pill Modal -->
 <div class="edit-modal-overlay" id="editPillModal" role="dialog" aria-modal="true" aria-labelledby="editPillModalTitle">
   <div class="edit-modal-card">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-      <div id="editPillModalTitle" style="font-family:'Fraunces',serif; font-size:20px; font-weight:700;">Edit Medication &amp; Photo</div>
+      <div id="editPillModalTitle" class="edit-modal-title">Edit medication</div>
       <button class="icon-button" type="button" aria-label="Close edit medication dialog" onclick="closeEditModal()"><i data-lucide="x" style="width:20px;height:20px;"></i></button>
     </div>
 
@@ -1080,42 +1056,42 @@
     <input type="file" id="editPillPhotoFileInput" accept="image/*" style="display:none;" onchange="handleEditPillPhotoUpload(event)">
     <div class="file-dropzone" id="editPillDropzone" onclick="document.getElementById('editPillPhotoFileInput').click()">
       <div class="dropzone-icon"><i data-lucide="image" style="width:28px;height:28px;"></i></div>
-      <div class="dropzone-text">Upload new photo for this pill</div>
-      <div class="dropzone-sub">Drag & drop or click to replace image</div>
+      <div class="dropzone-text">Upload a new photo</div>
+      <div class="dropzone-sub">Drag a photo here or browse</div>
     </div>
 
     <div style="display:flex; align-items:center; gap:14px; margin-bottom:16px;">
       <img id="editPillPhotoPreview" src="assets/pills/lisinopril.svg" alt="Medication preview" style="width:64px; height:64px; border-radius:14px; object-fit:cover; border:2px solid var(--border);">
-      <input class="text-field" id="editPillPhotoUrl" placeholder="Or paste image URL" style="flex:1;">
+      <input class="text-field" id="editPillPhotoUrl" placeholder="Or paste an image link" aria-label="Image link" style="flex:1;">
     </div>
 
     <div class="input-group">
-      <label class="input-label">Medication Name</label>
+      <label class="input-label" for="editPillName">Name</label>
       <input class="text-field" id="editPillName">
     </div>
     <div class="input-group">
-      <label class="input-label">Dosage</label>
+      <label class="input-label" for="editPillDosage">Dose and instructions</label>
       <input class="text-field" id="editPillDosage">
     </div>
     <div class="input-group">
-      <label class="input-label">Icon</label>
+      <label class="input-label" for="editPillIcon">Type</label>
       <select class="text-field" id="editPillIcon">
-        <option value="heart-pulse">❤️ Heart & Pressure</option>
-        <option value="sun">☀️ Vitamin D3</option>
-        <option value="shield">🛡️ Calcium & Minerals</option>
-        <option value="droplet">💧 Water & Hydration</option>
-        <option value="capsule">💊 Capsule</option>
-        <option value="sparkles">✨ Supplement</option>
+        <option value="heart-pulse">Blood pressure</option>
+        <option value="sun">Vitamin D</option>
+        <option value="shield">Calcium and minerals</option>
+        <option value="droplet">Water</option>
+        <option value="capsule">Capsule</option>
+        <option value="sparkles">Supplement</option>
       </select>
     </div>
     <div class="input-group">
-      <label class="input-label">Time Slots</label>
-      <div id="editTimeSlotsCheckboxes" style="display:flex; gap:10px; flex-wrap:wrap;"></div>
+      <span class="input-label">When to take it</span>
+      <div class="check-list" id="editTimeSlotsCheckboxes"></div>
     </div>
 
     <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
       <button class="btn-secondary" type="button" onclick="closeEditModal()">Cancel</button>
-      <button class="btn-primary" type="button" onclick="saveEditedPill()"><i data-lucide="check" style="width:16px;height:16px;"></i> Save Changes</button>
+      <button class="btn-primary" type="button" onclick="saveEditedPill()"><i data-lucide="check" style="width:16px;height:16px;"></i> Save changes</button>
     </div>
   </div>
 </div>
@@ -1124,15 +1100,15 @@
 <div class="edit-modal-overlay" id="editPhotoModal" role="dialog" aria-modal="true" aria-labelledby="editPhotoModalTitle">
   <form class="edit-modal-card" onsubmit="saveEditedPhoto(event)">
     <div class="edit-modal-heading">
-      <div class="edit-modal-title" id="editPhotoModalTitle">Edit Photo</div>
+      <div class="edit-modal-title" id="editPhotoModalTitle">Edit photo</div>
       <button class="icon-button" type="button" aria-label="Close edit photo dialog" onclick="closeEditPhotoModal()">
         <i data-lucide="x" style="width:20px;height:20px;"></i>
       </button>
     </div>
     <input type="hidden" id="editPhotoId">
     <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
-      <img id="editPhotoPreview" src="https://media.clero.so/content_items/2026/08/Family_Picnic_Scene.jpg" alt="Current photo preview" width="88" height="72" style="width:88px;height:72px;border-radius:14px;object-fit:cover;background:#e2e8f0;">
-      <p style="font-size:13px;line-height:1.5;color:var(--text-muted);">Changes appear on Grandma's frame immediately after saving.</p>
+      <img id="editPhotoPreview" src="assets/photos/family-picnic-scene.jpg" alt="Current photo preview" width="88" height="72" style="width:88px;height:72px;border-radius:14px;object-fit:cover;background:#dce3dd;">
+      <p class="card-sub">Changes show on <span data-resident>Margaret</span>'s frame as soon as you save.</p>
     </div>
     <div class="input-group">
       <label class="input-label" for="editPhotoTitle">Title</label>
@@ -1143,16 +1119,16 @@
       <textarea class="text-field" id="editPhotoCaption" maxlength="240" rows="3" style="resize:vertical;"></textarea>
     </div>
     <div class="input-group">
-      <label class="input-label" for="editPhotoUrl">Image URL</label>
-      <input class="text-field" id="editPhotoUrl" type="text" inputmode="url" required placeholder="https://...">
+      <label class="input-label" for="editPhotoUrl">Image link</label>
+      <input class="text-field" id="editPhotoUrl" type="text" inputmode="url" required placeholder="https://">
     </div>
-    <label style="display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700;cursor:pointer;">
-      <input id="editPhotoPrioritized" type="checkbox" style="width:18px;height:18px;">
-      Make this the next photo on Grandma's frame
+    <label class="check-row" for="editPhotoPrioritized">
+      <input id="editPhotoPrioritized" type="checkbox">
+      <span>Show this photo next on <span data-resident>Margaret</span>'s frame</span>
     </label>
     <div class="modal-actions">
       <button class="btn-secondary" type="button" onclick="closeEditPhotoModal()">Cancel</button>
-      <button class="btn-primary" type="submit"><i data-lucide="check" style="width:16px;height:16px;"></i> Save Photo</button>
+      <button class="btn-primary" type="submit"><i data-lucide="check" style="width:16px;height:16px;"></i> Save photo</button>
     </div>
   </form>
 </div>
@@ -1161,63 +1137,70 @@
 <div class="edit-modal-overlay" id="editErrandModal" role="dialog" aria-modal="true" aria-labelledby="editErrandModalTitle">
   <form class="edit-modal-card" onsubmit="saveEditedErrand(event)">
     <div class="edit-modal-heading">
-      <div class="edit-modal-title" id="editErrandModalTitle">Edit Errand</div>
+      <div class="edit-modal-title" id="editErrandModalTitle">Edit reminder</div>
       <button class="icon-button" type="button" aria-label="Close edit errand dialog" onclick="closeEditErrandModal()">
         <i data-lucide="x" style="width:20px;height:20px;"></i>
       </button>
     </div>
     <input type="hidden" id="editErrandId">
     <div class="input-group">
-      <label class="input-label" for="editErrandTitle">Title</label>
+      <label class="input-label" for="editErrandTitle">What</label>
       <input class="text-field" id="editErrandTitle" maxlength="120" required>
     </div>
     <div class="input-group">
-      <label class="input-label" for="editErrandTime">Scheduled time</label>
+      <label class="input-label" for="editErrandTime">When</label>
       <input class="text-field" id="editErrandTime" maxlength="100" required>
     </div>
     <div class="input-group">
       <label class="recurring-checkbox" for="editErrandRecurring">
         <input id="editErrandRecurring" type="checkbox">
-        <span>Recurring Routine (repeats daily / weekly)</span>
+        <span>Repeats every day</span>
       </label>
     </div>
     <div class="input-group">
-      <label class="input-label" for="editErrandCaretaker">Assigned caretaker</label>
+      <label class="input-label" for="editErrandCaretaker">Family member responsible</label>
       <select class="text-field" id="editErrandCaretaker">
-        <option value="Alex">Alex (Son · Primary)</option>
-        <option value="Elena">Elena (Daughter · Secondary)</option>
+        <option value="Alex">Alex, son</option>
+        <option value="Elena">Elena, daughter</option>
       </select>
     </div>
     <div class="input-group">
-      <label class="input-label" for="editErrandCaretakerReminder">Remind caretaker</label>
+      <label class="input-label" for="editErrandCaretakerReminder">Remind them</label>
       <select class="text-field" id="editErrandCaretakerReminder"></select>
     </div>
     <div class="input-group">
-      <label class="input-label" for="editErrandPatientReminder">Remind Grandma</label>
+      <label class="input-label" for="editErrandPatientReminder">Remind <span data-resident>Margaret</span></label>
       <select class="text-field" id="editErrandPatientReminder"></select>
     </div>
     <div class="modal-actions">
       <button class="btn-secondary" type="button" onclick="closeEditErrandModal()">Cancel</button>
-      <button class="btn-primary" type="submit"><i data-lucide="check" style="width:16px;height:16px;"></i> Save Errand</button>
+      <button class="btn-primary" type="submit"><i data-lucide="check" style="width:16px;height:16px;"></i> Save reminder</button>
     </div>
   </form>
 </div>
 
 <!-- Toast -->
-<div class="hub-alert-toast" id="hubToast">
-  <i data-lucide="bell" style="width:24px;height:24px;"></i>
-  <span id="toastMsg">Update received from Grandma's frame!</span>
+<div class="hub-alert-toast" id="hubToast" role="status" aria-live="polite">
+  <i data-lucide="bell" style="width:22px;height:22px;"></i>
+  <span id="toastMsg">Update received from the frame</span>
 </div>
 
 <script>
   const careBus = window.BroadcastChannel ? new BroadcastChannel('care_companion_bus') : null;
   const CARE_STORAGE_KEYS = {
-    photos: 'care_companion_photos_v1',
-    pills: 'care_companion_pills_v1',
-    errands: 'care_companion_errands_v1',
-    checkinTimes: 'care_companion_checkin_times_v1',
-    lastScheduledCheckin: 'care_companion_last_scheduled_checkin_v1'
+    photos: 'care_companion_photos_v3',
+    pills: 'care_companion_pills_v3',
+    errands: 'care_companion_errands_v3',
+    checkinTimes: 'care_companion_checkin_times_v3',
+    lastScheduledCheckin: 'care_companion_last_scheduled_checkin_v3',
+    captions: 'care_companion_captions_v3',
+    activity: 'care_companion_activity_v3'
   };
+  const HOUSEHOLD = window.CARE_HOUSEHOLD || { resident: 'Margaret', family: {} };
+  const RESIDENT = HOUSEHOLD.resident;
+  // 24 hour UK time everywhere.
+  const formatTime = (date = new Date()) => date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+  const MORNING_SLOT = 'Morning (08:00)';
   let lastDialogTrigger = null;
 
   function loadStoredArray(key, fallback) {
@@ -1282,54 +1265,54 @@
   // MEDICATIONS DATA WITH WORKING PHOTO URLS & ICONS
   // ========================================================
   const publishedPillPhotoUrls = {
-    'Blood Pressure (Lisinopril)': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300',
-    'Vitamin D3 & Omega': 'https://images.unsplash.com/photo-1550572017-ed24d35eb7b3?w=300',
-    'Calcium & Zinc Support': 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=300',
-    'Glass of Fresh Water': 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=500&auto=format&fit=crop&q=80'
+    'Lisinopril 10 mg': 'assets/pills/lisinopril.jpg',
+    'Vitamin D3': 'assets/pills/vitamin-d3.svg',
+    'Calcium and zinc': 'assets/pills/calcium.jpg',
+    'Glass of water': 'assets/pills/fresh-water.svg'
   };
   const pillPhotoFallbacks = {
-    'Blood Pressure (Lisinopril)': 'assets/pills/lisinopril.svg',
-    'Vitamin D3 & Omega': 'assets/pills/vitamin-d3.svg',
-    'Calcium & Zinc Support': 'assets/pills/calcium.svg',
-    'Glass of Fresh Water': 'assets/pills/fresh-water.svg'
+    'Lisinopril 10 mg': 'assets/pills/lisinopril.svg',
+    'Vitamin D3': 'assets/pills/vitamin-d3.svg',
+    'Calcium and zinc': 'assets/pills/calcium.svg',
+    'Glass of water': 'assets/pills/fresh-water.svg'
   };
 
   let pillDatabase = loadStoredArray(CARE_STORAGE_KEYS.pills, [
     {
       id: 'pill_1',
-      name: 'Blood Pressure (Lisinopril)',
-      dosage: '1 Red Tablet · 10mg',
-      photoUrl: publishedPillPhotoUrls['Blood Pressure (Lisinopril)'],
-      fallbackPhotoUrl: pillPhotoFallbacks['Blood Pressure (Lisinopril)'],
+      name: 'Lisinopril 10 mg',
+      dosage: '1 tablet, for blood pressure',
+      photoUrl: publishedPillPhotoUrls['Lisinopril 10 mg'],
+      fallbackPhotoUrl: pillPhotoFallbacks['Lisinopril 10 mg'],
       iconName: 'heart-pulse',
-      times: ['Morning (08:00 AM)']
+      times: [MORNING_SLOT]
     },
     {
       id: 'pill_2',
-      name: 'Vitamin D3 & Omega',
-      dosage: '1 Yellow Capsule',
-      photoUrl: publishedPillPhotoUrls['Vitamin D3 & Omega'],
-      fallbackPhotoUrl: pillPhotoFallbacks['Vitamin D3 & Omega'],
+      name: 'Vitamin D3',
+      dosage: '1 capsule, 1000 IU',
+      photoUrl: publishedPillPhotoUrls['Vitamin D3'],
+      fallbackPhotoUrl: pillPhotoFallbacks['Vitamin D3'],
       iconName: 'sun',
-      times: ['Morning (08:00 AM)', 'Evening (07:00 PM)']
+      times: [MORNING_SLOT, 'Evening (19:00)']
     },
     {
       id: 'pill_3',
-      name: 'Calcium & Zinc Support',
-      dosage: '1 White Tablet',
-      photoUrl: publishedPillPhotoUrls['Calcium & Zinc Support'],
-      fallbackPhotoUrl: pillPhotoFallbacks['Calcium & Zinc Support'],
+      name: 'Calcium and zinc',
+      dosage: '1 tablet',
+      photoUrl: publishedPillPhotoUrls['Calcium and zinc'],
+      fallbackPhotoUrl: pillPhotoFallbacks['Calcium and zinc'],
       iconName: 'shield',
-      times: ['Morning (08:00 AM)', 'Bedtime (10:00 PM)']
+      times: [MORNING_SLOT, 'Bedtime (22:00)']
     },
     {
       id: 'pill_4',
-      name: 'Glass of Fresh Water',
-      dosage: 'Full 250ml glass',
-      photoUrl: publishedPillPhotoUrls['Glass of Fresh Water'],
-      fallbackPhotoUrl: pillPhotoFallbacks['Glass of Fresh Water'],
+      name: 'Glass of water',
+      dosage: '250 ml, with your tablets',
+      photoUrl: publishedPillPhotoUrls['Glass of water'],
+      fallbackPhotoUrl: pillPhotoFallbacks['Glass of water'],
       iconName: 'droplet',
-      times: ['Morning (08:00 AM)', 'Afternoon (01:00 PM)', 'Evening (07:00 PM)']
+      times: [MORNING_SLOT, 'Afternoon (13:00)', 'Evening (19:00)']
     }
   ]).map(pill => publishedPillPhotoUrls[pill.name]
     ? {
@@ -1341,10 +1324,10 @@
   );
 
   let timeSlots = [
-    { slotName: 'Morning (08:00 AM)', icon: 'sunrise', color: '#0284c7' },
-    { slotName: 'Afternoon (01:00 PM)', icon: 'sun', color: '#d97706' },
-    { slotName: 'Evening (07:00 PM)', icon: 'sunset', color: '#7c3aed' },
-    { slotName: 'Bedtime (10:00 PM)', icon: 'moon', color: '#475569' }
+    { slotName: MORNING_SLOT, icon: 'sunrise' },
+    { slotName: 'Afternoon (13:00)', icon: 'sun' },
+    { slotName: 'Evening (19:00)', icon: 'sunset' },
+    { slotName: 'Bedtime (22:00)', icon: 'moon' }
   ];
 
   // Drag and Drop Utility
@@ -1372,7 +1355,7 @@
     }, false);
   }
 
-  function readImageFileAsThumbnail(file, onReady) {
+  function readImageFileAsThumbnail(file, onReady, maxSide = 320) {
     if (!file || !file.type.startsWith('image/')) {
       showToast('Please choose an image file.');
       return;
@@ -1382,7 +1365,6 @@
       const source = event.target.result;
       const image = new Image();
       image.onload = () => {
-        const maxSide = 320;
         const scale = Math.min(1, maxSide / Math.max(image.naturalWidth, image.naturalHeight));
         const canvas = document.createElement('canvas');
         canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
@@ -1434,23 +1416,22 @@
       card.innerHTML = `
         <div class="time-slot-header">
           <div class="time-slot-title">
-            <i data-lucide="${slot.icon}" style="width:20px;height:20px;color:${slot.color};"></i>
+            <i data-lucide="${slot.icon}" style="width:20px;height:20px;"></i>
             <span>${slot.slotName}</span>
           </div>
-          <span class="time-slot-badge">${pillsInSlot.length} items to take</span>
+          <span class="time-slot-badge">${pillsInSlot.length} ${pillsInSlot.length === 1 ? 'item' : 'items'}</span>
         </div>
         <div class="slot-pill-grid">
-          ${pillsInSlot.length === 0 ? '<div style="font-size:13px; color:var(--text-muted); font-style:italic;">No medications scheduled</div>' : ''}
+          ${pillsInSlot.length === 0 ? '<div class="card-sub">Nothing scheduled</div>' : ''}
           ${pillsInSlot.map(p => `
             <div class="slot-pill-item">
               <img class="slot-pill-photo" src="${escapeHtml(p.photoUrl)}" alt="${escapeHtml(p.name)}" width="48" height="48" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='${escapeHtml(p.fallbackPhotoUrl || 'assets/pills/lisinopril.svg')}'">
-              <div style="flex:1;">
-                <div style="font-weight:700; font-size:14px; color:var(--text-dark);">${escapeHtml(p.name)}</div>
-                <div style="font-size:12px; color:var(--text-muted);">${escapeHtml(p.dosage)}</div>
-                <div class="pill-icon-tag"><i data-lucide="${p.iconName || 'pill'}" style="width:12px;height:12px;"></i></div>
+              <div class="slot-pill-copy">
+                <div class="slot-pill-name">${escapeHtml(p.name)}</div>
+                <div class="slot-pill-dose">${escapeHtml(p.dosage)}</div>
               </div>
-              <button style="background:none; border:none; cursor:pointer; color:#2563eb; padding:4px;" onclick="openEditModal('${p.id}')">
-                <i data-lucide="pencil" style="width:14px;height:14px;"></i>
+              <button class="icon-button" type="button" aria-label="Edit ${escapeHtml(p.name)}" onclick="openEditModal('${p.id}')">
+                <i data-lucide="pencil" style="width:16px;height:16px;"></i>
               </button>
             </div>
           `).join('')}
@@ -1466,8 +1447,8 @@
     const box = document.getElementById('timeSlotsCheckboxes');
     if (!box) return;
     box.innerHTML = timeSlots.map((s, idx) => `
-      <label style="display:flex; align-items:center; gap:6px; font-size:13px; font-weight:600; cursor:pointer;">
-        <input type="checkbox" value="${s.slotName}" ${idx === 0 ? 'checked' : ''}> <i data-lucide="${s.icon}" style="width:14px;height:14px;"></i> ${s.slotName}
+      <label class="check-row">
+        <input type="checkbox" value="${s.slotName}" ${idx === 0 ? 'checked' : ''}> <span>${s.slotName}</span>
       </label>
     `).join('');
     refreshIcons();
@@ -1482,17 +1463,13 @@
       return;
     }
 
-    const [hourValue, minuteValue] = scheduledTime.split(':').map(Number);
-    const period = hourValue >= 12 ? 'PM' : 'AM';
-    const displayHour = String(hourValue % 12 || 12).padStart(2, '0');
-    const displayTime = `${displayHour}:${String(minuteValue).padStart(2, '0')} ${period}`;
-    const name = `${routine} (${displayTime})`;
+    const name = `${routine} (${scheduledTime})`;
 
-    timeSlots.push({ slotName: name, icon: icon, color: '#2563eb' });
+    timeSlots.push({ slotName: name, icon });
     document.getElementById('newSlotNameInput').value = '';
     document.getElementById('newSlotTimeInput').value = '';
     renderTimeSlotsView();
-    showToast(`Time slot "${name}" added!`);
+    showToast(`Added ${name}.`);
   }
 
   // Render Pill View
@@ -1509,19 +1486,18 @@
           <div style="flex:1;">
             <div class="pill-inv-title">${escapeHtml(p.name)}</div>
             <div class="pill-inv-dosage">${escapeHtml(p.dosage)}</div>
-            <div class="pill-icon-tag"><i data-lucide="${p.iconName || 'pill'}" style="width:12px;height:12px;"></i> Icon Assigned</div>
           </div>
         </div>
-        <div style="font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Scheduled Times:</div>
+        <div class="input-label">When to take it</div>
         <div class="pill-time-chips">
           ${p.times.map(t => `<span class="time-chip"><i data-lucide="clock" style="width:12px;height:12px;"></i> ${t}</span>`).join('')}
         </div>
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; border-top:1px solid #f1f5f9; padding-top:8px;">
-          <button style="background:none; border:none; color:#2563eb; font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:4px;" onclick="openEditModal('${p.id}')">
-            <i data-lucide="pencil" style="width:14px;height:14px;"></i> Edit Pill & Photo
+        <div class="inline-actions">
+          <button class="text-button" type="button" onclick="openEditModal('${p.id}')">
+            <i data-lucide="pencil" style="width:16px;height:16px;"></i> Edit
           </button>
-          <button style="background:none; border:none; color:#ef4444; font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:4px;" onclick="deletePillItem('${p.id}')">
-            <i data-lucide="trash-2" style="width:14px;height:14px;"></i> Remove
+          <button class="text-button text-button-danger" type="button" onclick="deletePillItem('${p.id}')">
+            <i data-lucide="trash-2" style="width:16px;height:16px;"></i> Remove
           </button>
         </div>
       `;
@@ -1546,8 +1522,8 @@
 
     const slotBox = document.getElementById('editTimeSlotsCheckboxes');
     slotBox.innerHTML = timeSlots.map(s => `
-      <label style="display:flex; align-items:center; gap:6px; font-size:13px; font-weight:600; cursor:pointer;">
-        <input type="checkbox" value="${s.slotName}" ${pill.times.includes(s.slotName) ? 'checked' : ''}> ${s.slotName}
+      <label class="check-row">
+        <input type="checkbox" value="${s.slotName}" ${pill.times.includes(s.slotName) ? 'checked' : ''}> <span>${s.slotName}</span>
       </label>
     `).join('');
 
@@ -1588,12 +1564,12 @@
     renderTimeSlotsView();
     renderPillInventoryView();
     syncPillsToReceiver();
-    showToast(`Updated "${pill.name}" with new photo and schedule!`);
+    showToast(`Saved changes to ${pill.name}.`);
   }
 
   function addNewPillWithSchedule() {
     const name = document.getElementById('newPillNameInput').value.trim();
-    const dosage = document.getElementById('newPillDosageInput').value.trim() || '1 Tablet';
+    const dosage = document.getElementById('newPillDosageInput').value.trim() || '1 tablet';
     const photo = uploadedPillPhotoBase64 || 'assets/pills/lisinopril.svg';
     const icon = document.getElementById('newPillIconSelect').value;
 
@@ -1603,11 +1579,11 @@
     });
 
     if (!name) {
-      alert('Please enter medication name');
+      showToast('Add the medication name first.');
       return;
     }
     if (selectedTimes.length === 0) {
-      alert('Please select at least one scheduled time slot');
+      showToast('Pick at least one time for this medication.');
       return;
     }
 
@@ -1623,7 +1599,7 @@
     renderTimeSlotsView();
     renderPillInventoryView();
     syncPillsToReceiver();
-    showToast(`"${name}" saved to schedule!`);
+    showToast(`${name} added to the schedule.`);
 
     document.getElementById('newPillNameInput').value = '';
     document.getElementById('newPillDosageInput').value = '';
@@ -1635,11 +1611,11 @@
     renderTimeSlotsView();
     renderPillInventoryView();
     syncPillsToReceiver();
-    showToast('Medication removed');
+    showToast('Medication removed.');
   }
 
   function triggerSelectedSlotReminder() {
-    const morningPills = pillDatabase.filter(p => p.times.includes('Morning (08:00 AM)'));
+    const morningPills = pillDatabase.filter(p => p.times.includes(MORNING_SLOT));
     const pillsToSend = morningPills.length > 0 ? morningPills : pillDatabase;
 
     if (careBus) {
@@ -1648,11 +1624,12 @@
         pills: pillsToSend
       });
     }
-    showToast('Morning pill alert dispatched to Grandma\'s screen with photos!');
+    showToast(`Medication reminder sent to ${RESIDENT}'s frame.`);
+    logActivity('sent', 'Sent the 08:00 medication reminder');
   }
 
   function syncPillsToReceiver() {
-    const morningPills = pillDatabase.filter(p => p.times.includes('Morning (08:00 AM)'));
+    const morningPills = pillDatabase.filter(p => p.times.includes(MORNING_SLOT));
     storeArray(CARE_STORAGE_KEYS.pills, pillDatabase);
     if (careBus) {
       careBus.postMessage({
@@ -1666,45 +1643,44 @@
   // PHOTOS MANAGEMENT WITH IMMEDIATE & SCHEDULED CHECK-INS
   // ========================================================
   let photos = loadStoredArray(CARE_STORAGE_KEYS.photos, [
-    { id: 1, src: 'https://media.clero.so/content_items/2026/08/Family_Picnic_Scene.jpg', title: 'Meadow Picnic', caption: 'Sunny afternoon memories with the grandkids', prioritized: true },
-    { id: 2, src: 'https://media.clero.so/content_items/2026/08/Beach_Vacation_Scene.jpg', title: 'Beach Vacation', caption: 'Golden hour waves and warm sea breeze', prioritized: false },
-    { id: 3, src: 'https://media.clero.so/content_items/2026/08/Family_Dinner_Scene.jpg', title: 'Family Dinner', caption: 'Delicious home cooking and hearty laughs', prioritized: false },
-    { id: 4, src: 'https://media.clero.so/content_items/2026/08/Reading_Time_Scene.jpg', title: 'Fireplace Reading', caption: 'Cozy evenings by the crackling fire', prioritized: false },
-    { id: 5, src: 'https://media.clero.so/content_items/2026/08/Christmas_Dinner_Scene.jpg', title: 'Christmas Celebration', caption: 'Warm holiday hugs and joyful smiles', prioritized: false }
+    { id: 1, src: 'assets/photos/family-picnic-scene.jpg', title: 'In the park', caption: 'Sophie racing everyone to the swings', prioritized: true },
+    { id: 2, src: 'assets/photos/beach-vacation-scene.jpg', title: 'Autumn walk', caption: 'Wrapped up warm on Sunday', prioritized: false },
+    { id: 3, src: 'assets/photos/family-dinner-scene.jpg', title: 'Lazy Saturday', caption: 'Sophie telling Alex a very long story', prioritized: false },
+    { id: 4, src: 'assets/photos/reading-time-scene.jpg', title: 'Story time', caption: 'Her favourite book, again', prioritized: false },
+    { id: 5, src: 'assets/photos/christmas-dinner-scene.jpg', title: 'All three of us', caption: 'Elena, Alex and Sophie say hello', prioritized: false }
   ]);
 
   let scheduledCheckinTimes = loadStoredArray(CARE_STORAGE_KEYS.checkinTimes, [
-    '09:30 AM',
-    '02:00 PM',
-    '06:30 PM'
+    '09:30',
+    '14:00',
+    '18:30'
   ]);
 
-  let captionPool = [
-    "Thinking of you with lots of love!",
-    "Hope your morning is as wonderful as you are!",
-    "Sending the biggest family hugs today!",
-    "Remembering this lovely day together!",
-    "Smile Grandma, we love you so much!"
-  ];
+  let captionPool = loadStoredArray(CARE_STORAGE_KEYS.captions, [
+    'Thinking of you today',
+    'We loved this afternoon together',
+    'Hope you are having a good morning',
+    'See you on Sunday',
+    'Do you remember this day?'
+  ]);
 
   let uploadedFileBase64 = null;
 
   function handleLocalFileUpload(e) {
     const file = e.target.files ? e.target.files[0] : e;
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(evt) {
-      uploadedFileBase64 = evt.target.result;
+    // Resize before storing: full-size phone photos are several MB and overflow browser storage.
+    readImageFileAsThumbnail(file, (resized) => {
+      uploadedFileBase64 = resized;
       document.getElementById('uploadPreviewImg').src = uploadedFileBase64;
       document.getElementById('uploadPreviewBox').classList.add('show');
       const cleanName = file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
       if (!document.getElementById('newPhotoTitle').value) {
         document.getElementById('newPhotoTitle').value = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
       }
-      showToast('Photo loaded from computer!');
+      showToast('Photo ready to add.');
       refreshIcons();
-    };
-    reader.readAsDataURL(file);
+    }, 1400);
   }
 
   function clearUploadedFile() {
@@ -1719,30 +1695,30 @@
     grid.innerHTML = '';
     photos.forEach(p => {
       const safeId = escapeHtml(String(p.id));
-      const safeTitle = escapeHtml(p.title || 'Family Memory');
+      const safeTitle = escapeHtml(p.title || 'Family photo');
       const safeCaption = escapeHtml(p.caption || '');
       const safeSrc = escapeHtml(p.src || '');
       const card = document.createElement('div');
       card.className = `photo-item-card ${p.prioritized ? 'prioritized' : ''}`;
       card.innerHTML = `
-        ${p.prioritized ? '<div class="priority-badge-corner"><i data-lucide="star" style="width:12px;height:12px;fill:white;"></i> NEXT UP</div>' : ''}
+        ${p.prioritized ? '<div class="priority-badge-corner"><i data-lucide="star" style="width:14px;height:14px;" aria-hidden="true"></i> Plays next</div>' : ''}
         <img class="photo-item-img" src="${safeSrc}" alt="${safeTitle}" loading="lazy" decoding="async">
         <div class="photo-item-body">
           <div class="photo-item-title">${safeTitle}</div>
-          <div class="photo-item-caption">"${safeCaption}"</div>
+          <div class="photo-item-caption">${safeCaption}</div>
           <div class="photo-card-actions">
             <button class="btn-send-now" type="button" onclick="sendSpecificPhotoCheckinNow('${safeId}')">
-              <i data-lucide="send" style="width:14px;height:14px;"></i> Send as Check-in Now
+              <i data-lucide="send" style="width:16px;height:16px;"></i> Send now
             </button>
             <div class="photo-action-row">
               <button class="star-priority-btn ${p.prioritized ? 'active' : ''}" type="button" onclick="setPriorityPhoto('${safeId}')">
-                <i data-lucide="star" style="width:12px;height:12px;${p.prioritized ? 'fill:white;' : ''}"></i> ${p.prioritized ? 'Prioritized' : 'Make Next'}
+                <i data-lucide="star" style="width:16px;height:16px;"></i> ${p.prioritized ? 'Plays next' : 'Play next'}
               </button>
               <button class="card-edit-btn" type="button" onclick="openEditPhotoModal('${safeId}', this)">
-                <i data-lucide="pencil" style="width:12px;height:12px;"></i> Edit
+                <i data-lucide="pencil" style="width:16px;height:16px;"></i> Edit
               </button>
-              <button class="delete-card-btn" type="button" aria-label="Delete ${safeTitle}" style="background:none; border:none; color:#ef4444; cursor:pointer; font-size:12px; display:flex; align-items:center; gap:2px;" onclick="deletePhoto('${safeId}')">
-                <i data-lucide="trash-2" style="width:12px;height:12px;"></i> Delete
+              <button class="text-button text-button-danger" type="button" aria-label="Delete ${safeTitle}" onclick="deletePhoto('${safeId}')">
+                <i data-lucide="trash-2" style="width:16px;height:16px;"></i> Delete
               </button>
             </div>
           </div>
@@ -1755,17 +1731,18 @@
 
   function dispatchPhotoCheckin(photo, toastMessage) {
     if (!photo) return false;
-    const caption = photo.caption || `Hi Grandma! Look at this memory: ${photo.title}. How are you feeling today?`;
+    const caption = photo.caption || `${photo.title}. How are you feeling today?`;
     if (careBus) {
       careBus.postMessage({
         type: 'TRIGGER_CHECKIN',
         senderName: 'Alex',
-        avatarUrl: 'https://media.clero.so/content_items/2026/08/Son_Portrait.jpg',
+        avatarUrl: 'assets/people/alex.jpg',
         photoUrl: photo.src,
         caption
       });
     }
     showToast(toastMessage);
+    logActivity('sent', `Sent "${photo.title}" to ${RESIDENT}'s frame`);
     return true;
   }
 
@@ -1775,7 +1752,7 @@
       showToast('That photo is no longer in the queue.');
       return;
     }
-    dispatchPhotoCheckin(photo, `Dispatched "${photo.title}" as a live check-in to Grandma's screen!`);
+    dispatchPhotoCheckin(photo, `Check-in sent with "${photo.title}".`);
   }
 
   function triggerAutoRandomCheckin(scheduledTime = '') {
@@ -1784,8 +1761,18 @@
       return;
     }
     const photo = photos[Math.floor(Math.random() * photos.length)];
-    const prefix = scheduledTime ? `Scheduled ${scheduledTime} check-in` : 'Random check-in';
-    dispatchPhotoCheckin(photo, `${prefix} dispatched with "${photo.title}"!`);
+    const prefix = scheduledTime ? `${scheduledTime} check-in` : 'Check-in';
+    dispatchPhotoCheckin(photo, `${prefix} sent with "${photo.title}".`);
+  }
+
+  // Test check-ins use the photo that plays next, so the demo is predictable.
+  function sendTestCheckin() {
+    const photo = photos.find(item => item.prioritized) || photos[0];
+    if (!photo) {
+      showToast('Add a photo before sending a check-in.');
+      return;
+    }
+    dispatchPhotoCheckin(photo, `Test check-in sent with "${photo.title}".`);
   }
 
   function normalizeScheduleTime(value) {
@@ -1802,12 +1789,8 @@
       if (meridiem === 'PM') hour += 12;
     }
 
-    const displayHour = hour % 12 || 12;
-    const displayMeridiem = hour >= 12 ? 'PM' : 'AM';
-    return {
-      key: `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`,
-      display: `${String(displayHour).padStart(2, '0')}:${String(minute).padStart(2, '0')} ${displayMeridiem}`
-    };
+    const key = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+    return { key, display: key };
   }
 
   function renderScheduledTimes() {
@@ -1815,7 +1798,7 @@
     if (!container) return;
     container.innerHTML = scheduledCheckinTimes.map((time, index) => `
       <div class="schedule-time-chip">
-        <i data-lucide="clock" style="width:14px;height:14px;color:#16a34a;"></i>
+        <i data-lucide="clock" style="width:16px;height:16px;"></i>
         <span>${escapeHtml(time)}</span>
         <button class="del-time-btn" type="button" aria-label="Remove ${escapeHtml(time)}" onclick="removeScheduleTime(${index})"><i data-lucide="x" style="width:13px;height:13px;"></i></button>
       </div>
@@ -1827,7 +1810,7 @@
     const input = document.getElementById('newScheduleTimeInput');
     const normalized = normalizeScheduleTime(input.value);
     if (!normalized) {
-      showToast('Enter a valid time, such as 09:30 AM or 16:00.');
+      showToast('Choose a time, such as 09:30.');
       input.focus();
       return;
     }
@@ -1843,7 +1826,7 @@
     storeArray(CARE_STORAGE_KEYS.checkinTimes, scheduledCheckinTimes);
     input.value = '';
     renderScheduledTimes();
-    showToast(`Check-in scheduled at ${normalized.display}!`);
+    showToast(`Check-in scheduled at ${normalized.display}.`);
   }
 
   function removeScheduleTime(index) {
@@ -1877,7 +1860,7 @@
   function setPriorityPhoto(id) {
     photos.forEach(p => { p.prioritized = (String(p.id) === String(id)); });
     renderPhotoGrid();
-    showToast('Prioritized photo updated! It will be the next photo on Grandma\'s frame.');
+    showToast(`This photo plays next on ${RESIDENT}'s frame.`);
     syncPhotosToReceiver();
   }
 
@@ -1935,17 +1918,17 @@
     closeEditPhotoModal();
     renderPhotoGrid();
     syncPhotosToReceiver();
-    showToast(`Updated "${title}" on Grandma's frame.`);
+    showToast(`Updated "${title}" on ${RESIDENT}'s frame.`);
   }
 
   function addNewPhoto() {
     let finalSrc = uploadedFileBase64 || document.getElementById('newPhotoUrl').value.trim();
-    const title = document.getElementById('newPhotoTitle').value.trim() || 'Family Memory';
+    const title = document.getElementById('newPhotoTitle').value.trim() || 'Family photo';
     let caption = document.getElementById('newPhotoCaption').value.trim();
     const isStar = document.getElementById('newPhotoStar').checked;
 
     if (!finalSrc) {
-      alert('Please select a file from your computer or enter an image URL');
+      showToast('Choose a photo from your computer or paste an image link.');
       return;
     }
 
@@ -1960,7 +1943,7 @@
 
     photos.unshift({ id: Date.now(), src: finalSrc, title, caption, prioritized: isStar });
     renderPhotoGrid();
-    showToast('New photo added to Grandma\'s frame queue!');
+    showToast(`Photo added to ${RESIDENT}'s frame.`);
     syncPhotosToReceiver();
 
     clearUploadedFile();
@@ -1976,7 +1959,7 @@
     captionPool.forEach((c, idx) => {
       const item = document.createElement('div');
       item.className = 'caption-pool-item';
-      item.innerHTML = `<span>"${c}"</span><button class="del-caption-btn" onclick="deleteCaptionFromPool(${idx})"><i data-lucide="x" style="width:14px;height:14px;"></i></button>`;
+      item.innerHTML = `<span>${escapeHtml(c)}</span><button class="del-caption-btn" type="button" aria-label="Remove caption" onclick="deleteCaptionFromPool(${idx})"><i data-lucide="x" style="width:14px;height:14px;"></i></button>`;
       list.appendChild(item);
     });
     refreshIcons();
@@ -1988,11 +1971,13 @@
     if (!val) return;
     captionPool.push(val);
     input.value = '';
+    storeArray(CARE_STORAGE_KEYS.captions, captionPool);
     renderCaptionPool();
   }
 
   function deleteCaptionFromPool(idx) {
     captionPool.splice(idx, 1);
+    storeArray(CARE_STORAGE_KEYS.captions, captionPool);
     renderCaptionPool();
   }
 
@@ -2009,17 +1994,17 @@
   const caretakerProfiles = {
     Alex: {
       name: 'Alex',
-      role: 'Son · Primary',
-      label: 'Alex (Son · Primary)',
-      avatar: 'https://media.clero.so/content_items/2026/08/Son_Portrait.jpg',
-      fallbackAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=160&h=160&fit=crop&crop=face'
+      role: HOUSEHOLD.family?.Alex?.role || 'Son-in-law, main contact',
+      label: 'Alex, son',
+      avatar: 'assets/people/alex.jpg',
+      fallbackAvatar: 'assets/people/alex-fallback.jpg'
     },
     Elena: {
       name: 'Elena',
-      role: 'Daughter · Secondary',
-      label: 'Elena (Daughter · Secondary)',
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=160&h=160&fit=crop&crop=face',
-      fallbackAvatar: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=160&h=160&fit=crop&crop=face'
+      role: HOUSEHOLD.family?.Elena?.role || 'Daughter',
+      label: 'Elena, daughter',
+      avatar: 'assets/people/elena.jpg',
+      fallbackAvatar: 'assets/people/elena.jpg'
     }
   };
   const caretakerReminderOptions = [
@@ -2039,8 +2024,8 @@
     {
       id: 'e1',
       icon: 'footprints',
-      title: 'Afternoon Garden Walk',
-      time: 'Today at 3:30 PM',
+      title: 'Afternoon walk in the garden',
+      time: 'Today at 15:30',
       caretaker: 'Alex',
       caretakerReminder: '15m',
       patientReminder: '5m',
@@ -2050,8 +2035,8 @@
     {
       id: 'e2',
       icon: 'phone-call',
-      title: 'Video Call with Grandchildren',
-      time: 'Tomorrow at 10:00 AM',
+      title: 'Video call with the grandchildren',
+      time: 'Tomorrow at 10:00',
       caretaker: 'Elena',
       caretakerReminder: '30m',
       patientReminder: '15m',
@@ -2096,18 +2081,18 @@
           <div class="errand-item-main">
             <div class="errand-icon-badge"><i data-lucide="${e.icon}" style="width:24px;height:24px;"></i></div>
             <div>
-              <div style="font-weight:800; font-size:16px; color:var(--text-dark);">${escapeHtml(e.title)}</div>
-              <div style="font-size:13px; color:var(--text-muted);">${escapeHtml(e.time)}</div>
+              <div class="errand-title-text">${escapeHtml(e.title)}</div>
+              <div class="card-sub">${escapeHtml(e.time)}</div>
             </div>
           </div>
           <div class="errand-actions">
             <button class="card-edit-btn" type="button" onclick="openEditErrandModal('${safeId}', this)">
-              <i data-lucide="pencil" style="width:13px;height:13px;"></i> Edit
+              <i data-lucide="pencil" style="width:16px;height:16px;"></i> Edit
             </button>
-            <button class="btn-secondary" type="button" style="padding:8px 12px; font-size:12px;" onclick="triggerDemoErrandAlert('${safeId}')">
-              <i data-lucide="bell-ring" style="width:13px;height:13px;color:#7c3aed;"></i> Test Alert
+            <button class="btn-secondary btn-small" type="button" onclick="triggerDemoErrandAlert('${safeId}')">
+              <i data-lucide="bell-ring" style="width:16px;height:16px;"></i> Send now
             </button>
-            <button type="button" aria-label="Delete ${escapeHtml(e.title)}" style="background:none; border:none; color:#ef4444; cursor:pointer; padding:8px;" onclick="deleteErrand('${safeId}')">
+            <button class="icon-button icon-button-danger" type="button" aria-label="Delete ${escapeHtml(e.title)}" onclick="deleteErrand('${safeId}')">
               <i data-lucide="trash-2" style="width:16px;height:16px;"></i>
             </button>
           </div>
@@ -2121,19 +2106,19 @@
         </div>
         <div class="errand-control-grid">
           <div class="input-group">
-            <label class="input-label" for="caretaker-${safeId}">Responsible caretaker</label>
+            <label class="input-label" for="caretaker-${safeId}">Family member responsible</label>
             <select class="text-field" id="caretaker-${safeId}" onchange="updateErrandSetting('${safeId}', 'caretaker', this.value)">
               ${Object.entries(caretakerProfiles).map(([key, candidate]) => `<option value="${key}" ${key === e.caretaker ? 'selected' : ''}>${candidate.label}</option>`).join('')}
             </select>
           </div>
           <div class="input-group">
-            <label class="input-label" for="caretaker-reminder-${safeId}">Remind caretaker</label>
+            <label class="input-label" for="caretaker-reminder-${safeId}">Remind them</label>
             <select class="text-field" id="caretaker-reminder-${safeId}" onchange="updateErrandSetting('${safeId}', 'caretakerReminder', this.value)">
               ${renderReminderOptions(caretakerReminderOptions, e.caretakerReminder)}
             </select>
           </div>
           <div class="input-group">
-            <label class="input-label" for="patient-reminder-${safeId}">Remind Grandma</label>
+            <label class="input-label" for="patient-reminder-${safeId}">Remind ${escapeHtml(RESIDENT)}</label>
             <select class="text-field" id="patient-reminder-${safeId}" onchange="updateErrandSetting('${safeId}', 'patientReminder', this.value)">
               ${renderReminderOptions(patientReminderOptions, e.patientReminder)}
             </select>
@@ -2168,7 +2153,7 @@
     const recurring = document.getElementById('newErrandRecurring').checked;
 
     if (!title) {
-      alert('Please enter errand title');
+      showToast('Add what the reminder is for first.');
       return;
     }
 
@@ -2186,7 +2171,7 @@
 
     renderErrands();
     syncErrandsToReceiver();
-    showToast(`Errand "${title}" assigned to ${caretaker}!`);
+    showToast(`Reminder saved. ${caretaker} is responsible.`);
 
     document.getElementById('newErrandTitle').value = '';
     document.getElementById('newErrandTime').value = '';
@@ -2224,7 +2209,7 @@
     const title = document.getElementById('editErrandTitle').value.trim();
     const time = document.getElementById('editErrandTime').value.trim();
     if (!title || !time) {
-      showToast('Add both an errand title and scheduled time.');
+      showToast('Add what the reminder is for and when.');
       return;
     }
 
@@ -2274,31 +2259,8 @@
       recurring: Boolean(e.recurring)
     };
     careBus.postMessage({ type: 'TRIGGER_ERRAND', errand: errandPayload, ...errandPayload });
-    showToast(`Dispatched errand alert for "${e.title}" to Grandma's screen!`);
-  }
-
-  // AI Chat
-  const chatStream = document.getElementById('chatStream');
-  const aiInput = document.getElementById('aiInput');
-
-  function addAiMessage(text, type) {
-    const msg = document.createElement('div');
-    msg.className = `chat-msg ${type}`;
-    msg.style.cssText = type === 'user' ? 'background:#2563eb; color:white; align-self:flex-end; padding:12px 16px; border-radius:16px; font-size:14px; max-width:80%;' : 'background:#f1f5f9; padding:12px 16px; border-radius:16px; font-size:14px; max-width:80%;';
-    msg.textContent = text;
-    chatStream.appendChild(msg);
-    chatStream.scrollTop = chatStream.scrollHeight;
-  }
-
-  function sendAiMessage() {
-    const q = aiInput.value.trim();
-    if (!q) return;
-    aiInput.value = '';
-    addAiMessage(q, 'user');
-    setTimeout(() => {
-      let reply = "Grandma's medication schedule has 4 active prescriptions. Her morning pills include Lisinopril, Vitamin D3 & Omega, Calcium, and Water. Errands are assigned to Alex and Elena.";
-      addAiMessage(reply, 'bot');
-    }, 500);
+    showToast(`Reminder sent to ${RESIDENT}'s frame.`);
+    logActivity('sent', `Sent the "${e.title}" reminder`);
   }
 
   function showToast(msg) {
@@ -2308,22 +2270,112 @@
     setTimeout(() => toast.classList.remove('show'), 3500);
   }
 
+  // ========================================================
+  // ACTIVITY LOG & ESCALATION ALERT
+  // ========================================================
+  const ACTIVITY_KEY = CARE_STORAGE_KEYS.activity;
+  const ACTIVITY_ICONS = { response: 'message-circle-heart', pills: 'pill', errand: 'calendar-check', sent: 'send', retry: 'bell-ring', escalation: 'phone-call' };
+  let activity = loadStoredArray(ACTIVITY_KEY, []);
+
+  function nowLabel() {
+    return formatTime();
+  }
+
+  function logActivity(kind, text) {
+    activity.unshift({ kind, text, time: nowLabel() });
+    activity = activity.slice(0, 30);
+    storeArray(ACTIVITY_KEY, activity);
+    renderActivity();
+  }
+
+  function renderActivity() {
+    const list = document.getElementById('activityLog');
+    list.innerHTML = activity.map(item => `
+      <li class="activity-item activity-${escapeHtml(item.kind)}">
+        <span class="activity-icon"><i data-lucide="${ACTIVITY_ICONS[item.kind] || 'dot'}" style="width:16px;height:16px;"></i></span>
+        <span class="activity-text">${escapeHtml(item.text)}</span>
+        <time class="activity-time">${escapeHtml(item.time)}</time>
+      </li>
+    `).join('');
+    document.getElementById('activityEmpty').hidden = activity.length > 0;
+    refreshIcons();
+  }
+
+  function clearActivity() {
+    activity = [];
+    storeArray(ACTIVITY_KEY, activity);
+    renderActivity();
+  }
+
+  function playAlertTone() {
+    try {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      [0, 0.35, 0.7].forEach(start => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.frequency.value = 740;
+        gain.gain.setValueAtTime(0.25, audioCtx.currentTime + start);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + start + 0.25);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(audioCtx.currentTime + start); osc.stop(audioCtx.currentTime + start + 0.25);
+      });
+    } catch (_error) {
+      // Audio can be blocked until the page has had a click. The banner still shows.
+    }
+  }
+
+  function showCareAlert(message) {
+    document.getElementById('careAlertText').textContent = message;
+    document.getElementById('careAlert').hidden = false;
+    refreshIcons();
+    playAlertTone();
+  }
+
+  function dismissCareAlert() {
+    document.getElementById('careAlert').hidden = true;
+  }
+
   if (careBus) {
     careBus.onmessage = (e) => {
       const data = e.data;
       if (!data || typeof data !== 'object') return;
+      if (['CHECKIN_RESPONSE', 'PILLS_TAKEN', 'ERRAND_ACKNOWLEDGED', 'ESCALATION_ALERT', 'RECEIVER_READY', 'REQUEST_SYNC'].includes(data.type)) {
+        markFrameSeen();
+      }
       if (data.type === 'CHECKIN_RESPONSE') {
-        showToast(`Grandma responded "${data.status}"!`);
+        showToast(`${RESIDENT} answered: ${data.status}.`);
+        logActivity('response', `${RESIDENT} answered the check-in: ${data.status}`);
+        dismissCareAlert();
       } else if (data.type === 'PILLS_TAKEN') {
-        showToast('Grandma confirmed taking all her medications!');
+        showToast(`${RESIDENT} marked her medication as taken.`);
+        logActivity('pills', `${RESIDENT} marked her medication as taken (${(data.medications || []).length} items)`);
       } else if (data.type === 'ERRAND_ACKNOWLEDGED') {
-        showToast(`Grandma acknowledged "${data.title}" at ${data.timestamp}.`);
+        showToast(`${RESIDENT} saw the reminder for "${data.title}".`);
+        logActivity('errand', `${RESIDENT} saw the reminder for "${data.title}"`);
+      } else if (data.type === 'DEMO_ACTION') {
+        runDemoAction(data.action);
+      } else if (data.type === 'ESCALATION_ALERT') {
+        if (data.stage === 1) {
+          logActivity('retry', `No answer yet. Reminded ${RESIDENT} again on the frame.`);
+        } else {
+          logActivity('escalation', 'No answer after the reminder. Alerted the family.');
+          showCareAlert(data.message || 'She missed the check-in and the reminder. Please call her.');
+        }
       } else if (data.type === 'REQUEST_SYNC') {
         syncAllState();
-      } else if (data.type === 'RECEIVER_READY') {
-        document.getElementById('hubStatusText').textContent = 'Frame Active · Synced';
       }
     };
+  }
+
+  function markFrameSeen() {
+    document.getElementById('hubStatusText').textContent = `Frame last connected at ${formatTime()}`;
+  }
+
+  // Presenter controls on the demo launcher send these, so the resident's frame stays free of demo buttons.
+  function runDemoAction(action) {
+    if (action === 'checkin') sendTestCheckin();
+    if (action === 'medication') triggerSelectedSlotReminder();
+    if (action === 'reminder' && errands[0]) triggerDemoErrandAlert(errands[0].id);
   }
 
   document.getElementById('editPhotoUrl').addEventListener('input', (event) => {
@@ -2342,10 +2394,7 @@
 
   document.addEventListener('keydown', (event) => {
     const activeDialog = document.querySelector('.edit-modal-overlay.active');
-    if (!activeDialog) {
-      if (event.key === 'Enter' && document.activeElement === aiInput) sendAiMessage();
-      return;
-    }
+    if (!activeDialog) return;
     if (event.key === 'Escape') {
       if (activeDialog.id === 'editPillModal') closeEditModal();
       if (activeDialog.id === 'editPhotoModal') closeEditPhotoModal();
@@ -2373,6 +2422,7 @@
   setupDragDrop('editPillDropzone', handleEditPillPhotoUpload);
 
   // Init
+  renderActivity();
   renderPhotoGrid();
   renderScheduledTimes();
   renderCaptionPool();

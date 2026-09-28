@@ -1,0 +1,379 @@
+/*
+  Care Companion theme: "Garden Room".
+  Loaded after each page's own styles. Forest ink for structure and actions,
+  cool sage paper for surfaces, marigold as the one accent for "needs attention".
+  Brick is reserved for the missed check-in alert. Green confirms.
+  Type: Lexend for headings, Atkinson Hyperlegible (built for low vision) for everything else.
+  Radius rule: controls 12px, cards and dialogs 20px, full rounding only for status chips.
+  Elevation: --shadow for cards, --shadow-dialog for dialogs. No other shadows.
+*/
+
+:root {
+  --ink: #1f3a2d;
+  --ink-deep: #16291f;
+  --ink-soft: #2e5241;
+  --paper: #f3f5f2;
+  --surface: #fbfcfa;
+  --tint: #e4ebe5;
+  --line: #dce3dd;
+  --text: #1b2620;
+  --muted: #56625a;
+  --marigold: #e2a33a;
+  --marigold-deep: #8a5c12;
+  --marigold-wash: #fbefd6;
+  --success: #2f7a52;
+  --brick: #b3452f;
+  --brick-wash: #f6e3de;
+  --ease: cubic-bezier(.16, 1, .3, 1);
+  --shadow: 0 1px 2px rgba(27, 38, 32, .05), 0 12px 32px -18px rgba(27, 38, 32, .25);
+  --shadow-dialog: 0 20px 48px rgba(27, 38, 32, .24);
+  --radius-control: 12px;
+  --radius-card: 20px;
+}
+
+:is(h1, h2, h3, .card-title, .edit-modal-title, .takeover-title, .caption-title, .sender-name) {
+  font-family: 'Lexend', 'Atkinson Hyperlegible', sans-serif !important;
+  letter-spacing: -0.015em;
+}
+
+button, input, select, textarea { font-family: inherit; }
+
+:is(button, a, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--marigold) !important;
+  outline-offset: 2px;
+}
+
+/* Buttons never wrap their labels. */
+:is(.btn-primary, .btn-secondary, .btn-send-now, .card-edit-btn, .star-priority-btn, .takeover-tap-btn, .done-pills-btn, .checkin-tts-badge, .nav-tab-btn, .text-button) {
+  white-space: nowrap;
+}
+
+/* ======================= Caretaker panel ======================= */
+
+body.caretaker {
+  background: var(--paper);
+  color: var(--text);
+  font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.caretaker .container { max-width: 1080px; padding: 28px 20px 40px; }
+
+.caretaker .header-card {
+  background: var(--ink);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 24px 28px;
+}
+.caretaker .header-titles h1 { font-size: clamp(22px, 3vw, 28px); font-weight: 600; }
+.caretaker .header-titles p { color: #c9d6cd; font-size: 15px; }
+.caretaker .patient-avatar { border-color: var(--marigold); }
+.caretaker .sync-status { white-space: nowrap; }
+
+.caretaker .card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+.caretaker .card-title { font-size: 20px; font-weight: 600; color: var(--text); }
+
+.caretaker .nav-tabs {
+  background: var(--tint);
+  border-radius: 16px;
+  padding: 6px;
+  gap: 4px;
+}
+.caretaker .nav-tab-btn {
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--muted);
+  transition: background .2s var(--ease), color .2s var(--ease);
+}
+.caretaker .nav-tab-btn:hover { color: var(--text); }
+.caretaker .nav-tab-btn.active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(27, 38, 32, .12); }
+
+.caretaker .btn-primary,
+.caretaker .btn-send-now {
+  background: var(--ink) !important;
+  color: var(--surface) !important;
+  border: 0;
+  border-radius: 12px;
+  font-weight: 700;
+  box-shadow: none;
+  transition: background .2s var(--ease), transform .2s var(--ease);
+}
+.caretaker :is(.btn-primary, .btn-send-now):hover { background: var(--ink-soft) !important; transform: translateY(-1px); }
+.caretaker :is(.btn-primary, .btn-send-now, .btn-secondary, .card-edit-btn, .star-priority-btn):active { transform: scale(.98); }
+
+.caretaker .btn-secondary {
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-weight: 700;
+}
+.caretaker .btn-secondary:hover { background: var(--tint); }
+
+.caretaker .text-field {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 16px;
+}
+.caretaker .text-field::placeholder { color: #75817a; }
+.caretaker .text-field:focus { border-color: var(--ink); box-shadow: 0 0 0 4px rgba(31, 58, 45, .12); outline: none; }
+.caretaker .input-label { color: var(--text); font-size: 13px; letter-spacing: .02em; }
+
+.caretaker .schedule-card { background: var(--surface) !important; border-color: var(--line) !important; }
+.caretaker .schedule-time-chip { background: var(--tint); border-color: transparent; }
+
+.caretaker .photo-item-card { border-radius: 16px; border: 1px solid var(--line); background: var(--surface); }
+.caretaker .photo-item-card.prioritized { border: 2px solid var(--marigold); box-shadow: 0 10px 30px -18px rgba(138, 92, 18, .6); }
+.caretaker .priority-badge-corner { background: var(--marigold); color: var(--text); }
+.caretaker .priority-badge-corner svg { fill: var(--text) !important; }
+.caretaker .star-priority-btn.active { background: var(--marigold); color: var(--text); border-color: var(--marigold); }
+.caretaker .star-priority-btn.active svg { fill: var(--text) !important; }
+.caretaker .photo-item-title { font-size: 16px; }
+.caretaker .photo-item-caption { color: var(--muted); font-size: 14px; }
+
+.caretaker .file-dropzone { background: var(--paper); border: 2px dashed #b9c6bc; border-radius: 16px; }
+.caretaker .file-dropzone:hover, .caretaker .file-dropzone.dragover { border-color: var(--ink); background: var(--tint); }
+
+.caretaker .hub-alert-toast { background: var(--ink); color: var(--surface); border-radius: 14px; }
+
+/* Missed check-in alert */
+.care-alert {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 18px 22px;
+  border-radius: 20px;
+  background: var(--brick-wash);
+  border: 2px solid var(--brick);
+  color: var(--brick);
+  animation: alert-in .45s var(--ease) both;
+}
+.care-alert[hidden] { display: none; }
+.care-alert-copy strong { display: block; font-family: 'Lexend', sans-serif; font-size: 18px; color: #6f2618; }
+.care-alert-copy span { color: #6f2618; }
+@keyframes alert-in { from { opacity: 0; transform: translateY(-6px); } }
+
+/* Activity log */
+.activity-card .card-header { margin-bottom: 8px; }
+.activity-log { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; max-height: 260px; overflow-y: auto; }
+.activity-item {
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--tint);
+}
+.activity-item:last-child { border-bottom: 0; }
+.activity-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; background: var(--tint); color: var(--ink); }
+.activity-response .activity-icon, .activity-pills .activity-icon, .activity-errand .activity-icon { background: #e3efe7; color: var(--success); }
+.activity-retry .activity-icon { background: var(--marigold-wash); color: var(--marigold-deep); }
+.activity-escalation .activity-icon { background: var(--brick-wash); color: var(--brick); }
+.activity-escalation .activity-text { color: #6f2618; font-weight: 700; }
+.activity-time { color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+.activity-empty { color: var(--muted); margin: 4px 0 0; }
+.activity-empty[hidden] { display: none; }
+
+@media (max-width: 640px) {
+  .caretaker .container { padding: 16px 14px 32px; }
+  .caretaker .header-card { padding: 18px; border-radius: 16px; }
+  .caretaker .header-titles p { display: none; }
+  .care-alert { grid-template-columns: auto 1fr; }
+  .care-alert .btn-secondary { grid-column: 1 / -1; }
+}
+
+/* ======================= Care receiver (tablet) ======================= */
+
+body.receiver {
+  background: #121714;
+  font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
+}
+
+.receiver .frame-time,
+.receiver .caption-pill {
+  background: rgba(18, 23, 20, .58);
+  border-color: rgba(251, 252, 250, .16);
+}
+.receiver .time-text { font-family: 'Lexend', sans-serif; font-size: 26px; font-weight: 600; }
+.receiver .date-text { font-size: 15px; }
+/* A small, quiet caption so the photo stays the focus. */
+.receiver .caption-pill { padding: 10px 16px; border-radius: 12px; max-width: min(420px, 100%); }
+.receiver .caption-title { font-size: 18px; line-height: 1.25; }
+.receiver .caption-sub { font-size: 14px; line-height: 1.35; margin-top: 2px; }
+
+.receiver .takeover-overlay { background: rgba(18, 23, 20, .72); }
+.receiver .takeover-card { background: var(--surface); color: var(--text); border-radius: 28px; }
+.receiver .takeover-title { font-size: clamp(26px, 4vw, 36px); color: var(--text); }
+.receiver .takeover-sub { color: var(--muted); font-size: 18px; }
+.receiver .takeover-badge { background: var(--marigold-wash); color: var(--marigold-deep); }
+.receiver .takeover-tap-btn { background: var(--ink); color: var(--surface); font-size: 20px; border-radius: 16px; min-height: 64px; }
+.receiver .avatar-pulse-ring { border-color: var(--marigold); }
+
+.receiver .checkin-big-caption { font-size: clamp(22px, 3.2vw, 30px); line-height: 1.35; }
+.receiver .checkin-bottom-prompt { font-family: 'Lexend', sans-serif; font-size: clamp(24px, 3.6vw, 34px); }
+.receiver .checkin-tts-badge { font-size: 16px; min-height: 48px; }
+
+/* Answers: large, labelled, and never colour alone. */
+.receiver .resp-btn { min-height: 88px; font-size: 22px; font-weight: 700; border-radius: 20px; color: #fbfcfa; }
+.receiver .resp-btn.btn-good { background: var(--success); }
+.receiver .resp-btn.btn-ok { background: var(--marigold); color: #1b2620; }
+.receiver .resp-btn.btn-help { background: var(--brick); }
+.receiver .resp-btn.btn-mic { background: rgba(251, 252, 250, .16); border: 2px solid rgba(251, 252, 250, .5); }
+
+.receiver .modal-card { background: var(--surface); color: var(--text); border-radius: 28px; }
+.receiver .pill-header h2 { font-size: clamp(26px, 4vw, 34px); color: var(--text); }
+.receiver .pill-header p { font-size: 18px; color: var(--muted); }
+.receiver .badge-pill { background: var(--tint); color: var(--ink); }
+.receiver .pill-item-card { border-radius: 20px; border: 2px solid var(--line); background: var(--surface); }
+.receiver .pill-item-card.taken { border-color: var(--success); background: #eef5f0; }
+.receiver .pill-name { font-size: 18px; color: var(--text); }
+.receiver .pill-dosage { font-size: 16px; color: var(--muted); }
+.receiver .done-pills-btn { background: var(--ink) !important; color: var(--surface); font-size: 20px; min-height: 64px; border-radius: 16px; }
+.receiver .done-pills-btn:disabled { background: #c6d0c8 !important; color: #3e4a43; }
+.receiver .errand-patient-icon { background: var(--tint); color: var(--ink); }
+
+.receiver .feedback-toast { background: var(--surface); color: var(--text); border-radius: 28px; }
+.receiver .feedback-icon { color: var(--success); }
+.receiver .escalation-alert-banner { background: var(--marigold); color: #1b2620; font-size: 20px; border-radius: 16px; }
+
+/* Portrait tablet and phone */
+@media (max-width: 900px) {
+  .receiver .frame-header { top: 16px; left: 16px; right: 16px; }
+  .receiver .slideshow-caption { left: 16px; right: 16px; bottom: 16px; }
+  .receiver .caption-pill { width: fit-content; max-width: 100%; }
+  .receiver .response-btn-row { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 520px) {
+  .receiver .time-text { font-size: 22px; }
+  .receiver .caption-title { font-size: 16px; }
+  .receiver .caption-sub { font-size: 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* Fixes found in screenshots */
+.receiver .escalation-alert-banner {
+  transform: translateX(-50%) translateY(calc(-100% - 40px));
+  visibility: hidden;
+  box-shadow: 0 12px 30px -12px rgba(18, 23, 20, .6);
+  transition: transform .4s var(--ease), visibility 0s linear .4s;
+  max-width: calc(100vw - 32px);
+}
+.receiver .escalation-alert-banner.show {
+  transform: translateX(-50%) translateY(0);
+  visibility: visible;
+  transition: transform .4s var(--ease);
+}
+.caretaker .input-label { text-transform: none; letter-spacing: 0; font-size: 14px; }
+
+/* Two and three column form rows that collapse on phones */
+.caretaker .form-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.caretaker .form-split-tight { gap: 16px; margin-bottom: 14px; }
+.caretaker .form-split-3 { grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 18px; }
+
+@media (max-width: 720px) {
+  .caretaker .form-split, .caretaker .form-split-3 { grid-template-columns: 1fr; }
+  .caretaker .card-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .caretaker .card { padding: 20px 16px; }
+  .caretaker .photo-grid-manager { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .caretaker .nav-tabs { overflow-x: auto; scrollbar-width: none; }
+  .caretaker .hub-alert-toast { left: 12px; right: 12px; bottom: 12px; border-radius: 14px; }
+  html, body.caretaker { overflow-x: hidden; }
+}
+@media (max-width: 430px) {
+  .caretaker .photo-grid-manager { grid-template-columns: 1fr; }
+}
+
+/* Tap targets on the frame stay still: the avatar ring pulses for attention instead. */
+.receiver .takeover-tap-btn { animation: none; box-shadow: 0 12px 28px -14px rgba(18, 23, 20, .7); }
+.receiver .takeover-tap-btn:hover { background: var(--ink-soft); }
+.receiver .takeover-tap-btn:active { transform: scale(.98); }
+/* No elastic overshoot on takeovers. */
+.receiver :is(.takeover-card, .checkin-large-frame, .modal-card) { animation-timing-function: var(--ease); }
+
+/* The voice reply button sits on the light answer card, so it needs a visible fill and a text label. */
+.receiver .resp-btn.btn-mic { background: var(--tint); border: 2px solid var(--ink); color: var(--ink); }
+.receiver .resp-btn.btn-mic.recording { background: var(--brick-wash); border-color: var(--brick); color: var(--brick); }
+.receiver .resp-btn.btn-mic.recorded { background: #e3efe7; border-color: var(--success); color: var(--success); }
+
+/* ======================= Product polish ======================= */
+
+/* Shared layout helpers for the family panel. */
+.caretaker .card-sub { color: var(--muted); font-size: 14px; line-height: 1.5; margin-top: 4px; }
+.caretaker .card-actions { display: flex; justify-content: flex-end; margin-top: 16px; }
+.caretaker .card-section { border-top: 1px solid var(--line); margin-top: 24px; padding-top: 20px; }
+.caretaker .card-section-title { font-size: 17px; font-weight: 600; color: var(--text); margin: 0 0 12px; }
+.caretaker .slot-form { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr) auto; gap: 12px; align-items: end; }
+.caretaker .slot-form .input-group { margin: 0; }
+.caretaker .inline-form { display: flex; gap: 10px; }
+.caretaker .inline-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--tint); }
+.caretaker .btn-block { width: 100%; justify-content: center; min-height: 48px; }
+.caretaker .btn-small { padding: 8px 12px; font-size: 14px; }
+.caretaker .check-row { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; font-size: 15px; cursor: pointer; }
+.caretaker .check-row input { width: 18px; height: 18px; accent-color: var(--ink); }
+.caretaker .check-list { display: flex; flex-wrap: wrap; gap: 4px 18px; margin-top: 6px; }
+.caretaker .check-list .check-row { margin-bottom: 6px; font-size: 14px; }
+.caretaker .text-button { display: inline-flex; align-items: center; gap: 6px; padding: 6px 8px; border: 0; border-radius: var(--radius-control); background: none; color: var(--ink); font-size: 14px; font-weight: 700; cursor: pointer; }
+.caretaker .text-button:hover { background: var(--tint); }
+.caretaker .text-button-danger { color: var(--brick); }
+.caretaker .text-button-danger:hover { background: var(--brick-wash); }
+.caretaker .icon-button { border-radius: var(--radius-control); }
+.caretaker .icon-button-danger { color: var(--brick); }
+.caretaker .icon-button-danger:hover { background: var(--brick-wash); }
+.caretaker .slot-pill-copy { flex: 1; min-width: 0; }
+.caretaker .slot-pill-name, .caretaker .errand-title-text { font-weight: 700; font-size: 15px; color: var(--text); }
+.caretaker .slot-pill-dose { font-size: 14px; color: var(--muted); }
+.caretaker .activity-note { color: var(--muted); font-size: 13px; margin: 10px 0 0; }
+.caretaker .sync-status { color: #c9d6cd; font-size: 14px; margin: 0; }
+.caretaker .header-card { align-items: center; }
+
+/* One radius and elevation system across the family panel. */
+.caretaker :is(.card-edit-btn, .star-priority-btn, .btn-send-now, .sub-toggle-btn, .text-field, .btn-primary, .btn-secondary) { border-radius: var(--radius-control); }
+.caretaker :is(.edit-modal-card) { border-radius: var(--radius-card); box-shadow: var(--shadow-dialog); }
+.caretaker :is(.time-slot-card, .pill-inv-card, .errand-item-card, .photo-item-card, .caretaker-profile) { border-radius: 16px; box-shadow: none; }
+.caretaker .priority-badge-corner { border-radius: 999px; font-size: 13px; font-weight: 700; box-shadow: none; }
+.caretaker .card-edit-btn { font-size: 14px; padding: 6px 10px; }
+.caretaker .time-slot-badge { border-radius: 999px; }
+
+/* Resident frame: same tokens, calmer elevation. */
+.receiver .frame-time { border-radius: 999px; }
+.receiver .caption-pill { border-radius: var(--radius-card); box-shadow: none; }
+.receiver :is(.takeover-card, .modal-card, .feedback-toast, .checkin-large-frame) { border-radius: var(--radius-card); box-shadow: var(--shadow-dialog); }
+.receiver :is(.checkin-top-overlay-card, .checkin-bottom-action-container) { border-radius: var(--radius-card); box-shadow: var(--shadow); }
+.receiver :is(.resp-btn, .done-pills-btn, .takeover-tap-btn, .checkin-tts-badge) { border-radius: var(--radius-control); box-shadow: none; }
+.receiver .pill-item-card { border-radius: 16px; }
+.receiver .pill-photo-thumb { border-radius: var(--radius-control); box-shadow: none; }
+.receiver .takeover-badge, .receiver .badge-pill, .receiver .errand-recurring-badge { border-radius: 999px; }
+.receiver .takeover-badge { font-size: 15px; font-weight: 700; }
+.receiver .pill-card-icon-badge { display: none; }
+.receiver .errand-title { font-size: clamp(24px, 3.4vw, 30px); margin: 10px 0 6px; }
+.receiver .errand-desc { color: var(--muted); font-size: 18px; margin-bottom: 18px; }
+.receiver .done-pills-btn:not(:disabled) { background: var(--ink) !important; }
+
+@media (max-width: 720px) {
+  .caretaker .slot-form { grid-template-columns: 1fr 1fr; }
+  .caretaker .slot-form .btn-secondary { grid-column: 1 / -1; }
+  .caretaker .inline-form { flex-direction: column; }
+  .caretaker .header-card { flex-wrap: wrap; }
+  .caretaker .sync-status { text-align: left; }
+}
+
+/* Slides zoom slightly as they fade, so clip them to the frame. */
+.receiver .slideshow-container { overflow: hidden; }

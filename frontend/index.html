@@ -3,19 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#17231d">
-  <title>Care Companion · Live Demo</title>
+  <meta name="theme-color" content="#fbfcfa">
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Lexend:wght@600&amp;display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <script src="assets/household.js"></script>
+<title>Care Companion | Live demo</title>
   <style>
     :root {
-      color-scheme: dark;
-      --ink: #17231d;
-      --paper: #fffdf7;
-      --ground: #e8e3d8;
-      --leaf: #62c58c;
-      --sun: #f1c96a;
-      --line: rgba(255, 255, 255, .13);
+      color-scheme: light;
+      --ink: #17251d;
+      --ink-soft: #52605a;
+      --green: #1f3a2d;
+      --page: #eef1ec;
+      --surface: #fbfcfa;
+      --line: #d9dfd8;
+      --sun: #e2a33a;
       --ease: cubic-bezier(.16, 1, .3, 1);
-      font-family: "Avenir Next", Avenir, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
     }
 
     * { box-sizing: border-box; }
@@ -24,162 +28,272 @@
     body {
       margin: 0;
       overflow: hidden;
-      background: var(--ink);
-      color: white;
+      background: var(--page);
+      color: var(--ink);
     }
 
-    button, a { font: inherit; }
+    button, a { font: inherit; color: inherit; }
 
     :is(button, a):focus-visible {
       outline: 3px solid var(--sun);
-      outline-offset: 3px;
+      outline-offset: 2px;
     }
 
     .launcher {
       display: grid;
-      grid-template-rows: auto 1fr;
-      min-height: 100dvh;
+      grid-template-rows: auto auto 1fr;
+      height: 100dvh;
     }
 
+    /* Top bar */
     .toolbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
-      min-height: 72px;
-      padding: 12px clamp(14px, 2.5vw, 30px);
+      gap: 16px;
+      min-height: 64px;
+      padding: 10px 24px;
+      background: var(--surface);
       border-bottom: 1px solid var(--line);
-      background: #17231d;
     }
 
     .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
-
     .mark {
       display: grid;
       place-items: center;
-      flex: 0 0 auto;
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: #294e3a;
-      color: var(--sun);
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--green);
+      color: #f3f6f1;
+      flex: none;
     }
-
-    .mark svg { width: 23px; height: 23px; fill: none; stroke: currentColor; stroke-width: 1.8; }
-    .brand-copy strong, .brand-copy span { display: block; }
-    .brand-copy strong { font-size: .95rem; letter-spacing: -.02em; }
-    .brand-copy span { margin-top: 2px; color: #aebdb3; font-size: .68rem; }
+    .mark svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+    .brand-copy { display: grid; line-height: 1.2; min-width: 0; }
+    .brand-copy strong { font-family: "Lexend", sans-serif; font-weight: 600; font-size: 1.02rem; letter-spacing: -0.01em; }
+    .brand-copy span { color: var(--ink-soft); font-size: .84rem; }
 
     .toolbar-actions { display: flex; align-items: center; gap: 8px; }
 
     .view-switch {
-      display: inline-flex;
-      padding: 4px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .08);
+      display: flex;
+      padding: 3px;
+      border-radius: 10px;
+      background: #e3e8e2;
     }
-
     .view-button {
-      min-height: 34px;
-      padding: 0 12px;
+      min-height: 32px;
+      padding: 0 14px;
       border: 0;
-      border-radius: 999px;
+      border-radius: 8px;
       background: transparent;
-      color: #b8c7bd;
-      font-size: .7rem;
-      font-weight: 800;
+      color: var(--ink-soft);
+      font-size: .88rem;
+      font-weight: 700;
       cursor: pointer;
+      transition: background .2s var(--ease), color .2s var(--ease);
     }
-
-    .view-button.is-active { background: var(--paper); color: var(--ink); }
+    .view-button:hover { color: var(--ink); }
+    .view-button.is-active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(23, 37, 29, .12); }
 
     .open-link {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      min-height: 40px;
-      padding: 0 13px;
+      gap: 6px;
+      min-height: 38px;
+      padding: 0 12px;
       border: 1px solid var(--line);
-      border-radius: 999px;
-      color: white;
+      border-radius: 10px;
+      background: var(--surface);
+      font-size: .88rem;
+      font-weight: 700;
       text-decoration: none;
-      font-size: .7rem;
-      font-weight: 800;
-      transition: background .2s ease, transform .2s var(--ease);
+      cursor: pointer;
+      transition: border-color .2s var(--ease), background .2s var(--ease);
     }
+    .open-link:hover { border-color: #b9c3b9; background: #f4f6f2; }
+    .open-link:active { transform: translateY(1px); }
+    .open-link svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
+    .guide-toggle[hidden] { display: none; }
 
-    .open-link:hover { background: rgba(255, 255, 255, .09); transform: translateY(-1px); }
-    .open-link svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; }
-
-    .preview-grid {
+    /* Guide */
+    .guide {
+      position: relative;
       display: grid;
-      grid-template-columns: minmax(360px, .88fr) minmax(520px, 1.12fr);
+      grid-template-columns: minmax(280px, 380px) 1fr;
+      gap: 16px 32px;
+      padding: 16px 56px 18px 24px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+    }
+    .guide[hidden] { display: none; }
+    .guide-head h2 { margin: 0 0 4px; font-family: "Lexend", sans-serif; font-size: 1rem; font-weight: 600; }
+    .guide-head p { margin: 0 0 6px; color: var(--ink-soft); font-size: .86rem; line-height: 1.45; }
+    .guide-head p strong { color: var(--ink); }
+
+    .guide-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: step;
+    }
+    .guide-steps li {
+      counter-increment: step;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #f6f8f5;
+      font-size: .84rem;
+      line-height: 1.4;
+    }
+    .guide-steps li::before {
+      content: counter(step);
+      display: grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      margin-bottom: 2px;
+      border-radius: 50%;
+      background: var(--green);
+      color: #f3f6f1;
+      font-size: .74rem;
+      font-weight: 700;
+    }
+    .guide-steps strong { font-weight: 700; }
+    .guide [data-resident] { color: inherit; }
+    .guide-steps span { color: var(--ink-soft); }
+    .guide-steps .demo-button { margin-top: auto; }
+    .guide-steps li > span { margin-bottom: 6px; }
+
+    .demo-button {
+      min-height: 36px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+      font-size: .84rem;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background .2s var(--ease), border-color .2s var(--ease);
+    }
+    .demo-button:hover { border-color: #b9c3b9; background: #f4f6f2; }
+    .demo-button:active { transform: translateY(1px); }
+    .demo-button.primary { background: var(--green); border-color: var(--green); color: #f3f6f1; }
+    .demo-button.primary:hover { background: #28493a; }
+
+    .guide-close {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--ink-soft);
+      font-size: 1.3rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .guide-close:hover { background: #e3e8e2; color: var(--ink); }
+
+    /* Screens */
+    .preview-grid {
+      /* Always the last row, so the screens fill the page when the guide is hidden. */
+      grid-row: 3;
+      display: grid;
+      grid-template-columns: minmax(340px, .8fr) minmax(520px, 1.2fr);
+      gap: 24px;
       min-height: 0;
-      gap: 1px;
-      background: #38463d;
+      padding: 20px 24px 24px;
     }
 
     .preview {
       display: grid;
-      grid-template-rows: 40px 1fr;
+      grid-template-rows: auto 1fr;
+      gap: 10px;
       min-width: 0;
       min-height: 0;
-      background: var(--paper);
     }
 
     .preview-label {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: baseline;
       gap: 12px;
-      padding: 0 14px;
-      background: #233229;
-      color: #d8e2db;
-      font-size: .7rem;
-      font-weight: 800;
+      padding: 0 4px;
+      font-size: .84rem;
+      color: var(--ink-soft);
     }
-
-    .preview-label span:last-child { display: inline-flex; align-items: center; gap: 7px; color: #91dfae; }
-    .preview-label i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: livePulse 2.2s ease-in-out infinite; }
+    .preview-label > span:first-child { color: var(--ink); font-weight: 700; }
 
     iframe {
       display: block;
       width: 100%;
       height: 100%;
       min-height: 0;
-      border: 0;
-      background: var(--paper);
+      background: var(--surface);
     }
 
-    .preview-grid[data-view="receiver"] { grid-template-columns: 1fr; }
+    /* Margaret's frame sits in a tablet, the family panel in a browser window. */
+    .preview.receiver iframe {
+      border: 12px solid #1a1f1c;
+      border-radius: 28px;
+      box-shadow: 0 1px 0 #3a423d inset, 0 24px 48px -24px rgba(23, 37, 29, .45);
+    }
+    .preview.caretaker iframe {
+      border: 1px solid var(--line);
+      border-top: 28px solid #e3e8e2;
+      border-radius: 14px;
+      box-shadow: 0 24px 48px -28px rgba(23, 37, 29, .35);
+    }
+
+    .preview-grid[data-view="receiver"] { grid-template-columns: minmax(0, 760px); justify-content: center; }
     .preview-grid[data-view="receiver"] .preview.caretaker { display: none; }
-    .preview-grid[data-view="caretaker"] { grid-template-columns: 1fr; }
+    .preview-grid[data-view="caretaker"] { grid-template-columns: minmax(0, 1100px); justify-content: center; }
     .preview-grid[data-view="caretaker"] .preview.receiver { display: none; }
 
-    @keyframes livePulse { 0%, 100% { opacity: 1; } 50% { opacity: .42; } }
+    @media (max-width: 1100px) {
+      .guide { grid-template-columns: 1fr; }
+      .guide-head { max-width: 900px; }
+    }
 
     @media (max-width: 860px) {
-      .toolbar { min-height: 64px; }
-      .brand-copy span, .open-link span { display: none; }
-      .open-link { width: 40px; padding: 0; justify-content: center; }
-      .preview-grid { grid-template-columns: 1fr; }
-      .preview-grid[data-view="split"] .preview.caretaker { display: none; }
+      .toolbar { padding: 10px 14px; }
+      .brand-copy span { display: none; }
+      .toolbar-actions > a.open-link { display: none; }
+      .guide-toggle span { font-size: .8rem; }
       .view-switch .view-button[data-view="split"] { display: none; }
-      .view-switch .view-button[data-view="receiver"] { background: var(--paper); color: var(--ink); }
-      .view-switch .view-button[data-view="caretaker"] { background: transparent; color: #b8c7bd; }
-      .view-switch[data-mobile-view="caretaker"] .view-button[data-view="receiver"] { background: transparent; color: #b8c7bd; }
-      .view-switch[data-mobile-view="caretaker"] .view-button[data-view="caretaker"] { background: var(--paper); color: var(--ink); }
-      .preview-grid[data-view="caretaker"] .preview.caretaker { display: grid; }
+      .preview-grid[data-view="split"] { grid-template-columns: 1fr; }
+      .preview-grid[data-view="split"] .preview.caretaker { display: none; }
+      .preview-grid { padding: 12px 12px 14px; gap: 12px; }
+      .guide { padding: 12px 44px 12px 14px; gap: 10px; }
+      .guide-panes { display: none; }
+      .guide-steps { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .guide-steps li { padding: 10px; }
+      .guide-steps li > span { display: none; }
+      .guide-steps li:nth-child(2), .guide-steps li:nth-child(4) { display: none; }
+      .guide-steps li::before { display: none; }
+      .guide-steps li { flex-direction: row; align-items: center; justify-content: space-between; gap: 8px; }
+      .guide-steps .demo-button { margin-top: 0; flex: none; }
+      .guide-steps { grid-template-columns: 1fr; }
+      .preview.receiver iframe { border-width: 7px; border-radius: 20px; }
+      .preview.caretaker iframe { border-top-width: 18px; border-radius: 12px; }
     }
 
     @media (max-width: 470px) {
-      .toolbar { gap: 8px; padding-inline: 10px; }
-      .brand { gap: 8px; }
-      .mark { width: 36px; height: 36px; }
-      .brand-copy strong { font-size: .78rem; }
-      .view-button { padding-inline: 9px; }
-      .toolbar-actions { gap: 5px; }
-      .open-link:first-of-type { display: none; }
+      .demo-button { padding: 0 10px; font-size: .8rem; }
+      .preview-label > span:last-child { display: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -188,40 +302,62 @@
   </style>
 </head>
 <body>
-  <!--
-    THESIS: The demo is one connected household shown simultaneously, not a menu of disconnected mockups.
-    OWN-WORLD: Ink-green demo chrome, paper-white previews, live leaf signals, and compact rounded navigation.
-    STORY: The presenter opens one URL, sees both roles, triggers care from the right, and watches Grandma respond on the left.
-    FIRST VIEWPORT: A slim launcher toolbar sits above a full-height receiver and caretaker split preview with direct-open links.
-    FORM: Family Daybook, assigned direction 6, seed 72401c94.
-    FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
-  -->
   <main class="launcher">
     <header class="toolbar">
       <div class="brand">
         <div class="mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5c3.5-6.3 10.5-6.3 14 0-3.5 6.3-10.5 6.3-14 0Z"></path><path d="M12 9.4v10.1M8.7 13.8 12 17l3.3-3.2"></path></svg></div>
-        <div class="brand-copy"><strong>Care Companion</strong><span>Live two-screen demo</span></div>
+        <div class="brand-copy"><strong>Care Companion</strong><span>Photo frame and family panel, side by side</span></div>
       </div>
 
       <div class="toolbar-actions">
         <div class="view-switch" id="viewSwitch" role="group" aria-label="Preview layout">
           <button class="view-button is-active" type="button" data-view="split">Split</button>
-          <button class="view-button" type="button" data-view="receiver">Grandma</button>
-          <button class="view-button" type="button" data-view="caretaker">Caretaker</button>
+          <button class="view-button" type="button" data-view="receiver">Frame</button>
+          <button class="view-button" type="button" data-view="caretaker">Family</button>
         </div>
-        <a class="open-link" href="carereceiver.html" target="_blank" rel="noopener"><span>Open Grandma</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"></path><path d="M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"></path></svg></a>
-        <a class="open-link" href="caretaker.html" target="_blank" rel="noopener"><span>Open Caretaker</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"></path><path d="M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"></path></svg></a>
+        <button class="open-link guide-toggle" id="guideToggle" type="button" hidden><span>What is this?</span></button>
+        <a class="open-link" href="carereceiver.html" target="_blank" rel="noopener"><span>Open frame</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"></path><path d="M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"></path></svg></a>
+        <a class="open-link" href="caretaker.html" target="_blank" rel="noopener"><span>Open family panel</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"></path><path d="M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"></path></svg></a>
       </div>
     </header>
 
+    <section class="guide" id="guide" aria-labelledby="guideTitle">
+      <div class="guide-head">
+        <h2 id="guideTitle">What is this?</h2>
+        <p><strong>Care Companion</strong> helps families look after an older relative who lives alone.</p>
+        <p class="guide-panes"><strong>Left:</strong> the tablet in <span data-resident>Margaret</span>'s home. It shows family photos and asks simple questions. <strong>Right:</strong> the app her family uses to send photos and reminders, and to get an alert if she doesn't answer.</p>
+      </div>
+      <ol class="guide-steps" aria-label="Try it in about a minute">
+        <li>
+          <strong>Send <span data-resident>Margaret</span> a check-in</strong>
+          <span>A family photo and "How are you feeling today?" appear on her tablet.</span>
+          <button class="demo-button primary" type="button" data-demo-action="checkin">Send check-in</button>
+        </li>
+        <li>
+          <strong>Answer as <span data-resident>Margaret</span>, or don't</strong>
+          <span>Tap Open message, then Good. Or wait 10 seconds: she gets a reminder, then the family is alerted.</span>
+        </li>
+        <li>
+          <strong>Send a medication reminder</strong>
+          <span>Tick each item on her tablet, then confirm.</span>
+          <button class="demo-button" type="button" data-demo-action="medication">Send reminder</button>
+        </li>
+        <li>
+          <strong>Watch the family app</strong>
+          <span>Every answer, reminder and alert is logged on the right. Nothing leaves your browser.</span>
+        </li>
+      </ol>
+      <button class="guide-close" id="guideClose" type="button" aria-label="Hide the guide">&times;</button>
+    </section>
+
     <section class="preview-grid" id="previewGrid" data-view="split" aria-label="Care Companion split preview">
       <article class="preview receiver">
-        <header class="preview-label"><span>Grandma · Ambient frame</span><span><i aria-hidden="true"></i>Live receiver</span></header>
-        <iframe src="carereceiver.html" title="Grandma's digital photo frame"></iframe>
+        <header class="preview-label"><span><span data-resident>Margaret</span>'s tablet</span><span>What she sees at home</span></header>
+        <iframe src="carereceiver.html" title="Margaret's photo frame"></iframe>
       </article>
       <article class="preview caretaker">
-        <header class="preview-label"><span>Family · Caretaker hub</span><span><i aria-hidden="true"></i>Live controller</span></header>
-        <iframe src="caretaker.html" title="Family caretaker hub"></iframe>
+        <header class="preview-label"><span>Family app</span><span>What Alex sees on his phone or laptop</span></header>
+        <iframe src="caretaker.html" title="Family panel"></iframe>
       </article>
     </section>
   </main>
@@ -241,6 +377,28 @@
       }
 
       buttons.forEach((button) => button.addEventListener('click', () => setView(button.dataset.view)));
+
+      // Demo controls talk to the family panel over the same channel the two screens use.
+      const bus = window.BroadcastChannel ? new BroadcastChannel('care_companion_bus') : null;
+      document.querySelectorAll('[data-demo-action]').forEach((button) => {
+        button.addEventListener('click', () => {
+          bus?.postMessage({ type: 'DEMO_ACTION', action: button.dataset.demoAction });
+        });
+      });
+
+      const guide = document.getElementById('guide');
+      const guideToggle = document.getElementById('guideToggle');
+      const GUIDE_KEY = 'care_companion_guide_hidden_v2';
+      function setGuide(open) {
+        guide.hidden = !open;
+        guideToggle.hidden = open;
+        try { localStorage.setItem(GUIDE_KEY, open ? '0' : '1'); } catch (_error) { /* storage can be blocked */ }
+      }
+      document.getElementById('guideClose').addEventListener('click', () => setGuide(false));
+      guideToggle.addEventListener('click', () => setGuide(true));
+      let hidden = false;
+      try { hidden = localStorage.getItem(GUIDE_KEY) === '1'; } catch (_error) { hidden = false; }
+      setGuide(!hidden);
       window.matchMedia('(max-width: 860px)').addEventListener('change', (event) => setView(event.matches ? 'receiver' : 'split'));
     })();
   </script>
