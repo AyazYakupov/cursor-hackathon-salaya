@@ -771,7 +771,7 @@
             <div class="sender-sub" id="modalSentTime">Sent today</div>
           </div>
         </div>
-        <button class="checkin-tts-badge" type="button" onclick="speakText(currentCaption + '. How are you feeling today?')">
+        <button class="checkin-tts-badge" type="button" onclick="speakText(currentCaption + '. How are you feeling today?', true)">
           <i data-lucide="volume-2" style="width:16px;height:16px;"></i> <span>Read aloud</span>
         </button>
       </div>
@@ -1026,7 +1026,9 @@
   setInterval(updateClock, 1000);
   updateClock();
 
-  function speakText(text) {
+  // The frame stays silent unless someone presses "Read aloud".
+  function speakText(text, requested = false) {
+    if (!requested) return;
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
@@ -1040,6 +1042,40 @@
   let escalationTimer = null;
   let escalationCountdown = 5;
   let escalationStage = 1;
+
+  // One prompt on the frame at a time. Anything that arrives while a prompt is
+  // showing waits its turn. A check-in that has already alerted the family can
+  // be replaced, because the family knows and is following up.
+  let activePrompt = null;
+  let checkinEscalated = false;
+  const promptQueue = [];
+
+  function requestPrompt(kind, show) {
+    if (activePrompt && !(activePrompt === 'checkin' && checkinEscalated)) {
+      promptQueue.push({ kind, show });
+      return;
+    }
+    if (activePrompt === 'checkin') closeCheckinPrompt();
+    activePrompt = kind;
+    show();
+  }
+
+  function promptFinished() {
+    activePrompt = null;
+    const next = promptQueue.shift();
+    if (next) {
+      requestPrompt(next.kind, next.show);
+    } else {
+      startSlideshow();
+    }
+  }
+
+  function closeCheckinPrompt() {
+    clearInterval(escalationTimer);
+    document.getElementById('checkinModal').classList.remove('active');
+    document.getElementById('takeoverOverlay').classList.remove('show');
+    document.getElementById('escalationAlertBanner').classList.remove('show');
+  }
 
   function triggerIncomingCheckin(senderName, avatarUrl, photoUrl, caption) {
     pauseSlideshow();
@@ -1092,6 +1128,7 @@
     clearInterval(escalationTimer);
     escalationCountdown = 5;
     escalationStage = 1;
+    checkinEscalated = false;
 
     escalationTimer = setInterval(() => {
       escalationCountdown--;
@@ -1105,6 +1142,11 @@
           showEscalationBanner('We have let your family know', 2);
           speakText('We have let your family know.');
           clearInterval(escalationTimer);
+          checkinEscalated = true;
+          if (promptQueue.length) {
+            const next = promptQueue.shift();
+            requestPrompt(next.kind, next.show);
+          }
         }
       }
     }, 1000);
@@ -1154,7 +1196,7 @@
 
     setTimeout(() => {
       toast.classList.remove('show');
-      startSlideshow();
+      promptFinished();
     }, 3000);
   }
 
@@ -1291,7 +1333,7 @@
 
     setTimeout(() => {
       toast.classList.remove('show');
-      startSlideshow();
+      promptFinished();
     }, 3000);
   }
 
@@ -1372,7 +1414,7 @@
 
     setTimeout(() => {
       toast.classList.remove('show');
-      startSlideshow();
+      promptFinished();
     }, 2500);
   }
 
@@ -1408,11 +1450,11 @@
       const data = e.data;
       if (!data || typeof data !== 'object') return;
       if (data.type === 'TRIGGER_CHECKIN') {
-        triggerIncomingCheckin(data.senderName, data.avatarUrl, data.photoUrl, data.caption);
+        requestPrompt('checkin', () => triggerIncomingCheckin(data.senderName, data.avatarUrl, data.photoUrl, data.caption));
       } else if (data.type === 'TRIGGER_PILLS') {
-        triggerPillReminder(data.pills);
+        requestPrompt('pills', () => triggerPillReminder(data.pills));
       } else if (data.type === 'TRIGGER_ERRAND') {
-        triggerErrandReminder(data.errand || data);
+        requestPrompt('errand', () => triggerErrandReminder(data.errand || data));
       } else if (data.type === 'UPDATE_PHOTO_QUEUE') {
         applyPhotoQueue(data.photos);
       } else if (data.type === 'UPDATE_PILLS_DATA') {

@@ -15,7 +15,7 @@ The demo opens Margaret's photo frame and her family's panel side by side. It ta
 
 Everything runs in your browser. There is no account and nothing is stored online.
 
-![The care tablet showing a check-in](docs/screenshots/tablet-answer.jpg)
+![The live demo: Margaret's frame on a tablet and the family panel side by side](docs/screenshots/demo.jpg)
 
 ## What it does
 

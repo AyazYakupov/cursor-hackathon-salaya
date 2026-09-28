@@ -205,10 +205,12 @@ body.receiver {
   background: rgba(18, 23, 20, .58);
   border-color: rgba(251, 252, 250, .16);
 }
-.receiver .time-text { font-family: 'Lexend', sans-serif; font-size: 30px; font-weight: 600; }
-.receiver .date-text { font-size: 17px; }
-.receiver .caption-title { font-size: 26px; }
-.receiver .caption-sub { font-size: 18px; }
+.receiver .time-text { font-family: 'Lexend', sans-serif; font-size: 26px; font-weight: 600; }
+.receiver .date-text { font-size: 15px; }
+/* A small, quiet caption so the photo stays the focus. */
+.receiver .caption-pill { padding: 10px 16px; border-radius: 12px; max-width: min(420px, 100%); }
+.receiver .caption-title { font-size: 18px; line-height: 1.25; }
+.receiver .caption-sub { font-size: 14px; line-height: 1.35; margin-top: 2px; }
 
 .receiver .takeover-overlay { background: rgba(18, 23, 20, .72); }
 .receiver .takeover-card { background: var(--surface); color: var(--text); border-radius: 28px; }
@@ -249,13 +251,13 @@ body.receiver {
 @media (max-width: 900px) {
   .receiver .frame-header { top: 16px; left: 16px; right: 16px; }
   .receiver .slideshow-caption { left: 16px; right: 16px; bottom: 16px; }
-  .receiver .caption-pill { max-width: none; }
+  .receiver .caption-pill { width: fit-content; max-width: 100%; }
   .receiver .response-btn-row { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 520px) {
-  .receiver .time-text { font-size: 24px; }
-  .receiver .caption-title { font-size: 21px; }
-  .receiver .caption-sub { font-size: 16px; }
+  .receiver .time-text { font-size: 22px; }
+  .receiver .caption-title { font-size: 16px; }
+  .receiver .caption-sub { font-size: 13px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
