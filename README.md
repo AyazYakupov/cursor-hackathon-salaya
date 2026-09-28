@@ -86,4 +86,4 @@ After the hackathon, Dylan revamped the frontend:
 
 ## Photo credits
 
-Photos are CC0 stock images from StockSnap (stocksnap.io).
+Family photos are CC0 stock images from StockSnap (stocksnap.io). Margaret's portrait is by Eric Oliveira on Unsplash (unsplash.com/@ericdsgn), used under the Unsplash License.
