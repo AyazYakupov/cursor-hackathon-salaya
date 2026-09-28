@@ -3,15 +3,25 @@
 A tablet for someone who needs care, and a control panel for the family who looks after them. The tablet is a quiet photo frame until the family has something to say. Then it asks a simple question, and if nobody answers, the family finds out.
 
 **Live demo:** https://itsdakpan.github.io/cursor-hackathon-salaya/
-It opens both screens side by side. Press "Demo Check-in" on the tablet and watch the family panel.
+
+## How to try it
+
+The demo opens Margaret's photo frame and her family's panel side by side. It takes about a minute.
+
+1. Press **Send test check-in** at the top. A photo and a question appear on Margaret's frame.
+2. Tap an answer, or wait 10 seconds. An unanswered check-in gets one reminder, then the family panel shows an alert.
+3. Press **Send medication reminder**. Select each item on the frame, then confirm.
+4. Check **Today's activity** on the family panel. Everything that happened is logged there.
+
+Everything runs in your browser. There is no account and nothing is stored online.
 
 ![The care tablet showing a check-in](docs/screenshots/tablet-answer.jpg)
 
 ## What it does
 
-- **Photo check-ins.** The family queues photos with a caption. One becomes today's check-in, the tablet reads it aloud and asks "How are you feeling today?" with big answers: Good, I'm OK, Need help, or speak a reply.
-- **Pill reminders.** The tablet shows each pill with a picture. Grandma taps each one, then Done. The family sees it logged.
-- **Errands.** A reminder for Grandma plus a named family member who is responsible for it, like a lift to the doctor.
+- **Photo check-ins.** The family queues photos with a caption. At set times one becomes a check-in: the tablet reads it aloud and asks "How are you feeling today?" with large answers: Good, I'm OK, Need help, or a spoken reply.
+- **Medication reminders.** The tablet shows each medication with a picture. Margaret selects each one, then confirms. The family sees what she marked, which is a record of her answer rather than proof that a dose was taken.
+- **Reminders and routines.** A reminder for Margaret plus a named family member who is responsible for it, like a lift to the doctor.
 - **Missed check-ins get escalated.** No answer, the tablet reminds her again. Still no answer, the family's panel raises an alert and plays a sound.
 - **Activity log.** Every answer, reminder and alert shows up on the family's panel with a time.
 
@@ -25,11 +35,13 @@ Check-ins, pills and errands all run through the same loop:
 
 1. The family sends or schedules an item.
 2. It takes over the tablet with a sound and a spoken prompt.
-3. If Grandma opens it, the countdown stops and her answer goes to the family.
+3. If Margaret opens it, the countdown stops and her answer goes to the family.
 4. If she doesn't, the tablet reminds her once more.
 5. If there is still no answer, the family panel shows an alert and logs it.
 
 For the demo the retry and the alert fire after 5 seconds each, so the miss path can be shown live.
+
+The resident's name lives in one place, `frontend/assets/household.js`.
 
 ## Built with
 
@@ -45,7 +57,7 @@ cd cursor-hackathon-salaya/frontend
 python3 -m http.server 8000
 ```
 
-Open http://localhost:8000. The launcher shows the tablet and the family panel side by side. Press **Send as Check-in Now** on a photo in the family panel and watch the tablet. To see the miss path, send one and don't tap anything for 10 seconds.
+Open http://localhost:8000 and follow the steps in the "How to try it" panel at the top.
 
 Use a local server rather than opening the files directly, because the two screens need to share an origin to talk to each other.
 
@@ -65,7 +77,8 @@ The original team repo is [AyazYakupov/cursor-hackathon-salaya](https://github.c
 
 After the hackathon, Dylan revamped the frontend:
 
-- A calmer, higher contrast design built for older eyes
+- A calmer, higher contrast design built for older eyes, with 24 hour UK times and zoom allowed
+- Plain, clinically careful wording, and demo controls moved off the resident's screen into a presenter panel
 - The escalation alert and activity log on the family panel (before, missed check-ins never reached it)
 - A visible voice reply button, still tap targets, and a correct picture for every pill
 - Resized photo uploads so large pictures fit in browser storage

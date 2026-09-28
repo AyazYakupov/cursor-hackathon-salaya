@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<title>Grandma's Digital Frame &amp; Companion</title>
+<title>Care Companion | Photo frame</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&amp;family=Lexend:wght@500;600;700&amp;display=swap" rel="stylesheet">
 <link rel="preload" href="assets/pills/lisinopril.svg" as="image" type="image/svg+xml">
@@ -13,6 +13,7 @@
 <link rel="preload" href="assets/pills/fresh-water.svg" as="image" type="image/svg+xml">
 <!-- Lucide Icons -->
 <script src="assets/vendor/lucide.min.js"></script>
+<script src="assets/household.js"></script>
 <style>
   :root {
     --bg: #121714;
@@ -96,31 +97,6 @@
     color: rgba(255,255,255,0.8);
     font-weight: 500;
   }
-  .frame-badge {
-    background: rgba(0,0,0,0.45);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255,255,255,0.15);
-    padding: 10px 18px;
-    border-radius: 40px;
-    font-size: 13px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .live-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: #8cc6a4;
-    box-shadow: 0 0 10px #8cc6a4;
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.85); }
-  }
-
   /* Bottom Left Caption */
   .slideshow-caption {
     position: absolute;
@@ -151,39 +127,6 @@
     color: rgba(255,255,255,0.9);
     font-style: italic;
     line-height: 1.4;
-  }
-
-  /* Demo Trigger Bar */
-  .demo-bar {
-    position: absolute;
-    bottom: 28px;
-    right: 28px;
-    z-index: 50;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-  }
-  .demo-trigger-btn {
-    background: rgba(255, 255, 255, 0.22);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    color: white;
-    padding: 12px 18px;
-    border-radius: 30px;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  }
-  .demo-trigger-btn:hover {
-    background: rgba(255, 255, 255, 0.35);
-    transform: translateY(-2px);
   }
 
   /* Centered Takeover */
@@ -258,8 +201,6 @@
     color: #b3452f;
     font-size: 13px;
     font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
     padding: 6px 16px;
     border-radius: 30px;
     margin-bottom: 14px;
@@ -786,48 +727,31 @@
 <!-- Header Overlay -->
 <div class="frame-header">
   <div class="frame-time">
-    <span class="time-text" id="clock">12:45 PM</span>
-    <span class="date-text" id="dateStr">Sat, Aug 22</span>
-  </div>
-  <div class="frame-badge">
-    <span class="live-dot"></span>
-    <span>Care Hub Connected</span>
+    <span class="time-text" id="clock">12:45</span>
+    <span class="date-text" id="dateStr">Sat 22 Aug</span>
   </div>
 </div>
 
 <!-- Bottom Left Caption (Displays Actual Photo Caption) -->
 <div class="slideshow-caption" id="slideCaption">
   <div class="caption-pill">
-    <div class="caption-title" id="captionTitle">Meadow Picnic with Family</div>
-    <div class="caption-sub" id="captionSub">"Sunny afternoon memories with the grandkids"</div>
+    <div class="caption-title" id="captionTitle">Picnic in the meadow</div>
+    <div class="caption-sub" id="captionSub">"The afternoon with the grandchildren"</div>
   </div>
-</div>
-
-<!-- Demo Trigger Buttons -->
-<div class="demo-bar">
-  <button class="demo-trigger-btn" type="button" onclick="triggerIncomingCheckin('Alex', 'assets/people/alex.jpg', 'assets/photos/family-picnic-scene.jpg', 'Hi Grandma! Look at this photo from our picnic. How are you feeling today?')">
-    <i data-lucide="mail" style="width:16px;height:16px;"></i> Demo Check-in
-  </button>
-  <button class="demo-trigger-btn" type="button" onclick="triggerPillReminder()">
-    <i data-lucide="pill" style="width:16px;height:16px;"></i> Demo Pill Reminder
-  </button>
-  <button class="demo-trigger-btn" type="button" onclick="triggerErrandReminder()">
-    <i data-lucide="check-square" style="width:16px;height:16px;"></i> Demo Errand Reminder
-  </button>
 </div>
 
 <!-- Centered Takeover -->
 <div class="takeover-overlay" id="takeoverOverlay" onclick="openCheckinModal()">
   <div class="takeover-card" onclick="event.stopPropagation(); openCheckinModal()">
-    <div class="takeover-badge"><i data-lucide="sparkles" style="width:14px;height:14px;"></i> New Message</div>
+    <div class="takeover-badge"><i data-lucide="mail" style="width:16px;height:16px;"></i> New message</div>
     <div class="avatar-pulse-wrap">
       <div class="avatar-pulse-ring"></div>
-      <img class="takeover-avatar" id="takeoverAvatar" src="assets/people/alex.jpg" alt="Avatar">
+      <img class="takeover-avatar" id="takeoverAvatar" src="assets/people/alex.jpg" alt="">
     </div>
-    <h2 class="takeover-title" id="takeoverSender">Alex sent you a check-in!</h2>
-    <p class="takeover-sub">Tap anywhere to see photo &amp; message</p>
+    <h2 class="takeover-title" id="takeoverSender">Message from Alex</h2>
+    <p class="takeover-sub">Tap anywhere to see the photo and message</p>
     <button class="takeover-tap-btn" type="button">
-      <i data-lucide="hand" style="width:20px;height:20px;"></i> <span>Tap to Open Message</span>
+      <i data-lucide="mail-open" style="width:22px;height:22px;"></i> <span>Open message</span>
     </button>
   </div>
 </div>
@@ -835,32 +759,32 @@
 <!-- Immersive Check-in Modal -->
 <div class="modal-overlay" id="checkinModal" role="dialog" aria-modal="true" aria-labelledby="checkinQuestion">
   <div class="checkin-large-frame">
-    <img class="checkin-backdrop-photo" id="modalHeroPhoto" src="assets/photos/family-picnic-scene.jpg" alt="Check-in photo">
+    <img class="checkin-backdrop-photo" id="modalHeroPhoto" src="assets/photos/family-picnic-scene.jpg" alt="Photo sent by the family">
     <div class="checkin-gradient-overlay"></div>
 
     <div class="checkin-top-overlay-card">
       <div class="checkin-sender-row">
         <div class="checkin-sender-info">
-          <img class="sender-avatar" id="modalSenderAvatar" src="assets/people/alex.jpg" alt="Avatar">
+          <img class="sender-avatar" id="modalSenderAvatar" src="assets/people/alex.jpg" alt="">
           <div>
             <div class="sender-name" id="modalSenderName">Alex</div>
             <div class="sender-sub" id="modalSentTime">Sent today</div>
           </div>
         </div>
-        <button class="checkin-tts-badge" type="button" onclick="speakText(currentCaption + '. How are you feeling today Grandma?')">
-          <i data-lucide="volume-2" style="width:16px;height:16px;"></i> <span>Read Aloud</span>
+        <button class="checkin-tts-badge" type="button" onclick="speakText(currentCaption + '. How are you feeling today?')">
+          <i data-lucide="volume-2" style="width:16px;height:16px;"></i> <span>Read aloud</span>
         </button>
       </div>
       <div class="checkin-big-caption" id="modalCaptionText">
-        "Hi Grandma! Look at this memory from our sunny picnic. We're thinking of you!"
+        "Here is a photo from our picnic. How are you feeling today?"
       </div>
     </div>
 
     <div class="checkin-bottom-action-container">
-      <div class="checkin-bottom-prompt" id="checkinQuestion">How are you feeling today, Grandma?</div>
+      <div class="checkin-bottom-prompt" id="checkinQuestion">How are you feeling today?</div>
       <div class="voice-recorded-note" id="voiceRecordedNote" role="status" aria-live="polite">
         <i data-lucide="check-circle-2" style="width:16px;height:16px;"></i>
-        <span>Voice recorded! Select Good, OK, or Need Help to send.</span>
+        <span>Voice message recorded. Choose Good, OK or Need help to send it.</span>
       </div>
       <div class="response-btn-row">
         <button class="resp-btn btn-good" type="button" onclick="submitResponse('Good')">
@@ -869,8 +793,8 @@
         <button class="resp-btn btn-ok" type="button" onclick="submitResponse('OK')">
           <i data-lucide="meh" style="width:26px;height:26px;"></i> <span>I'm OK</span>
         </button>
-        <button class="resp-btn btn-help" type="button" onclick="submitResponse('Need Help')">
-          <i data-lucide="life-buoy" style="width:26px;height:26px;"></i> <span>Need Help</span>
+        <button class="resp-btn btn-help" type="button" onclick="submitResponse('Need help')">
+          <i data-lucide="life-buoy" style="width:26px;height:26px;"></i> <span>Need help</span>
         </button>
         <button class="resp-btn btn-mic" id="micBtn" type="button" onclick="toggleVoiceRecord()" title="Speak reply" aria-label="Record a voice reply">
           <i data-lucide="mic" style="width:26px;height:26px;"></i> <span>Speak</span>
@@ -881,18 +805,18 @@
 </div>
 
 <!-- Medication Modal (With Greyed-Out Done Button) -->
-<div class="modal-overlay" id="pillModal">
+<div class="modal-overlay" id="pillModal" role="dialog" aria-modal="true" aria-labelledby="pillModalTitle">
   <div class="modal-card">
     <div class="pill-header">
-      <span class="badge-pill"><i data-lucide="calendar" style="width:14px;height:14px;"></i> DAILY MEDICATION</span>
-      <h2>Time for your pills, Grandma!</h2>
-      <p>Tap each pill once you've taken it. (All must be checked to confirm)</p>
+      <span class="badge-pill"><i data-lucide="clock" style="width:14px;height:14px;"></i> <span id="pillSlotLabel">Morning, 08:00</span></span>
+      <h2 id="pillModalTitle">Medication reminder</h2>
+      <p>Select each item after you have taken it.</p>
     </div>
 
     <div class="pill-grid" id="pillModalGrid"></div>
 
     <button class="done-pills-btn" id="btnDonePills" type="button" disabled onclick="submitPillsDone()">
-      <i data-lucide="check-check" style="width:22px;height:22px;"></i> <span id="donePillsBtnText" aria-live="polite">Check all pills to complete (0/4)</span>
+      <i data-lucide="check-check" style="width:22px;height:22px;"></i> <span id="donePillsBtnText" aria-live="polite">Confirm medication taken (0 of 4)</span>
     </button>
   </div>
 </div>
@@ -903,41 +827,46 @@
     <div class="errand-card-patient">
       <div class="errand-patient-icon"><i data-lucide="calendar-check" style="width:36px;height:36px;"></i></div>
       <span class="errand-recurring-badge" id="errandRecurringBadge" hidden><i data-lucide="repeat-2" style="width:13px;height:13px;"></i> Daily</span>
-      <h2 style="font-family:'Lexend',serif; font-size:26px; margin:10px 0;" id="errandModalTitle">Afternoon Garden Walk</h2>
-      <p style="color:var(--text-muted); font-size:15px; margin-bottom:16px;" id="errandModalDesc">Today at 3:30 PM · Reminder 5 minutes before</p>
+      <h2 class="errand-title" id="errandModalTitle">Afternoon walk in the garden</h2>
+      <p class="errand-desc" id="errandModalDesc">Today at 15:30</p>
       <div class="errand-assignee">
         <img id="errandCaretakerAvatar" src="assets/people/alex.jpg" alt="Alex">
         <div class="errand-assignee-copy">
           <strong id="errandCaretakerName">Alex</strong>
-          <span id="errandCaretakerRole">Son · Primary</span>
+          <span id="errandCaretakerRole">Son, main contact</span>
         </div>
       </div>
-      <button class="done-pills-btn" type="button" style="background:#1f3a2d;" onclick="submitErrandDone()">
-        <i data-lucide="check" style="width:20px;height:20px;"></i> <span>Got It, Thanks!</span>
+      <button class="done-pills-btn" type="button" onclick="submitErrandDone()">
+        <i data-lucide="check" style="width:20px;height:20px;"></i> <span>Done</span>
       </button>
     </div>
   </div>
 </div>
 
 <!-- Toast Feedback -->
-<div class="feedback-toast" id="feedbackToast">
+<div class="feedback-toast" id="feedbackToast" role="status" aria-live="polite">
   <div class="feedback-icon"><i data-lucide="check-circle" style="width:58px;height:58px;"></i></div>
-  <h3 id="feedbackTitle">Message Sent to Family!</h3>
-  <p id="feedbackSub">Returning to photo frame in a moment...</p>
+  <h3 id="feedbackTitle">Response sent</h3>
+  <p id="feedbackSub">Returning to photos</p>
 </div>
 
 <!-- Escalation Alert Banner -->
 <div class="escalation-alert-banner" id="escalationAlertBanner">
   <i data-lucide="alert-triangle" style="width:22px;height:22px;"></i>
-  <span id="escalationAlertText">Try 1: Pinging Grandma's phone...</span>
+  <span id="escalationAlertText">Reminder: you have a new message</span>
 </div>
 
 <script>
   const CARE_STORAGE_KEYS = {
-    photos: 'care_companion_photos_v2',
-    pills: 'care_companion_pills_v2',
-    errands: 'care_companion_errands_v2'
+    photos: 'care_companion_photos_v3',
+    pills: 'care_companion_pills_v3',
+    errands: 'care_companion_errands_v3'
   };
+  const HOUSEHOLD = window.CARE_HOUSEHOLD || { resident: 'Margaret', family: {} };
+  const RESIDENT = HOUSEHOLD.resident;
+  // 24 hour UK time and "Sat 22 Aug" dates everywhere.
+  const formatTime = (date = new Date()) => date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+  const formatDate = (date = new Date()) => date.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }).replace(',', '');
 
   function loadStoredArray(key, fallback) {
     try {
@@ -992,24 +921,24 @@
   const careBus = window.BroadcastChannel ? new BroadcastChannel('care_companion_bus') : null;
 
   let slidesData = loadStoredArray(CARE_STORAGE_KEYS.photos, [
-    { src: 'assets/photos/family-picnic-scene.jpg', title: 'Meadow Picnic', caption: 'Sunny afternoon memories with the grandkids', prioritized: true },
-    { src: 'assets/photos/beach-vacation-scene.jpg', title: 'Beach Vacation', caption: 'Golden hour waves and warm sea breeze', prioritized: false },
-    { src: 'assets/photos/family-dinner-scene.jpg', title: 'Family Dinner', caption: 'Delicious home cooking and hearty laughs', prioritized: false },
-    { src: 'assets/photos/reading-time-scene.jpg', title: 'Fireplace Reading', caption: 'Cozy evenings by the crackling fire', prioritized: false },
-    { src: 'assets/photos/christmas-dinner-scene.jpg', title: 'Christmas Celebration', caption: 'Warm holiday hugs and joyful smiles', prioritized: false }
+    { src: 'assets/photos/family-picnic-scene.jpg', title: 'Picnic in the meadow', caption: 'The afternoon with the grandchildren', prioritized: true },
+    { src: 'assets/photos/beach-vacation-scene.jpg', title: 'Beach day', caption: 'A walk along the sea front', prioritized: false },
+    { src: 'assets/photos/family-dinner-scene.jpg', title: 'Sunday dinner', caption: 'Everyone round the table again', prioritized: false },
+    { src: 'assets/photos/reading-time-scene.jpg', title: 'Reading by the fire', caption: 'A quiet evening at home', prioritized: false },
+    { src: 'assets/photos/christmas-dinner-scene.jpg', title: 'Christmas lunch', caption: 'The whole family together', prioritized: false }
   ]);
 
   const publishedPillPhotoUrls = {
-    'Blood Pressure (Lisinopril)': 'assets/pills/lisinopril.jpg',
-    'Vitamin D3 & Omega': 'assets/pills/vitamin-d3.svg',
-    'Calcium & Zinc Support': 'assets/pills/calcium.jpg',
-    'Glass of Fresh Water': 'assets/pills/fresh-water.svg'
+    'Lisinopril 10 mg': 'assets/pills/lisinopril.jpg',
+    'Vitamin D3': 'assets/pills/vitamin-d3.svg',
+    'Calcium and zinc': 'assets/pills/calcium.jpg',
+    'Glass of water': 'assets/pills/fresh-water.svg'
   };
   const pillPhotoFallbacks = {
-    'Blood Pressure (Lisinopril)': 'assets/pills/lisinopril.svg',
-    'Vitamin D3 & Omega': 'assets/pills/vitamin-d3.svg',
-    'Calcium & Zinc Support': 'assets/pills/calcium.svg',
-    'Glass of Fresh Water': 'assets/pills/fresh-water.svg'
+    'Lisinopril 10 mg': 'assets/pills/lisinopril.svg',
+    'Vitamin D3': 'assets/pills/vitamin-d3.svg',
+    'Calcium and zinc': 'assets/pills/calcium.svg',
+    'Glass of water': 'assets/pills/fresh-water.svg'
   };
   const normalizePillPhotos = pill => publishedPillPhotoUrls[pill.name]
     ? {
@@ -1020,10 +949,10 @@
     : pill;
 
   let currentPillsList = loadStoredArray(CARE_STORAGE_KEYS.pills, [
-    { name: 'Blood Pressure (Lisinopril)', dosage: '1 Red Tablet · 10mg', photoUrl: publishedPillPhotoUrls['Blood Pressure (Lisinopril)'], fallbackPhotoUrl: pillPhotoFallbacks['Blood Pressure (Lisinopril)'], iconName: 'heart-pulse' },
-    { name: 'Vitamin D3 & Omega', dosage: '1 Yellow Capsule', photoUrl: publishedPillPhotoUrls['Vitamin D3 & Omega'], fallbackPhotoUrl: pillPhotoFallbacks['Vitamin D3 & Omega'], iconName: 'sun' },
-    { name: 'Calcium & Zinc Support', dosage: '1 White Tablet', photoUrl: publishedPillPhotoUrls['Calcium & Zinc Support'], fallbackPhotoUrl: pillPhotoFallbacks['Calcium & Zinc Support'], iconName: 'shield' },
-    { name: 'Glass of Fresh Water', dosage: 'Full 250ml glass', photoUrl: publishedPillPhotoUrls['Glass of Fresh Water'], fallbackPhotoUrl: pillPhotoFallbacks['Glass of Fresh Water'], iconName: 'droplet' }
+    { name: 'Lisinopril 10 mg', dosage: '1 tablet, for blood pressure', photoUrl: publishedPillPhotoUrls['Lisinopril 10 mg'], fallbackPhotoUrl: pillPhotoFallbacks['Lisinopril 10 mg'], iconName: 'heart-pulse' },
+    { name: 'Vitamin D3', dosage: '1 capsule, 1000 IU', photoUrl: publishedPillPhotoUrls['Vitamin D3'], fallbackPhotoUrl: pillPhotoFallbacks['Vitamin D3'], iconName: 'sun' },
+    { name: 'Calcium and zinc', dosage: '1 tablet', photoUrl: publishedPillPhotoUrls['Calcium and zinc'], fallbackPhotoUrl: pillPhotoFallbacks['Calcium and zinc'], iconName: 'shield' },
+    { name: 'Glass of water', dosage: '250 ml, with your tablets', photoUrl: publishedPillPhotoUrls['Glass of water'], fallbackPhotoUrl: pillPhotoFallbacks['Glass of water'], iconName: 'droplet' }
   ]).map(normalizePillPhotos);
   let currentErrands = loadStoredArray(CARE_STORAGE_KEYS.errands, []);
 
@@ -1091,8 +1020,8 @@
 
   function updateClock() {
     const now = new Date();
-    document.getElementById('clock').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    document.getElementById('dateStr').textContent = now.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' });
+    document.getElementById('clock').textContent = formatTime(now);
+    document.getElementById('dateStr').textContent = formatDate(now);
   }
   setInterval(updateClock, 1000);
   updateClock();
@@ -1130,18 +1059,18 @@
     playMelodicChime();
 
     if (avatarUrl) document.getElementById('takeoverAvatar').src = avatarUrl;
-    document.getElementById('takeoverSender').textContent = `${displayName} sent you a check-in!`;
+    document.getElementById('takeoverSender').textContent = `Message from ${displayName}`;
     if (avatarUrl) document.getElementById('modalSenderAvatar').src = avatarUrl;
     document.getElementById('modalSenderName').textContent = displayName;
     if (photoUrl) document.getElementById('modalHeroPhoto').src = photoUrl;
     document.getElementById('modalCaptionText').textContent = formatPhotoCaption(currentCaption);
-    document.getElementById('modalSentTime').textContent = `Sent today at ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    document.getElementById('modalSentTime').textContent = `Sent today at ${formatTime()}`;
 
     document.getElementById('takeoverOverlay').classList.add('show');
     refreshIcons();
 
     setTimeout(() => {
-      speakText(`Grandma, you have a new check-in from ${displayName}!`);
+      speakText(`${RESIDENT}, you have a new message from ${displayName}.`);
     }, 300);
 
     startEscalationWatch();
@@ -1155,7 +1084,7 @@
     refreshIcons();
 
     setTimeout(() => {
-      speakText(currentCaption + '. How are you feeling today, Grandma?');
+      speakText(currentCaption + '. How are you feeling today?');
     }, 300);
   }
 
@@ -1168,12 +1097,12 @@
       escalationCountdown--;
       if (escalationCountdown <= 0) {
         if (escalationStage === 1) {
-          showEscalationBanner('Reminder: you have a new message.', 1);
+          showEscalationBanner('Reminder: you have a new message', 1);
           speakText('This is your reminder. Please check your tablet.');
           escalationStage = 2;
           escalationCountdown = 5;
         } else if (escalationStage === 2) {
-          showEscalationBanner('We have let your family know.', 2);
+          showEscalationBanner('We have let your family know', 2);
           speakText('We have let your family know.');
           clearInterval(escalationTimer);
         }
@@ -1192,7 +1121,7 @@
       careBus.postMessage({
         type: 'ESCALATION_ALERT',
         stage,
-        message: 'Grandma missed the check-in and the reminder. Please give her a call.'
+        message: `${RESIDENT} missed the check-in and the reminder. Please give her a call.`
       });
     }
   }
@@ -1209,19 +1138,19 @@
         type: 'CHECKIN_RESPONSE',
         status: finalStatus,
         hasVoice: hasVoiceNote,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        timestamp: formatTime()
       });
     }
 
     const toast = document.getElementById('feedbackToast');
-    document.getElementById('feedbackTitle').textContent = `Marked "${status}"`;
+    document.getElementById('feedbackTitle').textContent = 'Response sent';
     document.getElementById('feedbackSub').textContent = hasVoiceNote
-      ? 'Voice note and status sent to family.'
-      : 'Family has been notified. Returning to photos...';
+      ? 'Your voice message and answer were sent to your family.'
+      : 'Your family can see your answer. Returning to photos.';
     toast.classList.add('show');
     refreshIcons();
 
-    speakText(`Thank you Grandma! We let the family know you are ${status}.`);
+    speakText(`Thank you. Your family can see your answer.`);
 
     setTimeout(() => {
       toast.classList.remove('show');
@@ -1248,7 +1177,7 @@
       btn.classList.add('recorded');
       if (note) note.classList.add('show');
       refreshIcons();
-      speakText('Voice message recorded. Please choose Good, OK, or Need Help to send.');
+      speakText('Voice message recorded. Choose Good, OK or Need help to send it.');
     } else {
       hasVoiceNote = false;
       isRecording = true;
@@ -1305,7 +1234,8 @@
 
     document.getElementById('pillModal').classList.add('active');
     refreshIcons();
-    speakText("Grandma, it's time for your scheduled pills. Please tap each pill once taken.");
+    document.getElementById('pillSlotLabel').textContent = `Morning, 08:00`;
+    speakText(`${RESIDENT}, it is time for your morning medication. Select each item after you have taken it.`);
   }
 
   function togglePill(el, name) {
@@ -1329,15 +1259,15 @@
     btn.disabled = !allTaken;
     btn.setAttribute('aria-disabled', String(!allTaken));
     text.textContent = allTaken
-      ? `I've Taken All My Pills (${takenCount}/${totalCount})`
-      : `Check all pills to complete (${takenCount}/${totalCount})`;
+      ? `Confirm medication taken (${takenCount} of ${totalCount})`
+      : `Confirm medication taken (${takenCount} of ${totalCount})`;
   }
 
   function submitPillsDone() {
     const pillCards = Array.from(document.querySelectorAll('#pillModalGrid .pill-item-card'));
     if (!pillCards.length || !pillCards.every(card => card.classList.contains('taken'))) {
       updatePillsDoneBtnState();
-      speakText('Please check every pill before confirming.');
+      speakText('Select each item before confirming.');
       return;
     }
 
@@ -1347,17 +1277,17 @@
       careBus.postMessage({
         type: 'PILLS_TAKEN',
         medications: pillCards.map(card => card.querySelector('.pill-name').textContent.trim()),
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        timestamp: formatTime()
       });
     }
 
     const toast = document.getElementById('feedbackToast');
-    document.getElementById('feedbackTitle').textContent = 'All Pills Logged!';
-    document.getElementById('feedbackSub').textContent = 'We sent a confirmation to the family.';
+    document.getElementById('feedbackTitle').textContent = 'Medication marked as taken';
+    document.getElementById('feedbackSub').textContent = 'Your family can see this. Returning to photos.';
     toast.classList.add('show');
     refreshIcons();
 
-    speakText('Great job Grandma! All pills recorded for today.');
+    speakText('Thank you. Your medication is marked as taken.');
 
     setTimeout(() => {
       toast.classList.remove('show');
@@ -1370,8 +1300,8 @@
   // ========================================================
   let activeErrand = null;
   const receiverCaretakers = {
-    Alex: { name: 'Alex', role: 'Son · Primary', avatar: 'assets/people/alex.jpg' },
-    Elena: { name: 'Elena', role: 'Daughter · Secondary', avatar: 'assets/people/elena.jpg' }
+    Alex: { name: 'Alex', role: HOUSEHOLD.family?.Alex?.role || 'Son, main contact', avatar: 'assets/people/alex.jpg' },
+    Elena: { name: 'Elena', role: HOUSEHOLD.family?.Elena?.role || 'Daughter', avatar: 'assets/people/elena.jpg' }
   };
 
   function normalizeErrandForReceiver(errand) {
@@ -1386,9 +1316,8 @@
 
   function renderActiveErrand() {
     if (!activeErrand) return;
-    const reminderLabels = { '15m': '15 minutes before', '10m': '10 minutes before', '5m': '5 minutes before', '5s': '5 seconds before (demo)' };
     document.getElementById('errandModalTitle').textContent = activeErrand.title;
-    document.getElementById('errandModalDesc').textContent = `${activeErrand.time} · Reminder ${reminderLabels[activeErrand.patientReminder] || activeErrand.patientReminder}`;
+    document.getElementById('errandModalDesc').textContent = activeErrand.time;
     document.getElementById('errandCaretakerName').textContent = activeErrand.caretakerName || 'Family';
     document.getElementById('errandCaretakerRole').textContent = activeErrand.caretakerRole || 'Responsible caretaker';
     document.getElementById('errandRecurringBadge').hidden = !activeErrand.recurring;
@@ -1400,12 +1329,12 @@
   function triggerErrandReminder(errandOrTitle, schedule, caretakerName) {
     const defaultErrand = {
       id: 'demo-garden-walk',
-      title: 'Afternoon Garden Walk',
-      time: 'Today at 3:30 PM',
+      title: 'Afternoon walk in the garden',
+      time: 'Today at 15:30',
       patientReminder: '5m',
       recurring: true,
       caretakerName: 'Alex',
-      caretakerRole: 'Son · Primary',
+      caretakerRole: receiverCaretakers.Alex.role,
       caretakerAvatarUrl: 'assets/people/alex.jpg'
     };
     const incomingErrand = errandOrTitle && typeof errandOrTitle === 'object'
@@ -1422,7 +1351,7 @@
 
     document.getElementById('errandModal').classList.add('active');
     refreshIcons();
-    speakText(`Grandma, gentle reminder: ${activeErrand.title} is coming up.`);
+    speakText(`${RESIDENT}, a reminder: ${activeErrand.title}, ${activeErrand.time}.`);
   }
 
   function submitErrandDone() {
@@ -1432,12 +1361,12 @@
         type: 'ERRAND_ACKNOWLEDGED',
         errandId: activeErrand.id,
         title: activeErrand.title,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        timestamp: formatTime()
       });
     }
     const toast = document.getElementById('feedbackToast');
-    document.getElementById('feedbackTitle').textContent = 'Reminder Acknowledged!';
-    document.getElementById('feedbackSub').textContent = 'Returning to photo slideshow...';
+    document.getElementById('feedbackTitle').textContent = 'Reminder noted';
+    document.getElementById('feedbackSub').textContent = 'Returning to photos';
     toast.classList.add('show');
     refreshIcons();
 
