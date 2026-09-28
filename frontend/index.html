@@ -120,21 +120,21 @@
     .guide {
       position: relative;
       display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: 12px 28px;
-      padding: 14px 56px 14px 24px;
+      grid-template-columns: minmax(280px, 380px) 1fr;
+      gap: 16px 32px;
+      padding: 16px 56px 18px 24px;
       background: var(--surface);
       border-bottom: 1px solid var(--line);
     }
     .guide[hidden] { display: none; }
-    .guide-head h2 { margin: 0; font-family: "Lexend", sans-serif; font-size: .95rem; font-weight: 600; }
-    .guide-head p { margin: 2px 0 0; color: var(--ink-soft); font-size: .8rem; max-width: 30ch; }
+    .guide-head h2 { margin: 0 0 4px; font-family: "Lexend", sans-serif; font-size: 1rem; font-weight: 600; }
+    .guide-head p { margin: 0 0 6px; color: var(--ink-soft); font-size: .86rem; line-height: 1.45; }
+    .guide-head p strong { color: var(--ink); }
 
     .guide-steps {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 22px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
       margin: 0;
       padding: 0;
       list-style: none;
@@ -143,9 +143,15 @@
     .guide-steps li {
       counter-increment: step;
       display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: .86rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #f6f8f5;
+      font-size: .84rem;
+      line-height: 1.4;
     }
     .guide-steps li::before {
       content: counter(step);
@@ -153,24 +159,26 @@
       place-items: center;
       width: 22px;
       height: 22px;
+      margin-bottom: 2px;
       border-radius: 50%;
-      background: #e3e8e2;
-      color: var(--green);
-      font-size: .75rem;
+      background: var(--green);
+      color: #f3f6f1;
+      font-size: .74rem;
       font-weight: 700;
-      flex: none;
     }
     .guide-steps strong { font-weight: 700; }
-    .guide-steps span { display: none; }
+    .guide [data-resident] { color: inherit; }
+    .guide-steps span { color: var(--ink-soft); }
+    .guide-steps .demo-button { margin-top: auto; }
+    .guide-steps li > span { margin-bottom: 6px; }
 
-    .guide-actions { display: flex; gap: 8px; }
     .demo-button {
-      min-height: 38px;
+      min-height: 36px;
       padding: 0 14px;
       border: 1px solid var(--line);
       border-radius: 10px;
       background: var(--surface);
-      font-size: .86rem;
+      font-size: .84rem;
       font-weight: 700;
       white-space: nowrap;
       cursor: pointer;
@@ -183,9 +191,8 @@
 
     .guide-close {
       position: absolute;
-      top: 50%;
+      top: 12px;
       right: 14px;
-      transform: translateY(-50%);
       display: grid;
       place-items: center;
       width: 30px;
@@ -256,10 +263,9 @@
     .preview-grid[data-view="caretaker"] { grid-template-columns: minmax(0, 1100px); justify-content: center; }
     .preview-grid[data-view="caretaker"] .preview.receiver { display: none; }
 
-    @media (max-width: 1280px) {
-      .guide { grid-template-columns: 1fr auto; }
-      .guide-head p { display: none; }
-      .guide-steps { grid-column: 1 / -1; grid-row: 2; }
+    @media (max-width: 1100px) {
+      .guide { grid-template-columns: 1fr; }
+      .guide-head { max-width: 900px; }
     }
 
     @media (max-width: 860px) {
@@ -271,10 +277,16 @@
       .preview-grid[data-view="split"] { grid-template-columns: 1fr; }
       .preview-grid[data-view="split"] .preview.caretaker { display: none; }
       .preview-grid { padding: 12px 12px 14px; gap: 12px; }
-      .guide { grid-template-columns: 1fr; padding: 12px 48px 12px 14px; gap: 10px; }
-      .guide-steps { display: none; }
-      .guide-head p { display: block; max-width: none; }
-      .guide-actions { overflow-x: auto; }
+      .guide { padding: 12px 44px 12px 14px; gap: 10px; }
+      .guide-panes { display: none; }
+      .guide-steps { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .guide-steps li { padding: 10px; }
+      .guide-steps li > span { display: none; }
+      .guide-steps li:nth-child(2), .guide-steps li:nth-child(4) { display: none; }
+      .guide-steps li::before { display: none; }
+      .guide-steps li { flex-direction: row; align-items: center; justify-content: space-between; gap: 8px; }
+      .guide-steps .demo-button { margin-top: 0; flex: none; }
+      .guide-steps { grid-template-columns: 1fr; }
       .preview.receiver iframe { border-width: 7px; border-radius: 20px; }
       .preview.caretaker iframe { border-top-width: 18px; border-radius: 12px; }
     }
@@ -303,7 +315,7 @@
           <button class="view-button" type="button" data-view="receiver">Frame</button>
           <button class="view-button" type="button" data-view="caretaker">Family</button>
         </div>
-        <button class="open-link guide-toggle" id="guideToggle" type="button" hidden><span>How to try it</span></button>
+        <button class="open-link guide-toggle" id="guideToggle" type="button" hidden><span>What is this?</span></button>
         <a class="open-link" href="carereceiver.html" target="_blank" rel="noopener"><span>Open frame</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"></path><path d="M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"></path></svg></a>
         <a class="open-link" href="caretaker.html" target="_blank" rel="noopener"><span>Open family panel</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"></path><path d="M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"></path></svg></a>
       </div>
@@ -311,30 +323,40 @@
 
     <section class="guide" id="guide" aria-labelledby="guideTitle">
       <div class="guide-head">
-        <h2 id="guideTitle">How to try it</h2>
-        <p>About a minute. The buttons here act as the family, so <span data-resident>Margaret</span>'s frame stays clean.</p>
+        <h2 id="guideTitle">What is this?</h2>
+        <p><strong>Care Companion</strong> helps families look after an older relative who lives alone.</p>
+        <p class="guide-panes"><strong>Left:</strong> the tablet in <span data-resident>Margaret</span>'s home. It shows family photos and asks simple questions. <strong>Right:</strong> the app her family uses to send photos and reminders, and to get an alert if she doesn't answer.</p>
       </div>
-      <ol class="guide-steps">
-        <li><div><strong>Send a check-in</strong><span>A photo and a question appear on the frame.</span></div></li>
-        <li><div><strong>Answer, or wait 10 seconds</strong><span>Unanswered check-ins alert the family.</span></div></li>
-        <li><div><strong>Send a medication reminder</strong><span>Select each item, then confirm.</span></div></li>
-        <li><div><strong>Check the family panel</strong><span>Everything is logged. Nothing leaves your browser.</span></div></li>
+      <ol class="guide-steps" aria-label="Try it in about a minute">
+        <li>
+          <strong>Send <span data-resident>Margaret</span> a check-in</strong>
+          <span>A family photo and "How are you feeling today?" appear on her tablet.</span>
+          <button class="demo-button primary" type="button" data-demo-action="checkin">Send check-in</button>
+        </li>
+        <li>
+          <strong>Answer as <span data-resident>Margaret</span>, or don't</strong>
+          <span>Tap Open message, then Good. Or wait 10 seconds: she gets a reminder, then the family is alerted.</span>
+        </li>
+        <li>
+          <strong>Send a medication reminder</strong>
+          <span>Tick each item on her tablet, then confirm.</span>
+          <button class="demo-button" type="button" data-demo-action="medication">Send reminder</button>
+        </li>
+        <li>
+          <strong>Watch the family app</strong>
+          <span>Every answer, reminder and alert is logged on the right. Nothing leaves your browser.</span>
+        </li>
       </ol>
-      <div class="guide-actions" role="group" aria-label="Demo controls">
-        <button class="demo-button primary" type="button" data-demo-action="checkin">Send test check-in</button>
-        <button class="demo-button" type="button" data-demo-action="medication">Send medication reminder</button>
-        <button class="demo-button" type="button" data-demo-action="reminder">Send a reminder</button>
-      </div>
       <button class="guide-close" id="guideClose" type="button" aria-label="Hide the guide">&times;</button>
     </section>
 
     <section class="preview-grid" id="previewGrid" data-view="split" aria-label="Care Companion split preview">
       <article class="preview receiver">
-        <header class="preview-label"><span><span data-resident>Margaret</span>'s frame</span><span>Tablet at home</span></header>
+        <header class="preview-label"><span><span data-resident>Margaret</span>'s tablet</span><span>What she sees at home</span></header>
         <iframe src="carereceiver.html" title="Margaret's photo frame"></iframe>
       </article>
       <article class="preview caretaker">
-        <header class="preview-label"><span>Family panel</span><span>Alex's phone or laptop</span></header>
+        <header class="preview-label"><span>Family app</span><span>What Alex sees on his phone or laptop</span></header>
         <iframe src="caretaker.html" title="Family panel"></iframe>
       </article>
     </section>
@@ -366,7 +388,7 @@
 
       const guide = document.getElementById('guide');
       const guideToggle = document.getElementById('guideToggle');
-      const GUIDE_KEY = 'care_companion_guide_hidden_v1';
+      const GUIDE_KEY = 'care_companion_guide_hidden_v2';
       function setGuide(open) {
         guide.hidden = !open;
         guideToggle.hidden = open;
