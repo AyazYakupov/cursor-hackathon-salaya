@@ -1643,11 +1643,11 @@
   // PHOTOS MANAGEMENT WITH IMMEDIATE & SCHEDULED CHECK-INS
   // ========================================================
   let photos = loadStoredArray(CARE_STORAGE_KEYS.photos, [
-    { id: 1, src: 'assets/photos/family-picnic-scene.jpg', title: 'Picnic in the park', caption: 'Alex and the children, with Bramble the dog', prioritized: true },
-    { id: 2, src: 'assets/photos/beach-vacation-scene.jpg', title: 'Beach day', caption: 'Paddling in the sea together', prioritized: false },
-    { id: 3, src: 'assets/photos/family-dinner-scene.jpg', title: 'Baking with Sophie', caption: 'Making biscuits in your kitchen', prioritized: false },
-    { id: 4, src: 'assets/photos/reading-time-scene.jpg', title: 'Reading together', caption: 'A quiet evening on the sofa', prioritized: false },
-    { id: 5, src: 'assets/photos/christmas-dinner-scene.jpg', title: 'Christmas morning', caption: 'Sophie in her Santa hat', prioritized: false }
+    { id: 1, src: 'assets/photos/family-picnic-scene.jpg', title: 'In the park', caption: 'Sophie racing everyone to the swings', prioritized: true },
+    { id: 2, src: 'assets/photos/beach-vacation-scene.jpg', title: 'Autumn walk', caption: 'Wrapped up warm on Sunday', prioritized: false },
+    { id: 3, src: 'assets/photos/family-dinner-scene.jpg', title: 'Lazy Saturday', caption: 'Sophie telling Alex a very long story', prioritized: false },
+    { id: 4, src: 'assets/photos/reading-time-scene.jpg', title: 'Story time', caption: 'Her favourite book, again', prioritized: false },
+    { id: 5, src: 'assets/photos/christmas-dinner-scene.jpg', title: 'All three of us', caption: 'Elena, Alex and Sophie say hello', prioritized: false }
   ]);
 
   let scheduledCheckinTimes = loadStoredArray(CARE_STORAGE_KEYS.checkinTimes, [
@@ -1994,7 +1994,7 @@
   const caretakerProfiles = {
     Alex: {
       name: 'Alex',
-      role: HOUSEHOLD.family?.Alex?.role || 'Son, main contact',
+      role: HOUSEHOLD.family?.Alex?.role || 'Son-in-law, main contact',
       label: 'Alex, son',
       avatar: 'assets/people/alex.jpg',
       fallbackAvatar: 'assets/people/alex-fallback.jpg'

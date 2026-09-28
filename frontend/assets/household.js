@@ -3,7 +3,7 @@
 window.CARE_HOUSEHOLD = {
   resident: 'Margaret',
   family: {
-    Alex: { name: 'Alex', role: 'Son, main contact' },
+    Alex: { name: 'Alex', role: 'Son-in-law, main contact' },
     Elena: { name: 'Elena', role: 'Daughter' }
   }
 };

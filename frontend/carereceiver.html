@@ -735,8 +735,8 @@
 <!-- Bottom Left Caption (Displays Actual Photo Caption) -->
 <div class="slideshow-caption" id="slideCaption">
   <div class="caption-pill">
-    <div class="caption-title" id="captionTitle">Picnic in the park</div>
-    <div class="caption-sub" id="captionSub">"Alex and the children, with Bramble the dog"</div>
+    <div class="caption-title" id="captionTitle">In the park</div>
+    <div class="caption-sub" id="captionSub">"Sophie racing everyone to the swings"</div>
   </div>
 </div>
 
@@ -833,7 +833,7 @@
         <img id="errandCaretakerAvatar" src="assets/people/alex.jpg" alt="Alex">
         <div class="errand-assignee-copy">
           <strong id="errandCaretakerName">Alex</strong>
-          <span id="errandCaretakerRole">Son, main contact</span>
+          <span id="errandCaretakerRole">Son-in-law, main contact</span>
         </div>
       </div>
       <button class="done-pills-btn" type="button" onclick="submitErrandDone()">
@@ -921,11 +921,11 @@
   const careBus = window.BroadcastChannel ? new BroadcastChannel('care_companion_bus') : null;
 
   let slidesData = loadStoredArray(CARE_STORAGE_KEYS.photos, [
-    { src: 'assets/photos/family-picnic-scene.jpg', title: 'Picnic in the park', caption: 'Alex and the children, with Bramble the dog', prioritized: true },
-    { src: 'assets/photos/beach-vacation-scene.jpg', title: 'Beach day', caption: 'Paddling in the sea together', prioritized: false },
-    { src: 'assets/photos/family-dinner-scene.jpg', title: 'Baking with Sophie', caption: 'Making biscuits in your kitchen', prioritized: false },
-    { src: 'assets/photos/reading-time-scene.jpg', title: 'Reading together', caption: 'A quiet evening on the sofa', prioritized: false },
-    { src: 'assets/photos/christmas-dinner-scene.jpg', title: 'Christmas morning', caption: 'Sophie in her Santa hat', prioritized: false }
+    { src: 'assets/photos/family-picnic-scene.jpg', title: 'In the park', caption: 'Sophie racing everyone to the swings', prioritized: true },
+    { src: 'assets/photos/beach-vacation-scene.jpg', title: 'Autumn walk', caption: 'Wrapped up warm on Sunday', prioritized: false },
+    { src: 'assets/photos/family-dinner-scene.jpg', title: 'Lazy Saturday', caption: 'Sophie telling Alex a very long story', prioritized: false },
+    { src: 'assets/photos/reading-time-scene.jpg', title: 'Story time', caption: 'Her favourite book, again', prioritized: false },
+    { src: 'assets/photos/christmas-dinner-scene.jpg', title: 'All three of us', caption: 'Elena, Alex and Sophie say hello', prioritized: false }
   ]);
 
   const publishedPillPhotoUrls = {
@@ -1342,7 +1342,7 @@
   // ========================================================
   let activeErrand = null;
   const receiverCaretakers = {
-    Alex: { name: 'Alex', role: HOUSEHOLD.family?.Alex?.role || 'Son, main contact', avatar: 'assets/people/alex.jpg' },
+    Alex: { name: 'Alex', role: HOUSEHOLD.family?.Alex?.role || 'Son-in-law, main contact', avatar: 'assets/people/alex.jpg' },
     Elena: { name: 'Elena', role: HOUSEHOLD.family?.Elena?.role || 'Daughter', avatar: 'assets/people/elena.jpg' }
   };
 
