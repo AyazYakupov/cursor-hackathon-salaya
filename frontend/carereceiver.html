@@ -735,8 +735,8 @@
 <!-- Bottom Left Caption (Displays Actual Photo Caption) -->
 <div class="slideshow-caption" id="slideCaption">
   <div class="caption-pill">
-    <div class="caption-title" id="captionTitle">Picnic in the meadow</div>
-    <div class="caption-sub" id="captionSub">"The afternoon with the grandchildren"</div>
+    <div class="caption-title" id="captionTitle">Picnic in the park</div>
+    <div class="caption-sub" id="captionSub">"Alex and the children, with Bramble the dog"</div>
   </div>
 </div>
 
@@ -921,11 +921,11 @@
   const careBus = window.BroadcastChannel ? new BroadcastChannel('care_companion_bus') : null;
 
   let slidesData = loadStoredArray(CARE_STORAGE_KEYS.photos, [
-    { src: 'assets/photos/family-picnic-scene.jpg', title: 'Picnic in the meadow', caption: 'The afternoon with the grandchildren', prioritized: true },
-    { src: 'assets/photos/beach-vacation-scene.jpg', title: 'Beach day', caption: 'A walk along the sea front', prioritized: false },
-    { src: 'assets/photos/family-dinner-scene.jpg', title: 'Sunday dinner', caption: 'Everyone round the table again', prioritized: false },
-    { src: 'assets/photos/reading-time-scene.jpg', title: 'Reading by the fire', caption: 'A quiet evening at home', prioritized: false },
-    { src: 'assets/photos/christmas-dinner-scene.jpg', title: 'Christmas lunch', caption: 'The whole family together', prioritized: false }
+    { src: 'assets/photos/family-picnic-scene.jpg', title: 'Picnic in the park', caption: 'Alex and the children, with Bramble the dog', prioritized: true },
+    { src: 'assets/photos/beach-vacation-scene.jpg', title: 'Beach day', caption: 'Paddling in the sea together', prioritized: false },
+    { src: 'assets/photos/family-dinner-scene.jpg', title: 'Baking with Sophie', caption: 'Making biscuits in your kitchen', prioritized: false },
+    { src: 'assets/photos/reading-time-scene.jpg', title: 'Reading together', caption: 'A quiet evening on the sofa', prioritized: false },
+    { src: 'assets/photos/christmas-dinner-scene.jpg', title: 'Christmas morning', caption: 'Sophie in her Santa hat', prioritized: false }
   ]);
 
   const publishedPillPhotoUrls = {

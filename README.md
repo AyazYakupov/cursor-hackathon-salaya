@@ -83,3 +83,7 @@ After the hackathon, Dylan revamped the frontend:
 - A visible voice reply button, still tap targets, and a correct picture for every pill
 - Resized photo uploads so large pictures fit in browser storage
 - Every image and script bundled in the repo, so the demo no longer depends on outside image hosts
+
+## Photo credits
+
+Photos are CC0 stock images from StockSnap (stocksnap.io).
