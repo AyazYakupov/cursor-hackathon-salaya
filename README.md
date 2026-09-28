@@ -2,6 +2,9 @@
 
 A tablet for someone who needs care, and a control panel for the family who looks after them. The tablet is a quiet photo frame until the family has something to say. Then it asks a simple question, and if nobody answers, the family finds out.
 
+**Live demo:** https://itsdakpan.github.io/cursor-hackathon-salaya/
+It opens both screens side by side. Press "Demo Check-in" on the tablet and watch the family panel.
+
 ![The care tablet showing a check-in](docs/screenshots/tablet-answer.jpg)
 
 ## What it does
