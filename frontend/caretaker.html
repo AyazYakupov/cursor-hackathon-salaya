@@ -3,25 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Care Companion — Family Caretaker Hub</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<title>Care Companion | Family Caretaker Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&amp;family=Lexend:wght@500;600;700&amp;display=swap" rel="stylesheet">
 <!-- Lucide Icons -->
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="assets/vendor/lucide.min.js"></script>
 <style>
   :root {
-    --bg-page: #f8fafc;
-    --card-bg: #ffffff;
-    --primary: #1e3a8a;
-    --primary-light: #3b82f6;
-    --emerald: #059669;
-    --emerald-light: #d1fae5;
-    --amber: #d97706;
-    --rose: #e11d48;
-    --purple: #7c3aed;
-    --text-main: #0f172a;
-    --text-muted: #64748b;
-    --border: #e2e8f0;
+    --bg-page: #f3f5f2;
+    --card-bg: #fbfcfa;
+    --primary: #1f3a2d;
+    --primary-light: #2e5241;
+    --emerald: #2f7a52;
+    --emerald-light: #e3efe7;
+    --amber: #a8711a;
+    --rose: #b3452f;
+    --purple: #1f3a2d;
+    --text-main: #1b2620;
+    --text-muted: #56625a;
+    --border: #dce3dd;
     --radius-lg: 24px;
     --radius-md: 16px;
     --shadow-sm: 0 4px 12px rgba(0,0,0,0.03);
@@ -29,7 +30,7 @@
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    font-family: 'Atkinson Hyperlegible', -apple-system, sans-serif;
     background: var(--bg-page);
     color: var(--text-main);
     min-height: 100vh;
@@ -44,7 +45,7 @@
 
   /* Header */
   .header-card {
-    background: linear-gradient(135deg, #1e293b, #0f172a);
+    background: linear-gradient(135deg, #1f3a2d, #1b2620);
     color: white;
     border-radius: var(--radius-lg);
     padding: 28px 32px;
@@ -52,7 +53,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 12px 36px rgba(15,23,42,0.15);
+    box-shadow: 0 12px 36px rgba(27,38,32,0.15);
   }
   .header-left {
     display: flex;
@@ -64,23 +65,23 @@
     height: 64px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #38bdf8;
+    border: 3px solid #e2a33a;
     box-shadow: 0 4px 14px rgba(0,0,0,0.3);
   }
   .header-titles h1 {
-    font-family: 'Fraunces', serif;
+    font-family: 'Lexend', serif;
     font-size: 26px;
     font-weight: 600;
   }
   .header-titles p {
     font-size: 14px;
-    color: #94a3b8;
+    color: #9aa69e;
     margin-top: 4px;
   }
   .live-status-pill {
-    background: rgba(16,185,129,0.15);
-    border: 1px solid rgba(16,185,129,0.3);
-    color: #34d399;
+    background: rgba(47,122,82,0.15);
+    border: 1px solid rgba(47,122,82,0.3);
+    color: #8cc6a4;
     padding: 8px 16px;
     border-radius: 40px;
     font-size: 13px;
@@ -92,8 +93,8 @@
   .live-status-pill .dot {
     width: 8px; height: 8px;
     border-radius: 50%;
-    background: #34d399;
-    box-shadow: 0 0 10px #34d399;
+    background: #8cc6a4;
+    box-shadow: 0 0 10px #8cc6a4;
   }
 
   /* Navigation Tabs (Photo Queue is 1st) */
@@ -101,7 +102,7 @@
     display: flex;
     flex-wrap: nowrap;
     gap: 8px;
-    background: #e2e8f0;
+    background: #dce3dd;
     padding: 6px;
     border-radius: 18px;
     margin-bottom: 24px;
@@ -153,7 +154,7 @@
     margin-bottom: 18px;
   }
   .card-title {
-    font-family: 'Fraunces', serif;
+    font-family: 'Lexend', serif;
     font-size: 20px;
     font-weight: 600;
     display: flex;
@@ -186,7 +187,7 @@
 
   .btn-primary {
     padding: 12px 20px;
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    background: linear-gradient(135deg, #1f3a2d, #16291f);
     color: white;
     border: none;
     border-radius: var(--radius-md);
@@ -198,16 +199,16 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: 0 4px 14px rgba(37,99,235,0.25);
+    box-shadow: 0 4px 14px rgba(31,58,45,0.25);
     transition: all 0.2s;
   }
   .btn-primary:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(37,99,235,0.35);
+    box-shadow: 0 6px 18px rgba(31,58,45,0.35);
   }
   .btn-secondary {
     padding: 8px 14px;
-    background: #f1f5f9;
+    background: #eef2ee;
     color: var(--text-main);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
@@ -220,12 +221,12 @@
     align-items: center;
     gap: 6px;
   }
-  .btn-secondary:hover { background: #e2e8f0; }
+  .btn-secondary:hover { background: #dce3dd; }
 
   /* Drag & Drop Upload Zone */
   .file-dropzone {
-    border: 2px dashed #93c5fd;
-    background: #eff6ff;
+    border: 2px dashed #cbd7ce;
+    background: #eef2ee;
     border-radius: var(--radius-md);
     padding: 20px 16px;
     text-align: center;
@@ -234,18 +235,18 @@
     margin-bottom: 12px;
   }
   .file-dropzone.dragover {
-    border-color: #2563eb;
-    background: #dbeafe;
+    border-color: #1f3a2d;
+    background: #e4ebe5;
     transform: scale(1.01);
   }
   .dropzone-icon {
     margin-bottom: 6px;
-    color: #2563eb;
+    color: #1f3a2d;
     display: flex;
     justify-content: center;
   }
-  .dropzone-text { font-size: 14px; font-weight: 600; color: #1e40af; }
-  .dropzone-sub { font-size: 12px; color: #64748b; margin-top: 2px; }
+  .dropzone-text { font-size: 14px; font-weight: 600; color: #1f3a2d; }
+  .dropzone-sub { font-size: 12px; color: #56625a; margin-top: 2px; }
 
   /* Previews */
   .upload-preview-box {
@@ -255,7 +256,7 @@
     border-radius: 14px;
     overflow: hidden;
     max-height: 140px;
-    border: 2px solid #3b82f6;
+    border: 2px solid #2e5241;
   }
   .upload-preview-box.show { display: block; }
   .upload-preview-img { width: 100%; height: 140px; object-fit: cover; display: block; }
@@ -272,7 +273,7 @@
   /* Sub Navigation Toggle */
   .sub-nav-toggle {
     display: flex;
-    background: #f1f5f9;
+    background: #eef2ee;
     padding: 4px;
     border-radius: 12px;
     gap: 4px;
@@ -300,7 +301,7 @@
 
   /* Time Slot Cards */
   .time-slot-card {
-    background: #ffffff;
+    background: #fbfcfa;
     border: 2px solid var(--border);
     border-radius: 20px;
     padding: 20px;
@@ -313,7 +314,7 @@
     align-items: center;
     margin-bottom: 14px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid #eef2ee;
   }
   .time-slot-title {
     font-size: 16px;
@@ -324,8 +325,8 @@
     gap: 8px;
   }
   .time-slot-badge {
-    background: #e0f2fe;
-    color: #0369a1;
+    background: #e4ebe5;
+    color: #1f3a2d;
     font-size: 12px;
     font-weight: 700;
     padding: 4px 10px;
@@ -338,7 +339,7 @@
     gap: 12px;
   }
   .slot-pill-item {
-    background: #f8fafc;
+    background: #f3f5f2;
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 12px;
@@ -353,7 +354,7 @@
     border-radius: 10px;
     object-fit: cover;
     border: 1px solid var(--border);
-    background: #e2e8f0;
+    background: #dce3dd;
     flex-shrink: 0;
   }
   .pill-icon-tag {
@@ -374,7 +375,7 @@
     margin-bottom: 24px;
   }
   .pill-inv-card {
-    background: #ffffff;
+    background: #fbfcfa;
     border: 2px solid var(--border);
     border-radius: 20px;
     padding: 18px;
@@ -395,14 +396,14 @@
     border-radius: 14px;
     object-fit: cover;
     border: 2px solid var(--border);
-    background: #e2e8f0;
+    background: #dce3dd;
     flex-shrink: 0;
   }
   .pill-inv-title { font-size: 16px; font-weight: 700; color: var(--text-dark); }
   .pill-inv-dosage { font-size: 13px; color: var(--text-muted); }
   .pill-time-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
   .time-chip {
-    background: #ede9fe; color: #6d28d9;
+    background: #e4ebe5; color: #1f3a2d;
     font-size: 11px; font-weight: 700;
     padding: 4px 8px; border-radius: 12px;
     display: inline-flex; align-items: center; gap: 4px;
@@ -439,7 +440,7 @@
     margin-bottom: 18px;
   }
   .edit-modal-title {
-    font-family: 'Fraunces', serif;
+    font-family: 'Lexend', serif;
     font-size: 20px;
     font-weight: 700;
   }
@@ -448,7 +449,7 @@
     height: 40px;
     border: 1px solid var(--border);
     border-radius: 12px;
-    background: #f8fafc;
+    background: #f3f5f2;
     color: var(--text-main);
     cursor: pointer;
     display: inline-flex;
@@ -456,7 +457,7 @@
     justify-content: center;
     flex: 0 0 auto;
   }
-  .icon-button:hover { background: #e2e8f0; }
+  .icon-button:hover { background: #dce3dd; }
   .modal-actions {
     display: flex;
     justify-content: flex-end;
@@ -472,7 +473,7 @@
     margin-bottom: 24px;
   }
   .photo-item-card {
-    background: #ffffff;
+    background: #fbfcfa;
     border: 2px solid var(--border);
     border-radius: 18px;
     overflow: hidden;
@@ -483,8 +484,8 @@
     flex-direction: column;
   }
   .photo-item-card.prioritized {
-    border-color: #f59e0b;
-    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25);
+    border-color: #e2a33a;
+    box-shadow: 0 0 0 3px rgba(226, 163, 58, 0.25);
   }
   .photo-item-img { width: 100%; height: 150px; object-fit: cover; background: #000; }
   .photo-item-body { padding: 12px 14px; display: flex; flex-direction: column; flex: 1; }
@@ -492,7 +493,7 @@
   .photo-item-caption { font-size: 12px; color: var(--text-muted); font-style: italic; margin-bottom: 12px; flex: 1; }
   .photo-card-actions {
     display: flex; flex-direction: column; gap: 8px;
-    padding-top: 8px; border-top: 1px solid #f1f5f9;
+    padding-top: 8px; border-top: 1px solid #eef2ee;
   }
   .photo-action-row {
     display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
@@ -501,7 +502,7 @@
   .btn-send-now {
     width: 100%;
     padding: 9px 12px;
-    background: linear-gradient(135deg, #059669, #10b981);
+    background: linear-gradient(135deg, #2f7a52, #2f7a52);
     color: white;
     border: none;
     border-radius: 10px;
@@ -513,17 +514,17 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    box-shadow: 0 2px 6px rgba(5,150,105,0.2);
+    box-shadow: 0 2px 6px rgba(47,122,82,0.2);
     transition: all 0.15s;
   }
   .btn-send-now:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(5,150,105,0.3);
+    box-shadow: 0 4px 10px rgba(47,122,82,0.3);
   }
   .card-edit-btn {
-    background: #eff6ff;
-    border: 1px solid #bfdbfe;
-    color: #1d4ed8;
+    background: #eef2ee;
+    border: 1px solid #cbd7ce;
+    color: #16291f;
     padding: 6px 10px;
     border-radius: 20px;
     font: 700 12px/1.2 inherit;
@@ -532,17 +533,17 @@
     align-items: center;
     gap: 5px;
   }
-  .card-edit-btn:hover { background: #dbeafe; }
+  .card-edit-btn:hover { background: #e4ebe5; }
   .star-priority-btn {
-    background: #f8fafc; border: 1px solid var(--border);
+    background: #f3f5f2; border: 1px solid var(--border);
     padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;
     cursor: pointer; display: inline-flex; align-items: center; gap: 5px; transition: all 0.2s;
   }
-  .star-priority-btn:hover { background: #fef3c7; border-color: #f59e0b; }
-  .star-priority-btn.active { background: #f59e0b; color: white; border-color: #d97706; }
+  .star-priority-btn:hover { background: #fbefd6; border-color: #e2a33a; }
+  .star-priority-btn.active { background: #e2a33a; color: white; border-color: #a8711a; }
   .priority-badge-corner {
     position: absolute; top: 8px; left: 8px;
-    background: #f59e0b; color: white;
+    background: #e2a33a; color: white;
     font-size: 11px; font-weight: 800;
     padding: 4px 10px; border-radius: 20px;
     display: flex; align-items: center; gap: 4px;
@@ -551,8 +552,8 @@
 
   /* Automated Check-in Schedule */
   .schedule-card {
-    background: linear-gradient(145deg, #ffffff, #f0fdf4);
-    border: 2px solid #bbf7d0;
+    background: linear-gradient(145deg, #fbfcfa, #eef5f0);
+    border: 2px solid #c4dfcd;
   }
   .schedule-time-list {
     display: flex;
@@ -561,7 +562,7 @@
     margin-bottom: 14px;
   }
   .schedule-time-chip {
-    background: #f1f5f9;
+    background: #eef2ee;
     border: 1px solid var(--border);
     padding: 6px 12px;
     border-radius: 20px;
@@ -574,7 +575,7 @@
   .schedule-time-chip .del-time-btn {
     background: none;
     border: none;
-    color: #ef4444;
+    color: #b3452f;
     cursor: pointer;
     padding: 0;
     display: flex;
@@ -588,11 +589,11 @@
 
   .caption-pool-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
   .caption-pool-item {
-    background: #f8fafc; border: 1px solid var(--border);
+    background: #f3f5f2; border: 1px solid var(--border);
     border-radius: 12px; padding: 10px 14px;
     display: flex; align-items: center; justify-content: space-between; font-size: 13px;
   }
-  .caption-pool-item .del-caption-btn { color: #ef4444; background: none; border: none; cursor: pointer; font-size: 14px; padding: 4px; display: flex; align-items: center; }
+  .caption-pool-item .del-caption-btn { color: #b3452f; background: none; border: none; cursor: pointer; font-size: 14px; padding: 4px; display: flex; align-items: center; }
 
   /* ========================================================
      ERRANDS ENHANCED CARDS (WITH CARETAKER & TIMING REMINDERS)
@@ -612,16 +613,16 @@
   }
   .errand-icon-badge {
     width: 48px; height: 48px; border-radius: 14px;
-    background: #ede9fe; color: var(--purple);
+    background: #e4ebe5; color: var(--purple);
     display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
   .errand-details-row {
     display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-    padding-top: 10px; border-top: 1px solid #f1f5f9;
+    padding-top: 10px; border-top: 1px solid #eef2ee;
   }
   .errand-caretaker-pill {
     display: inline-flex; align-items: center; gap: 8px;
-    background: #f1f5f9; padding: 4px 12px 4px 6px; border-radius: 24px;
+    background: #eef2ee; padding: 4px 12px 4px 6px; border-radius: 24px;
     font-size: 13px; font-weight: 700;
   }
   .errand-caretaker-pill img {
@@ -637,9 +638,9 @@
     gap: 5px;
     padding: 5px 10px;
     border-radius: 999px;
-    background: #ecfdf5;
-    color: #047857;
-    border: 1px solid #a7f3d0;
+    background: #eef5f0;
+    color: #245f40;
+    border: 1px solid #c4dfcd;
     font-size: 12px;
     font-weight: 800;
   }
@@ -656,7 +657,7 @@
     width: 18px;
     height: 18px;
     margin: 0;
-    accent-color: #059669;
+    accent-color: #2f7a52;
     cursor: pointer;
   }
   .caretaker-roster {
@@ -673,14 +674,14 @@
     padding: 12px 14px;
     border: 1px solid var(--border);
     border-radius: 14px;
-    background: #f8fafc;
+    background: #f3f5f2;
   }
   .caretaker-profile img {
     width: 46px;
     height: 46px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #bfdbfe;
+    border: 2px solid #cbd7ce;
     flex: 0 0 auto;
   }
   .caretaker-profile strong,
@@ -695,7 +696,7 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
     padding-top: 12px;
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid #eef2ee;
   }
   .errand-control-grid .input-group { margin: 0; min-width: 0; }
   .errand-control-grid .text-field {
@@ -708,7 +709,7 @@
   button:focus-visible,
   input:focus-visible,
   select:focus-visible {
-    outline: 3px solid #1d4ed8;
+    outline: 3px solid #16291f;
     outline-offset: 2px;
   }
 
@@ -732,7 +733,7 @@
   /* Toast */
   .hub-alert-toast {
     position: fixed; bottom: 24px; right: 24px;
-    background: #0f172a; color: white;
+    background: #1b2620; color: white;
     padding: 16px 24px; border-radius: 50px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     display: flex; align-items: center; gap: 12px;
@@ -741,14 +742,15 @@
   }
   .hub-alert-toast.show { transform: translateY(0); opacity: 1; }
 </style>
+<link rel="stylesheet" href="assets/theme.css">
 </head>
-<body>
+<body class="caretaker">
 
 <div class="container">
   <!-- Header Card -->
   <div class="header-card">
     <div class="header-left">
-      <img class="patient-avatar" src="https://media.clero.so/content_items/2026/08/Grandma_Portrait.jpg" alt="Grandma">
+      <img class="patient-avatar" src="assets/people/grandma.jpg" alt="Grandma">
       <div class="header-titles">
         <h1>Grandma's Care Hub</h1>
         <p>Family management for photos, time-based medications, errands & check-ins</p>
@@ -759,6 +761,26 @@
       <span id="hubStatusText">Frame Active</span>
     </div>
   </div>
+
+  <!-- Escalation alert: shown when Grandma misses a check-in after the retry -->
+  <section class="care-alert" id="careAlert" role="alert" hidden>
+    <i data-lucide="phone-call" style="width:26px;height:26px;"></i>
+    <div class="care-alert-copy">
+      <strong id="careAlertTitle">Grandma has not answered</strong>
+      <span id="careAlertText">She missed the check-in and the reminder. Please call her.</span>
+    </div>
+    <button class="btn-secondary" type="button" onclick="dismissCareAlert()">Mark as handled</button>
+  </section>
+
+  <!-- Activity log: every response, reminder and escalation from the frame -->
+  <section class="card activity-card" aria-labelledby="activityTitle">
+    <div class="card-header">
+      <div class="card-title" id="activityTitle"><i data-lucide="list-checks" style="width:22px;height:22px;"></i> Today's activity</div>
+      <button class="card-edit-btn" type="button" onclick="clearActivity()">Clear</button>
+    </div>
+    <ol class="activity-log" id="activityLog" aria-live="polite"></ol>
+    <p class="activity-empty" id="activityEmpty">Nothing yet today. Send a check-in and Grandma's answer will show up here.</p>
+  </section>
 
   <!-- Navigation Tabs -->
   <div class="nav-tabs">
@@ -775,12 +797,12 @@
     <div class="card schedule-card">
       <div class="card-header">
         <div>
-          <div class="card-title" style="color:#166534;"><i data-lucide="calendar-clock" style="width:22px;height:22px;color:#16a34a;"></i> Scheduled Check-in Times</div>
-          <p style="font-size:13px; color:#15803d; margin-top:2px;">
+          <div class="card-title" style="color:#245f40;"><i data-lucide="calendar-clock" style="width:22px;height:22px;color:#2f7a52;"></i> Scheduled Check-in Times</div>
+          <p style="font-size:13px; color:#2f7a52; margin-top:2px;">
             The system automatically draws a random photo from the queue at these times and sends a live check-in to Grandma.
           </p>
         </div>
-        <button class="btn-primary" type="button" style="background:#16a34a; font-size:13px; padding:8px 14px;" onclick="triggerAutoRandomCheckin()">
+        <button class="btn-primary" type="button" style="background:#2f7a52; font-size:13px; padding:8px 14px;" onclick="triggerAutoRandomCheckin()">
           <i data-lucide="shuffle" style="width:14px;height:14px;"></i> Test Random Check-in Now
         </button>
       </div>
@@ -795,7 +817,7 @@
 
     <div class="card">
       <div class="card-header">
-        <div class="card-title"><i data-lucide="image" style="width:22px;height:22px;color:#2563eb;"></i> Digital Frame Photo Queue</div>
+        <div class="card-title"><i data-lucide="image" style="width:22px;height:22px;color:#1f3a2d;"></i> Digital Frame Photo Queue</div>
         <span style="font-size: 13px; color: var(--text-muted);">Use "Send as Check-in Now" to immediately dispatch any photo to Grandma</span>
       </div>
       <div class="photo-grid-manager" id="photoGridManager"></div>
@@ -803,9 +825,9 @@
 
     <div class="card">
       <div class="card-header">
-        <div class="card-title"><i data-lucide="upload-cloud" style="width:22px;height:22px;color:#2563eb;"></i> Add New Photo to Queue</div>
+        <div class="card-title"><i data-lucide="upload-cloud" style="width:22px;height:22px;color:#1f3a2d;"></i> Add New Photo to Queue</div>
       </div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div class="form-split">
         <div>
           <input type="file" id="localFileInput" accept="image/*" style="display:none;" onchange="handleLocalFileUpload(event)">
           <div class="file-dropzone" id="photoDropzone" onclick="document.getElementById('localFileInput').click()">
@@ -814,7 +836,7 @@
             <div class="dropzone-sub">Supports JPG, PNG, WEBP from your computer</div>
           </div>
           <div class="upload-preview-box" id="uploadPreviewBox">
-            <img class="upload-preview-img" id="uploadPreviewImg" src="https://media.clero.so/content_items/2026/08/Family_Picnic_Scene.jpg" alt="Preview">
+            <img class="upload-preview-img" id="uploadPreviewImg" src="assets/photos/family-picnic-scene.jpg" alt="Preview">
             <button class="remove-preview-btn" onclick="clearUploadedFile()"><i data-lucide="x" style="width:14px;height:14px;"></i></button>
           </div>
           <div class="input-group">
@@ -845,7 +867,7 @@
 
     <div class="card">
       <div class="card-header">
-        <div class="card-title"><i data-lucide="message-square" style="width:22px;height:22px;color:#2563eb;"></i> Caption Pool</div>
+        <div class="card-title"><i data-lucide="message-square" style="width:22px;height:22px;color:#1f3a2d;"></i> Caption Pool</div>
         <span style="font-size: 13px; color: var(--text-muted);">Randomly paired with photos without custom captions</span>
       </div>
       <div class="caption-pool-list" id="captionPoolList"></div>
@@ -863,7 +885,7 @@
     <div class="card">
       <div class="card-header">
         <div>
-          <div class="card-title"><i data-lucide="pill" style="width:22px;height:22px;color:#2563eb;"></i> Daily Medication Schedule</div>
+          <div class="card-title"><i data-lucide="pill" style="width:22px;height:22px;color:#1f3a2d;"></i> Daily Medication Schedule</div>
           <p style="font-size:13px; color:var(--text-muted); margin-top:2px;">
             Organized by intake time slots or view individual pill schedules with uploaded photos. Click "Edit" on any pill to change photo or details.
           </p>
@@ -878,9 +900,9 @@
       <div id="pillsTimeView">
         <div id="timeSlotsContainer"></div>
 
-        <div style="background:#f8fafc; border:2px dashed #cbd5e1; border-radius:18px; padding:18px; margin-top:16px;">
+        <div style="background:#f3f5f2; border:2px dashed #c6d0c8; border-radius:18px; padding:18px; margin-top:16px;">
           <div style="font-weight:700; font-size:14px; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
-            <i data-lucide="clock-plus" style="width:18px;height:18px;color:#2563eb;"></i> Add New Scheduled Time Slot
+            <i data-lucide="clock-plus" style="width:18px;height:18px;color:#1f3a2d;"></i> Add New Scheduled Time Slot
           </div>
           <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
             <div class="input-group" style="flex:1; min-width:200px; margin:0;">
@@ -907,7 +929,7 @@
         </div>
 
         <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
-          <button class="btn-primary" style="background:#059669;" onclick="triggerSelectedSlotReminder()">
+          <button class="btn-primary" style="background:#2f7a52;" onclick="triggerSelectedSlotReminder()">
             <i data-lucide="bell-ring" style="width:16px;height:16px;"></i> Send Current Time Alert to Grandma's Screen
           </button>
         </div>
@@ -922,9 +944,9 @@
     <!-- Upload & Add New Pill Card -->
     <div class="card">
       <div class="card-header">
-        <div class="card-title"><i data-lucide="plus-circle" style="width:22px;height:22px;color:#2563eb;"></i> Add New Medication & Photo</div>
+        <div class="card-title"><i data-lucide="plus-circle" style="width:22px;height:22px;color:#1f3a2d;"></i> Add New Medication & Photo</div>
       </div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div class="form-split">
         <div>
           <input type="file" id="pillPhotoInput" accept="image/*" style="display:none;" onchange="handlePillPhotoUpload(event)">
           <div class="file-dropzone" id="pillDropzone" onclick="document.getElementById('pillPhotoInput').click()">
@@ -979,7 +1001,7 @@
     <div class="card">
       <div class="card-header">
         <div>
-          <div class="card-title"><i data-lucide="check-square" style="width:22px;height:22px;color:#2563eb;"></i> Grandma's Errands & Assigned Routine</div>
+          <div class="card-title"><i data-lucide="check-square" style="width:22px;height:22px;color:#1f3a2d;"></i> Grandma's Errands & Assigned Routine</div>
           <p style="font-size:13px; color:var(--text-muted); margin-top:2px;">
             Set responsible family members and configure relative reminders for both the caretaker and patient.
           </p>
@@ -989,12 +1011,12 @@
       <div class="errand-list" id="errandList"></div>
 
       <!-- Add New Errand Form -->
-      <div style="background:#f8fafc; border:1px solid var(--border); border-radius:20px; padding:22px;">
+      <div style="background:#f3f5f2; border:1px solid var(--border); border-radius:20px; padding:22px;">
         <div style="font-weight:800; font-size:16px; margin-bottom:14px; color:var(--text-dark);">
-          <i data-lucide="calendar-plus" style="width:18px;height:18px;vertical-align:middle;color:#2563eb;"></i> Add New Errand with Assigned Caretaker
+          <i data-lucide="calendar-plus" style="width:18px;height:18px;vertical-align:middle;color:#1f3a2d;"></i> Add New Errand with Assigned Caretaker
         </div>
 
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:14px;">
+        <div class="form-split form-split-tight">
           <div class="input-group" style="margin:0;">
             <label class="input-label">Errand Title</label>
             <input class="text-field" id="newErrandTitle" placeholder="e.g. Afternoon Garden Walk">
@@ -1005,7 +1027,7 @@
           </div>
         </div>
 
-        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:16px; margin-bottom:18px;">
+        <div class="form-split form-split-3">
           <div class="input-group" style="margin:0;">
             <label class="input-label">Responsible Caretaker</label>
             <select class="text-field" id="newErrandCaretaker">
@@ -1052,10 +1074,10 @@
   <div class="tab-content" id="tab-ai">
     <div class="card">
       <div class="card-header">
-        <div class="card-title"><i data-lucide="bot" style="width:22px;height:22px;color:#2563eb;"></i> AI Care Assistant</div>
+        <div class="card-title"><i data-lucide="bot" style="width:22px;height:22px;color:#1f3a2d;"></i> AI Care Assistant</div>
       </div>
       <div class="chat-stream" id="chatStream" style="height:260px; overflow-y:auto; display:flex; flex-direction:column; gap:12px; margin-bottom:16px;">
-        <div class="chat-msg bot" style="background:#f1f5f9; padding:12px 16px; border-radius:16px; font-size:14px; max-width:80%;">
+        <div class="chat-msg bot" style="background:#eef2ee; padding:12px 16px; border-radius:16px; font-size:14px; max-width:80%;">
           Hello! I'm monitoring Grandma's medication schedule and check-ins. You can ask me what pills she has scheduled or review errands!
         </div>
       </div>
@@ -1071,7 +1093,7 @@
 <div class="edit-modal-overlay" id="editPillModal" role="dialog" aria-modal="true" aria-labelledby="editPillModalTitle">
   <div class="edit-modal-card">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-      <div id="editPillModalTitle" style="font-family:'Fraunces',serif; font-size:20px; font-weight:700;">Edit Medication &amp; Photo</div>
+      <div id="editPillModalTitle" style="font-family:'Lexend',serif; font-size:20px; font-weight:700;">Edit Medication &amp; Photo</div>
       <button class="icon-button" type="button" aria-label="Close edit medication dialog" onclick="closeEditModal()"><i data-lucide="x" style="width:20px;height:20px;"></i></button>
     </div>
 
@@ -1131,7 +1153,7 @@
     </div>
     <input type="hidden" id="editPhotoId">
     <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
-      <img id="editPhotoPreview" src="https://media.clero.so/content_items/2026/08/Family_Picnic_Scene.jpg" alt="Current photo preview" width="88" height="72" style="width:88px;height:72px;border-radius:14px;object-fit:cover;background:#e2e8f0;">
+      <img id="editPhotoPreview" src="assets/photos/family-picnic-scene.jpg" alt="Current photo preview" width="88" height="72" style="width:88px;height:72px;border-radius:14px;object-fit:cover;background:#dce3dd;">
       <p style="font-size:13px;line-height:1.5;color:var(--text-muted);">Changes appear on Grandma's frame immediately after saving.</p>
     </div>
     <div class="input-group">
@@ -1212,11 +1234,11 @@
 <script>
   const careBus = window.BroadcastChannel ? new BroadcastChannel('care_companion_bus') : null;
   const CARE_STORAGE_KEYS = {
-    photos: 'care_companion_photos_v1',
-    pills: 'care_companion_pills_v1',
-    errands: 'care_companion_errands_v1',
-    checkinTimes: 'care_companion_checkin_times_v1',
-    lastScheduledCheckin: 'care_companion_last_scheduled_checkin_v1'
+    photos: 'care_companion_photos_v2',
+    pills: 'care_companion_pills_v2',
+    errands: 'care_companion_errands_v2',
+    checkinTimes: 'care_companion_checkin_times_v2',
+    lastScheduledCheckin: 'care_companion_last_scheduled_checkin_v2'
   };
   let lastDialogTrigger = null;
 
@@ -1282,10 +1304,10 @@
   // MEDICATIONS DATA WITH WORKING PHOTO URLS & ICONS
   // ========================================================
   const publishedPillPhotoUrls = {
-    'Blood Pressure (Lisinopril)': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300',
-    'Vitamin D3 & Omega': 'https://images.unsplash.com/photo-1550572017-ed24d35eb7b3?w=300',
-    'Calcium & Zinc Support': 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=300',
-    'Glass of Fresh Water': 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=500&auto=format&fit=crop&q=80'
+    'Blood Pressure (Lisinopril)': 'assets/pills/lisinopril.jpg',
+    'Vitamin D3 & Omega': 'assets/pills/vitamin-d3.svg',
+    'Calcium & Zinc Support': 'assets/pills/calcium.jpg',
+    'Glass of Fresh Water': 'assets/pills/fresh-water.svg'
   };
   const pillPhotoFallbacks = {
     'Blood Pressure (Lisinopril)': 'assets/pills/lisinopril.svg',
@@ -1341,10 +1363,10 @@
   );
 
   let timeSlots = [
-    { slotName: 'Morning (08:00 AM)', icon: 'sunrise', color: '#0284c7' },
-    { slotName: 'Afternoon (01:00 PM)', icon: 'sun', color: '#d97706' },
-    { slotName: 'Evening (07:00 PM)', icon: 'sunset', color: '#7c3aed' },
-    { slotName: 'Bedtime (10:00 PM)', icon: 'moon', color: '#475569' }
+    { slotName: 'Morning (08:00 AM)', icon: 'sunrise', color: '#1f3a2d' },
+    { slotName: 'Afternoon (01:00 PM)', icon: 'sun', color: '#a8711a' },
+    { slotName: 'Evening (07:00 PM)', icon: 'sunset', color: '#1f3a2d' },
+    { slotName: 'Bedtime (10:00 PM)', icon: 'moon', color: '#3e4a43' }
   ];
 
   // Drag and Drop Utility
@@ -1372,7 +1394,7 @@
     }, false);
   }
 
-  function readImageFileAsThumbnail(file, onReady) {
+  function readImageFileAsThumbnail(file, onReady, maxSide = 320) {
     if (!file || !file.type.startsWith('image/')) {
       showToast('Please choose an image file.');
       return;
@@ -1382,7 +1404,6 @@
       const source = event.target.result;
       const image = new Image();
       image.onload = () => {
-        const maxSide = 320;
         const scale = Math.min(1, maxSide / Math.max(image.naturalWidth, image.naturalHeight));
         const canvas = document.createElement('canvas');
         canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
@@ -1449,7 +1470,7 @@
                 <div style="font-size:12px; color:var(--text-muted);">${escapeHtml(p.dosage)}</div>
                 <div class="pill-icon-tag"><i data-lucide="${p.iconName || 'pill'}" style="width:12px;height:12px;"></i></div>
               </div>
-              <button style="background:none; border:none; cursor:pointer; color:#2563eb; padding:4px;" onclick="openEditModal('${p.id}')">
+              <button style="background:none; border:none; cursor:pointer; color:#1f3a2d; padding:4px;" onclick="openEditModal('${p.id}')">
                 <i data-lucide="pencil" style="width:14px;height:14px;"></i>
               </button>
             </div>
@@ -1488,7 +1509,7 @@
     const displayTime = `${displayHour}:${String(minuteValue).padStart(2, '0')} ${period}`;
     const name = `${routine} (${displayTime})`;
 
-    timeSlots.push({ slotName: name, icon: icon, color: '#2563eb' });
+    timeSlots.push({ slotName: name, icon: icon, color: '#1f3a2d' });
     document.getElementById('newSlotNameInput').value = '';
     document.getElementById('newSlotTimeInput').value = '';
     renderTimeSlotsView();
@@ -1516,11 +1537,11 @@
         <div class="pill-time-chips">
           ${p.times.map(t => `<span class="time-chip"><i data-lucide="clock" style="width:12px;height:12px;"></i> ${t}</span>`).join('')}
         </div>
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; border-top:1px solid #f1f5f9; padding-top:8px;">
-          <button style="background:none; border:none; color:#2563eb; font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:4px;" onclick="openEditModal('${p.id}')">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; border-top:1px solid #eef2ee; padding-top:8px;">
+          <button style="background:none; border:none; color:#1f3a2d; font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:4px;" onclick="openEditModal('${p.id}')">
             <i data-lucide="pencil" style="width:14px;height:14px;"></i> Edit Pill & Photo
           </button>
-          <button style="background:none; border:none; color:#ef4444; font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:4px;" onclick="deletePillItem('${p.id}')">
+          <button style="background:none; border:none; color:#b3452f; font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:4px;" onclick="deletePillItem('${p.id}')">
             <i data-lucide="trash-2" style="width:14px;height:14px;"></i> Remove
           </button>
         </div>
@@ -1603,11 +1624,11 @@
     });
 
     if (!name) {
-      alert('Please enter medication name');
+      showToast('Add the medication name first.');
       return;
     }
     if (selectedTimes.length === 0) {
-      alert('Please select at least one scheduled time slot');
+      showToast('Pick at least one time for this medication.');
       return;
     }
 
@@ -1648,7 +1669,8 @@
         pills: pillsToSend
       });
     }
-    showToast('Morning pill alert dispatched to Grandma\'s screen with photos!');
+    showToast('Morning pill reminder sent to Grandma\'s frame.');
+    logActivity('sent', 'Sent the morning pill reminder');
   }
 
   function syncPillsToReceiver() {
@@ -1666,11 +1688,11 @@
   // PHOTOS MANAGEMENT WITH IMMEDIATE & SCHEDULED CHECK-INS
   // ========================================================
   let photos = loadStoredArray(CARE_STORAGE_KEYS.photos, [
-    { id: 1, src: 'https://media.clero.so/content_items/2026/08/Family_Picnic_Scene.jpg', title: 'Meadow Picnic', caption: 'Sunny afternoon memories with the grandkids', prioritized: true },
-    { id: 2, src: 'https://media.clero.so/content_items/2026/08/Beach_Vacation_Scene.jpg', title: 'Beach Vacation', caption: 'Golden hour waves and warm sea breeze', prioritized: false },
-    { id: 3, src: 'https://media.clero.so/content_items/2026/08/Family_Dinner_Scene.jpg', title: 'Family Dinner', caption: 'Delicious home cooking and hearty laughs', prioritized: false },
-    { id: 4, src: 'https://media.clero.so/content_items/2026/08/Reading_Time_Scene.jpg', title: 'Fireplace Reading', caption: 'Cozy evenings by the crackling fire', prioritized: false },
-    { id: 5, src: 'https://media.clero.so/content_items/2026/08/Christmas_Dinner_Scene.jpg', title: 'Christmas Celebration', caption: 'Warm holiday hugs and joyful smiles', prioritized: false }
+    { id: 1, src: 'assets/photos/family-picnic-scene.jpg', title: 'Meadow Picnic', caption: 'Sunny afternoon memories with the grandkids', prioritized: true },
+    { id: 2, src: 'assets/photos/beach-vacation-scene.jpg', title: 'Beach Vacation', caption: 'Golden hour waves and warm sea breeze', prioritized: false },
+    { id: 3, src: 'assets/photos/family-dinner-scene.jpg', title: 'Family Dinner', caption: 'Delicious home cooking and hearty laughs', prioritized: false },
+    { id: 4, src: 'assets/photos/reading-time-scene.jpg', title: 'Fireplace Reading', caption: 'Cozy evenings by the crackling fire', prioritized: false },
+    { id: 5, src: 'assets/photos/christmas-dinner-scene.jpg', title: 'Christmas Celebration', caption: 'Warm holiday hugs and joyful smiles', prioritized: false }
   ]);
 
   let scheduledCheckinTimes = loadStoredArray(CARE_STORAGE_KEYS.checkinTimes, [
@@ -1679,32 +1701,31 @@
     '06:30 PM'
   ]);
 
-  let captionPool = [
+  let captionPool = loadStoredArray('care_companion_captions_v2', [
     "Thinking of you with lots of love!",
     "Hope your morning is as wonderful as you are!",
     "Sending the biggest family hugs today!",
     "Remembering this lovely day together!",
     "Smile Grandma, we love you so much!"
-  ];
+  ]);
 
   let uploadedFileBase64 = null;
 
   function handleLocalFileUpload(e) {
     const file = e.target.files ? e.target.files[0] : e;
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(evt) {
-      uploadedFileBase64 = evt.target.result;
+    // Resize before storing: full-size phone photos are several MB and overflow browser storage.
+    readImageFileAsThumbnail(file, (resized) => {
+      uploadedFileBase64 = resized;
       document.getElementById('uploadPreviewImg').src = uploadedFileBase64;
       document.getElementById('uploadPreviewBox').classList.add('show');
       const cleanName = file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
       if (!document.getElementById('newPhotoTitle').value) {
         document.getElementById('newPhotoTitle').value = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
       }
-      showToast('Photo loaded from computer!');
+      showToast('Photo ready to add.');
       refreshIcons();
-    };
-    reader.readAsDataURL(file);
+    }, 1400);
   }
 
   function clearUploadedFile() {
@@ -1741,7 +1762,7 @@
               <button class="card-edit-btn" type="button" onclick="openEditPhotoModal('${safeId}', this)">
                 <i data-lucide="pencil" style="width:12px;height:12px;"></i> Edit
               </button>
-              <button class="delete-card-btn" type="button" aria-label="Delete ${safeTitle}" style="background:none; border:none; color:#ef4444; cursor:pointer; font-size:12px; display:flex; align-items:center; gap:2px;" onclick="deletePhoto('${safeId}')">
+              <button class="delete-card-btn" type="button" aria-label="Delete ${safeTitle}" style="background:none; border:none; color:#b3452f; cursor:pointer; font-size:12px; display:flex; align-items:center; gap:2px;" onclick="deletePhoto('${safeId}')">
                 <i data-lucide="trash-2" style="width:12px;height:12px;"></i> Delete
               </button>
             </div>
@@ -1760,12 +1781,13 @@
       careBus.postMessage({
         type: 'TRIGGER_CHECKIN',
         senderName: 'Alex',
-        avatarUrl: 'https://media.clero.so/content_items/2026/08/Son_Portrait.jpg',
+        avatarUrl: 'assets/people/alex.jpg',
         photoUrl: photo.src,
         caption
       });
     }
     showToast(toastMessage);
+    logActivity('sent', `Sent "${photo.title}" to Grandma's frame`);
     return true;
   }
 
@@ -1815,7 +1837,7 @@
     if (!container) return;
     container.innerHTML = scheduledCheckinTimes.map((time, index) => `
       <div class="schedule-time-chip">
-        <i data-lucide="clock" style="width:14px;height:14px;color:#16a34a;"></i>
+        <i data-lucide="clock" style="width:14px;height:14px;color:#2f7a52;"></i>
         <span>${escapeHtml(time)}</span>
         <button class="del-time-btn" type="button" aria-label="Remove ${escapeHtml(time)}" onclick="removeScheduleTime(${index})"><i data-lucide="x" style="width:13px;height:13px;"></i></button>
       </div>
@@ -1945,7 +1967,7 @@
     const isStar = document.getElementById('newPhotoStar').checked;
 
     if (!finalSrc) {
-      alert('Please select a file from your computer or enter an image URL');
+      showToast('Choose a photo from your computer or paste an image link.');
       return;
     }
 
@@ -1976,7 +1998,7 @@
     captionPool.forEach((c, idx) => {
       const item = document.createElement('div');
       item.className = 'caption-pool-item';
-      item.innerHTML = `<span>"${c}"</span><button class="del-caption-btn" onclick="deleteCaptionFromPool(${idx})"><i data-lucide="x" style="width:14px;height:14px;"></i></button>`;
+      item.innerHTML = `<span>"${escapeHtml(c)}"</span><button class="del-caption-btn" type="button" aria-label="Remove caption" onclick="deleteCaptionFromPool(${idx})"><i data-lucide="x" style="width:14px;height:14px;"></i></button>`;
       list.appendChild(item);
     });
     refreshIcons();
@@ -1988,11 +2010,13 @@
     if (!val) return;
     captionPool.push(val);
     input.value = '';
+    storeArray('care_companion_captions_v2', captionPool);
     renderCaptionPool();
   }
 
   function deleteCaptionFromPool(idx) {
     captionPool.splice(idx, 1);
+    storeArray('care_companion_captions_v2', captionPool);
     renderCaptionPool();
   }
 
@@ -2011,15 +2035,15 @@
       name: 'Alex',
       role: 'Son · Primary',
       label: 'Alex (Son · Primary)',
-      avatar: 'https://media.clero.so/content_items/2026/08/Son_Portrait.jpg',
-      fallbackAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=160&h=160&fit=crop&crop=face'
+      avatar: 'assets/people/alex.jpg',
+      fallbackAvatar: 'assets/people/alex-fallback.jpg'
     },
     Elena: {
       name: 'Elena',
       role: 'Daughter · Secondary',
       label: 'Elena (Daughter · Secondary)',
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=160&h=160&fit=crop&crop=face',
-      fallbackAvatar: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=160&h=160&fit=crop&crop=face'
+      avatar: 'assets/people/elena.jpg',
+      fallbackAvatar: 'assets/people/elena.jpg'
     }
   };
   const caretakerReminderOptions = [
@@ -2105,9 +2129,9 @@
               <i data-lucide="pencil" style="width:13px;height:13px;"></i> Edit
             </button>
             <button class="btn-secondary" type="button" style="padding:8px 12px; font-size:12px;" onclick="triggerDemoErrandAlert('${safeId}')">
-              <i data-lucide="bell-ring" style="width:13px;height:13px;color:#7c3aed;"></i> Test Alert
+              <i data-lucide="bell-ring" style="width:13px;height:13px;color:#1f3a2d;"></i> Test Alert
             </button>
-            <button type="button" aria-label="Delete ${escapeHtml(e.title)}" style="background:none; border:none; color:#ef4444; cursor:pointer; padding:8px;" onclick="deleteErrand('${safeId}')">
+            <button type="button" aria-label="Delete ${escapeHtml(e.title)}" style="background:none; border:none; color:#b3452f; cursor:pointer; padding:8px;" onclick="deleteErrand('${safeId}')">
               <i data-lucide="trash-2" style="width:16px;height:16px;"></i>
             </button>
           </div>
@@ -2168,7 +2192,7 @@
     const recurring = document.getElementById('newErrandRecurring').checked;
 
     if (!title) {
-      alert('Please enter errand title');
+      showToast('Give the errand a title first.');
       return;
     }
 
@@ -2274,7 +2298,8 @@
       recurring: Boolean(e.recurring)
     };
     careBus.postMessage({ type: 'TRIGGER_ERRAND', errand: errandPayload, ...errandPayload });
-    showToast(`Dispatched errand alert for "${e.title}" to Grandma's screen!`);
+    showToast(`Sent the "${e.title}" reminder to Grandma's frame.`);
+    logActivity('sent', `Sent the "${e.title}" reminder`);
   }
 
   // AI Chat
@@ -2284,10 +2309,35 @@
   function addAiMessage(text, type) {
     const msg = document.createElement('div');
     msg.className = `chat-msg ${type}`;
-    msg.style.cssText = type === 'user' ? 'background:#2563eb; color:white; align-self:flex-end; padding:12px 16px; border-radius:16px; font-size:14px; max-width:80%;' : 'background:#f1f5f9; padding:12px 16px; border-radius:16px; font-size:14px; max-width:80%;';
+    msg.style.cssText = type === 'user' ? 'background:#1f3a2d; color:white; align-self:flex-end; padding:12px 16px; border-radius:16px; font-size:14px; max-width:80%;' : 'background:#eef2ee; padding:12px 16px; border-radius:16px; font-size:14px; max-width:80%;';
     msg.textContent = text;
     chatStream.appendChild(msg);
     chatStream.scrollTop = chatStream.scrollHeight;
+  }
+
+  // Demo assistant: answers from the household data in this browser. No AI model is called.
+  function answerCareQuestion(question) {
+    const q = question.toLowerCase();
+    if (/pill|med|tablet|dose/.test(q)) {
+      const bySlot = timeSlots.map(slot => {
+        const names = pillDatabase.filter(p => p.times.includes(slot.slotName)).map(p => p.name);
+        return names.length ? `${slot.slotName}: ${names.join(', ')}` : null;
+      }).filter(Boolean);
+      return bySlot.length ? `Grandma's pills. ${bySlot.join('. ')}.` : 'No medications are scheduled yet.';
+    }
+    if (/errand|appointment|pickup|walk|call/.test(q)) {
+      if (!errands.length) return 'There are no errands set up.';
+      return errands.map(e => `${e.title} (${e.time}), ${e.caretaker} is responsible`).join('. ') + '.';
+    }
+    if (/photo|picture|check.?in|queue/.test(q)) {
+      const next = photos.find(p => p.prioritized) || photos[0];
+      return `${photos.length} photos are in the queue.` + (next ? ` Next up is "${next.title}".` : '') +
+        (scheduledCheckinTimes.length ? ` Check-ins go out at ${scheduledCheckinTimes.join(', ')}.` : '');
+    }
+    if (/today|activity|answer|respond|how is|how's/.test(q)) {
+      return activity.length ? `Latest: ${activity[0].text} at ${activity[0].time}.` : 'Nothing has happened on the frame today yet.';
+    }
+    return 'I can answer questions about pills, errands, photos and today\'s activity.';
   }
 
   function sendAiMessage() {
@@ -2295,10 +2345,7 @@
     if (!q) return;
     aiInput.value = '';
     addAiMessage(q, 'user');
-    setTimeout(() => {
-      let reply = "Grandma's medication schedule has 4 active prescriptions. Her morning pills include Lisinopril, Vitamin D3 & Omega, Calcium, and Water. Errands are assigned to Alex and Elena.";
-      addAiMessage(reply, 'bot');
-    }, 500);
+    setTimeout(() => addAiMessage(answerCareQuestion(q), 'bot'), 300);
   }
 
   function showToast(msg) {
@@ -2308,16 +2355,92 @@
     setTimeout(() => toast.classList.remove('show'), 3500);
   }
 
+  // ========================================================
+  // ACTIVITY LOG & ESCALATION ALERT
+  // ========================================================
+  const ACTIVITY_KEY = 'care_companion_activity_v2';
+  const ACTIVITY_ICONS = { response: 'message-circle-heart', pills: 'pill', errand: 'calendar-check', sent: 'send', retry: 'bell-ring', escalation: 'phone-call' };
+  let activity = loadStoredArray(ACTIVITY_KEY, []);
+
+  function nowLabel() {
+    return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function logActivity(kind, text) {
+    activity.unshift({ kind, text, time: nowLabel() });
+    activity = activity.slice(0, 30);
+    storeArray(ACTIVITY_KEY, activity);
+    renderActivity();
+  }
+
+  function renderActivity() {
+    const list = document.getElementById('activityLog');
+    list.innerHTML = activity.map(item => `
+      <li class="activity-item activity-${escapeHtml(item.kind)}">
+        <span class="activity-icon"><i data-lucide="${ACTIVITY_ICONS[item.kind] || 'dot'}" style="width:16px;height:16px;"></i></span>
+        <span class="activity-text">${escapeHtml(item.text)}</span>
+        <time class="activity-time">${escapeHtml(item.time)}</time>
+      </li>
+    `).join('');
+    document.getElementById('activityEmpty').hidden = activity.length > 0;
+    refreshIcons();
+  }
+
+  function clearActivity() {
+    activity = [];
+    storeArray(ACTIVITY_KEY, activity);
+    renderActivity();
+  }
+
+  function playAlertTone() {
+    try {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      [0, 0.35, 0.7].forEach(start => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.frequency.value = 740;
+        gain.gain.setValueAtTime(0.25, audioCtx.currentTime + start);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + start + 0.25);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(audioCtx.currentTime + start); osc.stop(audioCtx.currentTime + start + 0.25);
+      });
+    } catch (_error) {
+      // Audio can be blocked until the page has had a click. The banner still shows.
+    }
+  }
+
+  function showCareAlert(message) {
+    document.getElementById('careAlertText').textContent = message;
+    document.getElementById('careAlert').hidden = false;
+    refreshIcons();
+    playAlertTone();
+  }
+
+  function dismissCareAlert() {
+    document.getElementById('careAlert').hidden = true;
+  }
+
   if (careBus) {
     careBus.onmessage = (e) => {
       const data = e.data;
       if (!data || typeof data !== 'object') return;
       if (data.type === 'CHECKIN_RESPONSE') {
-        showToast(`Grandma responded "${data.status}"!`);
+        showToast(`Grandma answered "${data.status}".`);
+        logActivity('response', `Grandma answered the check-in: ${data.status}`);
+        dismissCareAlert();
       } else if (data.type === 'PILLS_TAKEN') {
-        showToast('Grandma confirmed taking all her medications!');
+        showToast('Grandma confirmed all her pills.');
+        logActivity('pills', `Grandma took her pills (${(data.medications || []).length} items)`);
       } else if (data.type === 'ERRAND_ACKNOWLEDGED') {
-        showToast(`Grandma acknowledged "${data.title}" at ${data.timestamp}.`);
+        showToast(`Grandma acknowledged "${data.title}".`);
+        logActivity('errand', `Grandma acknowledged "${data.title}"`);
+      } else if (data.type === 'ESCALATION_ALERT') {
+        if (data.stage === 1) {
+          logActivity('retry', 'No answer yet. Reminded Grandma again on the frame.');
+        } else {
+          logActivity('escalation', 'No answer after the reminder. Alerted the family.');
+          showCareAlert(data.message || 'She missed the check-in and the reminder. Please call her.');
+        }
       } else if (data.type === 'REQUEST_SYNC') {
         syncAllState();
       } else if (data.type === 'RECEIVER_READY') {
@@ -2373,6 +2496,7 @@
   setupDragDrop('editPillDropzone', handleEditPillPhotoUpload);
 
   // Init
+  renderActivity();
   renderPhotoGrid();
   renderScheduledTimes();
   renderCaptionPool();
