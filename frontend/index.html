@@ -6,7 +6,8 @@
   <meta name="theme-color" content="#1f3a2d">
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=Lexend:wght@600&amp;display=swap" rel="stylesheet">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<title>Care Companion · Live Demo</title>
+  <script src="assets/household.js"></script>
+<title>Care Companion | Live demo</title>
   <style>
     :root {
       color-scheme: dark;
@@ -39,9 +40,84 @@
 
     .launcher {
       display: grid;
-      grid-template-rows: auto 1fr;
-      min-height: 100dvh;
+      grid-template-rows: auto auto 1fr;
+      height: 100dvh;
     }
+
+    .guide {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px 24px;
+      align-items: center;
+      padding: 12px clamp(14px, 2.5vw, 30px) 14px;
+      border-bottom: 1px solid var(--line);
+      background: #16291f;
+    }
+    .guide[hidden] { display: none; }
+    .guide-head { display: flex; align-items: baseline; gap: 12px; grid-column: 1 / -1; }
+    .guide-head h2 { margin: 0; font-family: "Lexend", sans-serif; font-size: 1rem; font-weight: 600; letter-spacing: -.01em; }
+    .guide-head p { margin: 0; color: #aebdb3; font-size: .85rem; }
+    .guide-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: step;
+    }
+    .guide-steps li { counter-increment: step; display: grid; grid-template-columns: 26px 1fr; gap: 10px; color: #d8e2db; font-size: .85rem; line-height: 1.45; }
+    .guide-steps li::before {
+      content: counter(step);
+      display: grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .1);
+      color: var(--sun);
+      font-weight: 700;
+      font-size: .8rem;
+    }
+    .guide-steps strong { display: block; color: white; font-size: .9rem; }
+    .guide-actions { display: grid; grid-template-columns: repeat(3, auto); gap: 8px; }
+    .demo-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: transparent;
+      color: white;
+      font-size: .85rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background .2s ease, transform .2s var(--ease);
+    }
+    .demo-button:hover { background: rgba(255, 255, 255, .09); }
+    .demo-button:active { transform: scale(.98); }
+    .demo-button.primary { background: var(--sun); border-color: var(--sun); color: #1b2620; }
+    .demo-button.primary:hover { background: #ecb456; }
+    .guide-close {
+      position: absolute;
+      top: 10px;
+      right: clamp(10px, 2vw, 24px);
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      color: #b8c7bd;
+      font-size: 1.3rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .guide-close:hover { background: rgba(255, 255, 255, .09); color: white; }
+    .guide { position: relative; }
+    .guide-toggle[hidden] { display: none; }
 
     .toolbar {
       display: flex;
@@ -141,8 +217,7 @@
       font-weight: 700;
     }
 
-    .preview-label span:last-child { display: inline-flex; align-items: center; gap: 7px; color: #8cc6a4; }
-    .preview-label i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: livePulse 2.2s ease-in-out infinite; }
+    .preview-label > span:last-child { color: #aebdb3; font-weight: 400; }
 
     iframe {
       display: block;
@@ -158,9 +233,17 @@
     .preview-grid[data-view="caretaker"] { grid-template-columns: 1fr; }
     .preview-grid[data-view="caretaker"] .preview.receiver { display: none; }
 
-    @keyframes livePulse { 0%, 100% { opacity: 1; } 50% { opacity: .42; } }
+
+    @media (max-width: 1280px) {
+      .guide { grid-template-columns: 1fr; }
+    }
 
     @media (max-width: 860px) {
+      .guide { grid-template-columns: 1fr; padding-top: 12px; }
+      .guide-steps { grid-template-columns: 1fr; gap: 8px; }
+      .guide-steps li span { display: none; }
+      .guide-actions { grid-template-columns: 1fr 1fr 1fr; }
+      .demo-button { padding: 0 10px; white-space: normal; text-align: center; line-height: 1.2; min-height: 44px; }
       .toolbar { min-height: 64px; }
       .brand-copy span, .open-link span { display: none; }
       .open-link { width: 40px; padding: 0; justify-content: center; }
@@ -181,7 +264,8 @@
       .brand-copy strong { font-size: .78rem; }
       .view-button { padding-inline: 9px; }
       .toolbar-actions { gap: 5px; }
-      .open-link:first-of-type { display: none; }
+      .open-link { display: none; }
+      .guide-head p { display: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -190,40 +274,52 @@
   </style>
 </head>
 <body>
-  <!--
-    THESIS: The demo is one connected household shown simultaneously, not a menu of disconnected mockups.
-    OWN-WORLD: Ink-green demo chrome, paper-white previews, live leaf signals, and compact rounded navigation.
-    STORY: The presenter opens one URL, sees both roles, triggers care from the right, and watches Grandma respond on the left.
-    FIRST VIEWPORT: A slim launcher toolbar sits above a full-height receiver and caretaker split preview with direct-open links.
-    FORM: Family Daybook, assigned direction 6, seed 72401c94.
-    FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
-  -->
   <main class="launcher">
     <header class="toolbar">
       <div class="brand">
         <div class="mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5c3.5-6.3 10.5-6.3 14 0-3.5 6.3-10.5 6.3-14 0Z"></path><path d="M12 9.4v10.1M8.7 13.8 12 17l3.3-3.2"></path></svg></div>
-        <div class="brand-copy"><strong>Care Companion</strong><span>Live two-screen demo</span></div>
+        <div class="brand-copy"><strong>Care Companion</strong><span>Photo frame and family panel, side by side</span></div>
       </div>
 
       <div class="toolbar-actions">
         <div class="view-switch" id="viewSwitch" role="group" aria-label="Preview layout">
           <button class="view-button is-active" type="button" data-view="split">Split</button>
-          <button class="view-button" type="button" data-view="receiver">Grandma</button>
-          <button class="view-button" type="button" data-view="caretaker">Caretaker</button>
+          <button class="view-button" type="button" data-view="receiver">Frame</button>
+          <button class="view-button" type="button" data-view="caretaker">Family</button>
         </div>
-        <a class="open-link" href="carereceiver.html" target="_blank" rel="noopener"><span>Open Grandma</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"></path><path d="M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"></path></svg></a>
-        <a class="open-link" href="caretaker.html" target="_blank" rel="noopener"><span>Open Caretaker</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"></path><path d="M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"></path></svg></a>
+        <button class="open-link guide-toggle" id="guideToggle" type="button" hidden><span>How to try it</span></button>
+        <a class="open-link" href="carereceiver.html" target="_blank" rel="noopener"><span>Open frame</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"></path><path d="M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"></path></svg></a>
+        <a class="open-link" href="caretaker.html" target="_blank" rel="noopener"><span>Open family panel</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"></path><path d="M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"></path></svg></a>
       </div>
     </header>
 
+    <section class="guide" id="guide" aria-labelledby="guideTitle">
+      <div class="guide-head">
+        <h2 id="guideTitle">How to try it</h2>
+        <p>About a minute. The buttons here act as the family, so <span data-resident>Margaret</span>'s frame stays clean.</p>
+      </div>
+      <ol class="guide-steps">
+        <li><div><strong>Send a check-in</strong><span>A photo and a question appear on the frame.</span></div></li>
+        <li><div><strong>Answer, or wait 10 seconds</strong><span>Unanswered check-ins alert the family.</span></div></li>
+        <li><div><strong>Send a medication reminder</strong><span>Select each item, then confirm.</span></div></li>
+        <li><div><strong>Check the family panel</strong><span>Everything is logged. Nothing leaves your browser.</span></div></li>
+      </ol>
+      <div class="guide-actions" role="group" aria-label="Demo controls">
+        <button class="demo-button primary" type="button" data-demo-action="checkin">Send test check-in</button>
+        <button class="demo-button" type="button" data-demo-action="medication">Send medication reminder</button>
+        <button class="demo-button" type="button" data-demo-action="reminder">Send a reminder</button>
+      </div>
+      <button class="guide-close" id="guideClose" type="button" aria-label="Hide the guide">&times;</button>
+    </section>
+
     <section class="preview-grid" id="previewGrid" data-view="split" aria-label="Care Companion split preview">
       <article class="preview receiver">
-        <header class="preview-label"><span>Grandma · Ambient frame</span><span><i aria-hidden="true"></i>Live receiver</span></header>
-        <iframe src="carereceiver.html" title="Grandma's digital photo frame"></iframe>
+        <header class="preview-label"><span><span data-resident>Margaret</span>'s frame</span><span>Tablet at home</span></header>
+        <iframe src="carereceiver.html" title="Margaret's photo frame"></iframe>
       </article>
       <article class="preview caretaker">
-        <header class="preview-label"><span>Family · Caretaker hub</span><span><i aria-hidden="true"></i>Live controller</span></header>
-        <iframe src="caretaker.html" title="Family caretaker hub"></iframe>
+        <header class="preview-label"><span>Family panel</span><span>Alex's phone or laptop</span></header>
+        <iframe src="caretaker.html" title="Family panel"></iframe>
       </article>
     </section>
   </main>
@@ -243,6 +339,28 @@
       }
 
       buttons.forEach((button) => button.addEventListener('click', () => setView(button.dataset.view)));
+
+      // Demo controls talk to the family panel over the same channel the two screens use.
+      const bus = window.BroadcastChannel ? new BroadcastChannel('care_companion_bus') : null;
+      document.querySelectorAll('[data-demo-action]').forEach((button) => {
+        button.addEventListener('click', () => {
+          bus?.postMessage({ type: 'DEMO_ACTION', action: button.dataset.demoAction });
+        });
+      });
+
+      const guide = document.getElementById('guide');
+      const guideToggle = document.getElementById('guideToggle');
+      const GUIDE_KEY = 'care_companion_guide_hidden_v1';
+      function setGuide(open) {
+        guide.hidden = !open;
+        guideToggle.hidden = open;
+        try { localStorage.setItem(GUIDE_KEY, open ? '0' : '1'); } catch (_error) { /* storage can be blocked */ }
+      }
+      document.getElementById('guideClose').addEventListener('click', () => setGuide(false));
+      guideToggle.addEventListener('click', () => setGuide(true));
+      let hidden = false;
+      try { hidden = localStorage.getItem(GUIDE_KEY) === '1'; } catch (_error) { hidden = false; }
+      setGuide(!hidden);
       window.matchMedia('(max-width: 860px)').addEventListener('change', (event) => setView(event.matches ? 'receiver' : 'split'));
     })();
   </script>
